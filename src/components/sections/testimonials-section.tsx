@@ -1,225 +1,118 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { Card, CardContent } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Star } from "lucide-react"
 
+const testimonials = [
+  {
+    name: "Elnoah Agustinus Markus Manalu",
+    role: "Siswa SMK Negeri 6 Surakarta",
+    initials: "EL",
+    text: "Mersif sangat membantu dalam mengelola pembelajaran digital. Platformnya mudah digunakan dan sangat responsif terhadap kebutuhan kami.",
+  },
+  {
+    name: "Febrian Bayu Purwanto",
+    role: "Siswa SMK Negeri 2 Surakarta",
+    initials: "FB",
+    text: "Kolaborasi dengan Mersif telah meningkatkan efektivitas pelatihan guru dan siswa. Materi yang disediakan lengkap dan aplikatif.",
+  },
+  {
+    name: "Abdullah Rudi Athaya",
+    role: "Siswa SMA Negeri 4 Surakarta",
+    initials: "AR",
+    text: "Saya sangat terbantu dengan Mersif dalam mengembangkan kemampuan saya dalam bidang teknologi.",
+  },
+  {
+    name: "Narendra Fatin Fahrezi",
+    role: "Siswa SMA Pradita Dirgantara",
+    initials: "NF",
+    text: "Saya sangat terbantu dengan Mersif dalam mengembangkan kemampuan saya dalam bidang teknologi.",
+  },
+]
+
+// Duplikat 2x agar bisa scroll 50%
+const scrollingTestimonials = [...testimonials, ...testimonials]
+
 export function TestimonialsSection() {
-  const testimonials = [
-    {
-      name: "Budi Santoso",
-      title: "Kepala Sekolah SMA Harapan Bangsa",
-      stars: 5,
-      description: "MersifLab telah merevolusi cara siswa kami belajar sains. Pengalaman VR sangat imersif dan mudah digunakan!",
-      avatar: "/placeholder.svg?height=50&width=50",
-    },
-    {
-      name: "Siti Aminah",
-      title: "Guru Fisika",
-      stars: 5,
-      description: "Dengan Mersif Creator, saya bisa membuat simulasi fisika interaktif dalam hitungan menit. Sangat membantu!",
-      avatar: "/placeholder.svg?height=50&width=50",
-    },
-    {
-      name: "Andi Wijaya",
-      title: "Mahasiswa Teknik",
-      stars: 5,
-      description: "Aplikasi seluler MersifLab membuat belajar di mana saja menjadi mungkin. Konten AR-nya luar biasa.",
-      avatar: "/placeholder.svg?height=50&width=50",
-    },
-    {
-      name: "Dr. Lia Kusuma",
-      title: "Dosen Universitas Teknologi",
-      stars: 5,
-      description: "Inovasi MersifLab dalam AR/VR membuka dimensi baru dalam pengajaran. Mahasiswa kami sangat antusias!",
-      avatar: "/placeholder.svg?height=50&width=50",
-    },
-    {
-      name: "Rina Dewi",
-      title: "Orang Tua Murid",
-      stars: 5,
-      description: "Anak saya jadi lebih semangat belajar sejak menggunakan produk MersifLab. Konsep sulit jadi mudah dipahami.",
-      avatar: "/placeholder.svg?height=50&width=50",
-    },
-    {
-      name: "Maya Sari",
-      title: "Direktur Sekolah Internasional",
-      stars: 5,
-      description: "MersifLab mengubah paradigma pembelajaran di sekolah kami. Students love the immersive experience!",
-      avatar: "/placeholder.svg?height=50&width=50",
-    },
-    {
-      name: "Fajar Nugraha",
-      title: "Guru Kimia SMA",
-      stars: 4,
-      description: "Eksperimen kimia virtual sangat membantu siswa memahami reaksi tanpa risiko. Brilliant innovation!",
-      avatar: "/placeholder.svg?height=50&width=50",
-    },
-    {
-      name: "Ravi Patel",
-      title: "International Student",
-      stars: 5,
-      description: "MersifLab breaks language barriers in learning. The visual learning approach is absolutely amazing!",
-      avatar: "/placeholder.svg?height=50&width=50",
-    },
-    {
-      name: "Indira Safitri",
-      title: "Guru Biologi",
-      stars: 5,
-      description: "Menjelajahi sel dan organ dalam VR memberikan pengalaman belajar yang tak terlupakan bagi siswa.",
-      avatar: "/placeholder.svg?height=50&width=50",
-    },
-    {
-      name: "Sarah Johnson",
-      title: "English Teacher",
-      stars: 5,
-      description: "The AR storytelling feature makes English learning so engaging. My students are more motivated than ever!",
-      avatar: "/placeholder.svg?height=50&width=50",
-    }
-  ]
-
-  // Enhanced animation variants for individual scroll-triggered animations
-  const zigzagVariants = {
-    leftEntry: {
-      hidden: { 
-        opacity: 0, 
-        x: -150, 
-        y: 40,
-        scale: 0.7,
-        rotate: -8
-      },
-      visible: {
-        opacity: 1,
-        x: 0,
-        y: 0,
-        scale: 1,
-        rotate: 0,
-        transition: {
-          type: "spring",
-          damping: 25,
-          stiffness: 120,
-          duration: 1,
-        },
-      },
-    },
-    rightEntry: {
-      hidden: { 
-        opacity: 0, 
-        x: 150, 
-        y: -40,
-        scale: 0.7,
-        rotate: 8
-      },
-      visible: {
-        opacity: 1,
-        x: 0,
-        y: 0,
-        scale: 1,
-        rotate: 0,
-        transition: {
-          type: "spring",
-          damping: 25,
-          stiffness: 120,
-          duration: 1,
-        },
-      },
-    },
-  }
-
-  // Function to determine animation variant based on position (2 columns)
-  const getAnimationVariant = (index: number) => {
-    return index % 2 === 0 ? zigzagVariants.leftEntry : zigzagVariants.rightEntry
-  }
-
   return (
-    <section id="testimonials" className="w-full py-16 md:py-24 lg:py-32 bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50">
-      <div className="container px-4 md:px-6 text-center max-w-7xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-        >
-       <h2 className="text-5xl md:text-6xl font-bold tracking-tighter text-black">
-          Testimoni
+    <section id="testimonials" className="bg-white py-12 md:py-20 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 md:px-6">
+        <h2 style={{ fontFamily: "Poppins, sans-serif" }} className="text-2xl md:text-4xl font-bold text-gray-900 text-center mb-3 md:mb-4">
+          Apa Kata Mereka
         </h2>
-          <p className="max-w-[700px] mx-auto text-slate-700 text-2xl font-semibold mt-4">
-            Lihat apa kata mereka tentang MersifLab
-          </p>
-        </motion.div>
+        <p style={{ fontFamily: "Inter, sans-serif" }}  className="text-center text-gray-500 mb-8 md:mb-12 text-sm md:text-base">
+          Pendapat para pengguna tentang layanan dan dukungan dari Mersif.
+        </p>
 
-        <div className="mt-20 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-          {testimonials.map((testimonial, index) => (
-            <motion.div
-              key={index}
-              variants={getAnimationVariant(index)}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.3 }}
-              className="w-full"
-              whileHover={{ 
-                scale: 1.03,
-                transition: { duration: 0.3 }
-              }}
-            >
-              <Card className="relative overflow-hidden bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-2xl transition-all duration-500 rounded-3xl group">
-                {/* Gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
-                {/* Content */}
-                <CardContent className="p-8 relative z-10">
-                  <div className="flex items-center gap-4 mb-6">
-                    <Avatar className="h-14 w-14 ring-2 ring-gradient-to-r from-blue-400 to-purple-400">
-                      <AvatarImage src={testimonial.avatar || "/placeholder.svg"} alt={testimonial.name} />
-                      <AvatarFallback className="bg-gradient-to-br from-blue-100 to-purple-100 text-blue-700 font-semibold">
-                        {testimonial.name
-                          .split(" ")
-                          .map((n) => n[0])
-                          .join("")}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="text-left">
-                      <div className="text-xl font-bold text-slate-800">{testimonial.name}</div>
-                      <div className="text-sm text-slate-500 font-medium">{testimonial.title}</div>
-                    </div>
+        <div className="relative w-full overflow-hidden">
+          {/* Gradient overlay kiri-kanan */}
+          <div className="absolute left-0 top-0 w-6 md:w-20 h-full bg-gradient-to-r from-white via-white to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 w-6 md:w-20 h-full bg-gradient-to-l from-white via-white to-transparent z-10 pointer-events-none" />
+
+          {/* Kontainer scroll otomatis */}
+          <div className="animate-scroll flex gap-4 md:gap-6 w-max">
+            {scrollingTestimonials.map((t, idx) => (
+              <div
+                key={idx}
+                className="w-[240px] md:w-[350px] border rounded-xl p-3 md:p-6 shadow-md bg-white hover:shadow-lg transition-all duration-300 flex-shrink-0"
+              >
+                <div className="flex items-center gap-2 md:gap-4 mb-2 md:mb-4">
+                  <div className="w-8 h-8 md:w-12 md:h-12 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold shadow-sm border text-xs md:text-base">
+                    {t.initials}
                   </div>
+                  <div className="min-w-0 flex-1">
+                    <h4 style={{ fontFamily: "Poppins, sans-serif" }} className="text-xs md:text-base font-semibold text-gray-900 leading-tight break-words">
+                      {t.name}
+                    </h4>
+                    <p style={{ fontFamily: "Inter, sans-serif" }} className="text-xs md:text-sm text-gray-500 break-words">{t.role}</p>
+                  </div>
+                </div>
 
-                  <div className="flex items-center justify-center gap-1 mb-6">
-                    {[...Array(5)].map((_, i) => (
+                <div className="flex items-center gap-1 mb-2 md:mb-3 text-yellow-500">
+                  {Array(5)
+                    .fill(0)
+                    .map((_, i) => (
                       <Star
                         key={i}
-                        className={`w-5 h-5 transition-all duration-300 ${
-                          i < testimonial.stars 
-                            ? "fill-yellow-400 text-yellow-400 scale-110" 
-                            : "fill-gray-200 text-gray-200"
-                        }`}
+                        size={10}
+                        className="md:w-[14px] md:h-[14px]"
+                        fill="currentColor"
                       />
                     ))}
-                  </div>
+                </div>
 
-                  <p className="text-lg text-slate-700 leading-relaxed font-medium">
-                    "{testimonial.description}"
+                <div className="h-[80px] md:h-[90px] overflow-hidden">
+                  <p style={{ fontFamily: "Inter, sans-serif" }} className="text-xs md:text-sm text-gray-700 leading-relaxed italic border-l-4 border-blue-500 pl-2 md:pl-4 break-words">
+                    "{t.text}"
                   </p>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-
-        {/* Call to action */}
-        <motion.div
-          className="mt-20"
-          initial={{ opacity: 0, scale: 0.8 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          viewport={{ once: true }}
-        >
-          <p className="text-xl text-slate-600 font-semibold">
-            Bergabunglah dengan ribuan educator yang telah merasakan revolusi pembelajaran!
-          </p>
-        </motion.div>
       </div>
+
+      {/* Animasi scroll CSS */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes scroll {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+
+        .animate-scroll {
+          animation: scroll 25s linear infinite;
+          will-change: transform;
+        }
+
+        .animate-scroll:hover {
+          animation-play-state: paused;
+        }
+
+        @media (max-width: 768px) {
+          .animate-scroll {
+            animation-duration: 20s;
+          }
+        }
+      `}} />
     </section>
   )
 }

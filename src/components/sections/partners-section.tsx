@@ -1,6 +1,6 @@
 "use client"
 
-import Image from "next/image"
+import Image from "next/image"  
 
 export function PartnersSection() {
   const partners = [
@@ -25,32 +25,36 @@ export function PartnersSection() {
   ]
 
   return (
-    <section id="partners" className="w-full py-8 md:py-12 lg:py-16 bg-white">
-      <div className="container px-4 md:px-6 text-center">
-        <div className="mt-6 overflow-hidden relative">
-          <div className="flex animate-scroll">
+    <section id="partners" className="w-full py-8 md:py-12 lg:py-16 bg-white overflow-hidden">
+      <div className="w-full text-center">
+        <div className="mt-6 relative w-full">
+          <div className="flex animate-scroll w-full">
             {/* First set of logos */}
             {partners.map((partner, index) => (
-              <div key={index} className="flex-shrink-0 mx-8 flex justify-center items-center">
-                <Image
-                  src={partner.logo || "/placeholder.svg"}
-                  alt={partner.name}
-                  width={150}
-                  height={80}
-                  className="object-contain h-16 w-auto opacity-70 hover:opacity-100 transition-opacity duration-300"
-                />
+              <div key={index} className="flex-shrink-0 mx-8 flex justify-center items-center min-w-[120px]">
+                <div className="partner-logo-container">
+                  <Image
+                    src={partner.logo || "/placeholder.svg"}
+                    alt={partner.name}
+                    width={150}
+                    height={80}
+                    className="object-contain h-16 w-auto opacity-70 hover:opacity-100 transition-all duration-300 hover:scale-110"
+                  />
+                </div>
               </div>
             ))}
             {/* Duplicate set for seamless loop */}
             {partners.map((partner, index) => (
-              <div key={`duplicate-${index}`} className="flex-shrink-0 mx-8 flex justify-center items-center">
-                <Image
-                  src={partner.logo || "/placeholder.svg"}
-                  alt={partner.name}
-                  width={150}
-                  height={80}
-                  className="object-contain h-16 w-auto opacity-70 hover:opacity-100 transition-opacity duration-300"
-                />
+              <div key={`duplicate-${index}`} className="flex-shrink-0 mx-8 flex justify-center items-center min-w-[120px]">
+                <div className="partner-logo-container">
+                  <Image
+                    src={partner.logo || "/placeholder.svg"}
+                    alt={partner.name}
+                    width={150}
+                    height={80}
+                    className="object-contain h-16 w-auto opacity-70 hover:opacity-100 transition-all duration-300 hover:scale-110"
+                  />
+                </div>
               </div>
             ))}
           </div>
@@ -58,24 +62,35 @@ export function PartnersSection() {
       </div>
 
       <style jsx>{`
-  @keyframes scroll {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-50%);
-    }
-  }
-  
-  .animate-scroll {
-    animation: scroll 25s linear infinite;
-    width: calc(200%);
-  }
-  
-  .animate-scroll:hover {
-    animation-play-state: paused;
-  }
-`}</style>
+        @keyframes scroll {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+        
+        .animate-scroll {
+          animation: scroll 50s linear infinite;
+          width: max-content;
+          min-width: 200%;
+        }
+        
+        .animate-scroll:hover {
+          animation-play-state: paused;
+        }
+
+        #partners {
+          mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+          -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+        }
+
+        .partner-logo-container {
+          position: relative;
+          display: inline-block;
+        }
+      `}</style>
     </section>
   )
 }

@@ -1,106 +1,111 @@
-'use client'
-
-import { useState, useRef, useEffect } from "react"
-import { Volume2, VolumeX, Maximize } from "lucide-react"
+"use client"
 
 export function AboutUsSection() {
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const [areControlsVisible, setAreControlsVisible] = useState(false)
-  const [isMuted, setIsMuted] = useState(true)
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (videoRef.current) {
-        const rect = videoRef.current.getBoundingClientRect()
-        const isVisible = rect.top < window.innerHeight && rect.bottom > 0
-        if (!isVisible) {
-          videoRef.current.pause()
-        } else {
-          videoRef.current.play()
-        }
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  const toggleMute = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !videoRef.current.muted
-      setIsMuted(videoRef.current.muted)
-    }
-  }
-
-  const toggleFullscreen = () => {
-    if (videoRef.current) {
-      if (document.fullscreenElement) {
-        document.exitFullscreen()
-      } else {
-        videoRef.current.requestFullscreen().catch((err) => {
-          console.error(`Error attempting fullscreen: ${err.message}`)
-        })
-      }
-    }
-  }
-
   return (
-    <section id="about" className="w-full py-12 md:py-24 lg:py-32 bg-white">
-      <div className="container px-4 md:px-6">
-        <div className="grid gap-10 lg:grid-cols-2 items-center">
-          <div className="space-y-6 lg:pl-12">
-            <h2 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl text-[#007bff]">About us</h2>
-            <h3 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-              Kami menyediakan ruang virtual
-            </h3>
-            <div className="space-y-4">
-              <p className="text-gray-700 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                MersifLab adalah startup teknologi pendidikan yang berdedikasi untuk memperkaya pengalaman belajar di
-                Indonesia. Kami percaya bahwa teknologi dapat membuka potensi tak terbatas dalam pendidikan, dan kami
-                berkomitmen untuk mengembangkan perangkat pembelajaran inovatif berbasis Augmented Reality (AR), Virtual
-                Reality (VR), dan Internet of Things (IoT).
-              </p>
-              <p className="text-gray-700 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                Misi kami adalah menciptakan lingkungan belajar yang imersif, interaktif, dan relevan dengan kebutuhan
-                abad ke-21, mempersiapkan siswa dan guru untuk masa depan yang lebih cerah.
-              </p>
+    <section id="about" className="w-full py-20 md:py-28 lg:py-32 relative overflow-hidden bg-white">
+      <div className="container mx-auto px-6 md:px-12 lg:px-20 max-w-7xl">
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
+          {/* Kolom kiri - Gambar dengan background organic shape yang disempurnakan */}
+          <div className="relative order-2 lg:order-1">
+            <div className="relative">
+              <svg viewBox="0 0 400 300" className="w-full h-auto" style={{ maxWidth: "400px" }}>
+                <defs>
+                  <clipPath id="organicShape">
+                    {/* Path yang lebih halus dan dinamis */}
+                    <path d="M120 40 C220 10, 340 80, 360 160 C380 240, 280 280, 180 270 C80 260, 40 190, 60 110 C80 60, 120 40, 120 40 Z" />
+                  </clipPath>
+                </defs>
+
+                {/* Background biru dengan gradien yang lebih kaya */}
+                <path
+                  d="M120 40 C220 10, 340 80, 360 160 C380 240, 280 280, 180 270 C80 260, 40 190, 60 110 C80 60, 120 40, 120 40 Z"
+                  fill="url(#blueGradient)"
+                  className="drop-shadow-xl"
+                />
+
+                {/* Gradien yang disempurnakan */}
+                <defs>
+                  <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#4299E1" /> {/* Light blue */}
+                    <stop offset="50%" stopColor="#3182CE" /> {/* Medium blue */}
+                    <stop offset="100%" stopColor="#2B6CB0" /> {/* Darker blue */}
+                  </linearGradient>
+                </defs>
+
+                {/* Gambar diposisikan dengan lebih baik di dalam shape */}
+                <image
+                  href="/img/siswaFoto.jpg"
+                  x="90"
+                  y="50"
+                  width="220"
+                  height="180"
+                  clipPath="url(#organicShape)"
+                  preserveAspectRatio="xMidYMid slice"
+                />
+              </svg>
             </div>
           </div>
-          <div className="mx-auto lg:ml-auto">
-            <div
-              className="relative aspect-video w-full max-w-[600px] overflow-hidden rounded-xl bg-gray-200"
-              onMouseEnter={() => setAreControlsVisible(true)}
-              onMouseLeave={() => setAreControlsVisible(false)}
-            >
-              <video
-                ref={videoRef}
-                className="w-full h-full object-cover"
-                src="/vid/SiswanMahasiswa.mp4"
-                autoPlay
-                muted={isMuted}
-                loop
-                preload="metadata"
+
+          {/* Kolom kanan - Konten */}
+          <div className="order-1 lg:order-2 space-y-6">
+            {/* Small tag */}
+            <div className="inline-block">
+              <span className="text-xs font-bold text-blue-600 bg-blue-100 px-4 py-2 rounded-full uppercase tracking-wider">
+                TENTANG KAMI
+              </span>
+            </div>
+
+            {/* Judul besar */}
+            <div className="space-y-2">
+              <h2
+                className="text-4xl lg:text-5xl font-black text-gray-900 leading-tight"
+                style={{ fontFamily: "Poppins, sans-serif" }}
               >
-                Browser Anda tidak mendukung tag video.
-              </video>
-              {areControlsVisible && (
-                <div className="absolute bottom-4 right-4 flex gap-2 p-2 bg-black bg-opacity-50 rounded-lg transition-opacity duration-300">
-                  <button
-                    onClick={toggleMute}
-                    className="text-white p-2 rounded-full hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-white"
-                    aria-label={isMuted ? "Unmute video" : "Mute video"}
-                  >
-                    {isMuted ? <VolumeX className="h-6 w-6" /> : <Volume2 className="h-6 w-6" />}
-                  </button>
-                  <button
-                    onClick={toggleFullscreen}
-                    className="text-white p-2 rounded-full hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-white"
-                    aria-label="Toggle fullscreen"
-                  >
-                    <Maximize className="h-6 w-6" />
-                  </button>
-                </div>
-              )}
+               Kami menyediakan ruang virtual
+              </h2>
+            </div>
+
+            {/* Deskripsi */}
+            <div className="space-y-4">
+              <p className="text-gray-600 text-base leading-relaxed" style={{ fontFamily: "Inter, sans-serif" }}>
+                MersifLab merevolusi pengalaman
+                    belajar yang didukung oleh teknologi
+                    Augmented Reality, Virtual Reality, dan
+                    Internet of Things. Misi kami adalah untuk
+                    meningkatkan kualitas pendidikan di
+                    Indonesia dengan membuat
+                    pembelajaran yang imersif dan interaktif
+                    yang dapat diakses oleh semua orang.
+              </p>
+            </div>
+
+            {/* Business Goals label */}
+            <div className="pt-2">
+              <span className="text-sm font-semibold text-gray-700 uppercase tracking-wide">BUSINESS GOALS</span>
+              <p className="text-xs text-gray-500 mt-1">Komitmen Utama di Teknologi SDG's Impact</p>
+            </div>
+
+            {/* Icon boxes dalam satu baris */}
+            <div className="flex gap-3 pt-2">
+              <div className="bg-red-500 w-12 h-12 rounded-lg flex items-center justify-center shadow-md">
+                <span className="text-white text-lg">📚</span>
+              </div>
+              <div className="bg-orange-500 w-12 h-12 rounded-lg flex items-center justify-center shadow-md">
+                <span className="text-white text-lg">📊</span>
+              </div>
+              <div className="bg-yellow-500 w-12 h-12 rounded-lg flex items-center justify-center shadow-md">
+                <span className="text-white text-lg">👥</span>
+              </div>
+              <div className="bg-pink-500 w-12 h-12 rounded-lg flex items-center justify-center shadow-md">
+                <span className="text-white text-lg">🎯</span>
+              </div>
+            </div>
+
+            {/* Button kuning */}
+            <div className="pt-4">
+              <button className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-6 rounded-full text-sm transition-all duration-300 shadow-md hover:shadow-lg">
+                Selengkapnya
+              </button>
             </div>
           </div>
         </div>

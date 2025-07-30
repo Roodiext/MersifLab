@@ -13,6 +13,7 @@ import { TestimonialsSection } from "@/components/sections/testimonials-section"
 import { NewsBlogSection } from "@/components/sections/news-blog-section"
 import { ContactCtaSection } from "@/components/sections/contact-cta-section"
 
+
 export default function HomePage() {
   return (
     <>
@@ -29,3 +30,5 @@ export default function HomePage() {
     </>
   )
 }
+
+
