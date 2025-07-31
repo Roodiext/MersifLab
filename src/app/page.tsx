@@ -1,8 +1,7 @@
+
 import { HeroSection } from "@/components/sections/hero-section"
-import { Metadata } from "next"
 import "./globals.css" // Import global styles
-import type React from "react"
-import { Inter, Poppins } from "next/font/google" // Import Poppins and Inter fonts
+// Poppins and Inter fonts are now imported and configured in app/layout.tsx
 import { Footer } from "@/components/layout/footer"
 import { Header } from "@/components/layout/header"
 import { PartnersSection } from "@/components/sections/partners-section"
@@ -12,7 +11,6 @@ import { ProductsSection } from "@/components/sections/products-section"
 import { TestimonialsSection } from "@/components/sections/testimonials-section"
 import { NewsBlogSection } from "@/components/sections/news-blog-section"
 import { ContactCtaSection } from "@/components/sections/contact-cta-section"
-
 
 export default function HomePage() {
   return (
@@ -30,5 +28,3 @@ export default function HomePage() {
     </>
   )
 }
-
-

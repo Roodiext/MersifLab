@@ -4,24 +4,25 @@ import Image from "next/image"
 
 export function PartnersSection() {
   const partners = [
-    { name: "Partner 1", logo: "/img/partner/partner1.png" },
-    { name: "Partner 2", logo: "/img/partner/partner2.png" },
-    { name: "Partner 3", logo: "/img/partner/partner3.png" },
-    { name: "Partner 4", logo: "/img/partner/partner4.png" },
-    { name: "Partner 5", logo: "/img/partner/partner5.png" },
-    { name: "Partner 6", logo: "/img/partner/partner6.png" },
-    { name: "Partner 7", logo: "/img/partner/partner7.png" },
-    { name: "Partner 8", logo: "/img/partner/partner8.png" },
-    { name: "Partner 9", logo: "/img/partner/partner9.png" },
-    { name: "Partner 10", logo: "/img/partner/partner10.png" },
-    { name: "Partner 11", logo: "/img/partner/partner11.png" },
-    { name: "Partner 12", logo: "/img/partner/partner12.png" },
-    { name: "Partner 13", logo: "/img/partner/partner13.png" },
-    { name: "Partner 14", logo: "/img/partner/partner14.png" },
-    { name: "Partner 15", logo: "/img/partner/partner15.png" },
-    { name: "Partner 16", logo: "/img/partner/partner16.png" },
-    { name: "Partner 17", logo: "/img/partner/partner17.png" },
-    { name: "Partner 18", logo: "/img/partner/partner18.png" },
+    { name: "Partner 1", logo: "/img/partner2/partner1.svg" },
+    { name: "Partner 2", logo: "/img/partner2/partner2.svg" },
+    { name: "Partner 3", logo: "/img/partner2/partner3.svg" },
+    { name: "Partner 4", logo: "/img/partner2/partner4.svg" },
+    { name: "Partner 5", logo: "/img/partner2/partner5.svg" },
+    { name: "Partner 6", logo: "/img/partner2/partner6.svg" },
+    { name: "Partner 7", logo: "/img/partner2/partner7.svg" },
+    { name: "Partner 8", logo: "/img/partner2/partner8.svg" },
+    { name: "Partner 9", logo: "/img/partner2/partner9.svg" },
+    { name: "Partner 10", logo: "/img/partner2/partner10.svg" },
+    { name: "Partner 11", logo: "/img/partner2/partner11.svg" },
+    { name: "Partner 12", logo: "/img/partner2/partner12.svg" },
+    { name: "Partner 13", logo: "/img/partner2/partner13.svg" },
+    { name: "Partner 14", logo: "/img/partner2/partner14.svg" },
+    { name: "Partner 15", logo: "/img/partner2/partner15.svg" },
+    { name: "Partner 16", logo: "/img/partner3/partner16.svg" },
+    { name: "Partner 17", logo: "/img/partner3/partner17.svg" },
+    { name: "Partner 18", logo: "/img/partner3/partner18.svg" },
+    { name: "Partner 19", logo: "/img/partner3/partner19.svg" },
   ]
 
   return (
@@ -31,28 +32,28 @@ export function PartnersSection() {
           <div className="flex animate-scroll w-full">
             {/* First set of logos */}
             {partners.map((partner, index) => (
-              <div key={index} className="flex-shrink-0 mx-8 flex justify-center items-center min-w-[120px]">
+              <div key={index} className="flex-shrink-0 mx-8 flex justify-center items-center min-w-[250px]">
                 <div className="partner-logo-container">
                   <Image
                     src={partner.logo || "/placeholder.svg"}
                     alt={partner.name}
-                    width={150}
-                    height={80}
-                    className="object-contain h-16 w-auto opacity-70 hover:opacity-100 transition-all duration-300 hover:scale-110"
+                    width={300}
+                    height={160}
+                    className="object-contain h-32 w-auto opacity-70 hover:opacity-100 transition-all duration-300 hover:scale-110"
                   />
                 </div>
               </div>
             ))}
             {/* Duplicate set for seamless loop */}
             {partners.map((partner, index) => (
-              <div key={`duplicate-${index}`} className="flex-shrink-0 mx-8 flex justify-center items-center min-w-[120px]">
+              <div key={`duplicate-${index}`} className="flex-shrink-0 mx-8 flex justify-center items-center min-w-[250px]">
                 <div className="partner-logo-container">
                   <Image
                     src={partner.logo || "/placeholder.svg"}
                     alt={partner.name}
-                    width={150}
-                    height={80}
-                    className="object-contain h-16 w-auto opacity-70 hover:opacity-100 transition-all duration-300 hover:scale-110"
+                    width={300}
+                    height={160}
+                    className="object-contain h-32 w-auto opacity-70 hover:opacity-100 transition-all duration-300 hover:scale-110"
                   />
                 </div>
               </div>

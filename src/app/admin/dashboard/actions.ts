@@ -30,6 +30,8 @@ export async function refreshDashboardData() {
     throw new Error("Akses ditolak. Hanya admin yang dapat melakukan ini.");
   }
 
-  // Hanya akan bekerja jika halaman dashboard menggunakan SSG atau ISR
+  // Revalidate paths for all sections that might be affected
   revalidatePath("/admin/dashboard");
+  revalidatePath("/"); // Revalidate homepage for Mersif Numbers, Partners, Products, Testimonials, News
+  revalidatePath("/news"); // Specific for news page
 }

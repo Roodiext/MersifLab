@@ -1,82 +1,86 @@
-// src/app/admin/articles/actions.ts
+"use server"
 
-"use server";
-
-import { query } from "@/lib/db"; // Menggunakan fungsi query dari db.ts
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
-import { promises as fs } from "fs";
-import path from "path";
-import { IncomingForm } from "formidable";
-import { NextApiRequest } from "next";
-
-// Fungsi untuk parsing form data karena Server Actions tidak langsung handle file
-async function parseFormData(req: any) {
-    return new Promise((resolve, reject) => {
-        const form = new IncomingForm();
-        form.parse(req, (err, fields, files) => {
-            if (err) return reject(err);
-            
-            // formidable v3 memberikan array untuk fields
-            const simplifiedFields: { [key: string]: string } = {};
-            for (const key in fields) {
-                if (fields[key]) {
-                    simplifiedFields[key] = fields[key]![0];
-                }
-            }
-            resolve({ fields: simplifiedFields, files });
-        });
-    });
+interface ArticleData {
+  id?: string
+  title: string
+  content: string
+  image_url: string
+  published_date: string
+  category: string
 }
 
+// In a real application, you would interact with a database here.
+// For demonstration, we'll simulate data operations.
 
-export async function addArticle(formData: FormData) {
-  const session = await getServerSession(authOptions);
+let articles: ArticleData[] = [
+  {
+    id: "1",
+    title: "Potensi Kerja Sama Berkelanjutan MersifLab",
+    content:
+      "Surakarta - Kesuksesan workshop 3D printing yang dilaksanakan di SMP Negeri 13 Surakarta melibatkan tim MersifLab sebagai...",
+    image_url: "/placeholder.svg?height=100&width=150",
+    published_date: "2025-06-25T10:00:00Z",
+    category: "Partnership",
+  },
+  {
+    id: "2",
+    title: "Hari ke-2: MersifLab Menjadi Narasumber Peningkatan...",
+    content:
+      "Surakarta - Hari kedua Peningkatan Kompetensi Guru Pemanfaatan Teknologi Printer 3D Dalam Media Pembelajaran Inovatif di SMP...",
+    image_url: "/placeholder.svg?height=100&width=150",
+    published_date: "2025-06-24T10:00:00Z",
+    category: "Event",
+  },
+  {
+    id: "3",
+    title: "Hari ke-1: MersifLab Menjadi Narasumber Peningkatan...",
+    content:
+      "Surakarta - Pada hari pertama Peningkatan Kompetensi Guru Pemanfaatan Teknologi Printer 3D Dalam Media Pembelajaran Inovatif di SMP...",
+    image_url: "/placeholder.svg?height=100&width=150",
+    published_date: "2025-06-23T10:00:00Z",
+    category: "Event",
+  },
+]
 
-  if (session?.user?.role !== "admin") {
-    return { error: "Akses ditolak. Anda bukan admin." };
+export async function createOrUpdateArticle(data: ArticleData): Promise<boolean> {
+  console.log("Simulating create/update article:", data)
+  await new Promise((resolve) => setTimeout(resolve, 500)) // Simulate network delay
+
+  if (data.id) {
+    // Update existing article
+    const index = articles.findIndex((a) => a.id === data.id)
+    if (index !== -1) {
+      articles[index] = { ...articles[index], ...data }
+      console.log("Article updated (simulated).")
+      return true
+    }
+    return false // Article not found
+  } else {
+    // Create new article
+    const newId = (articles.length + 1).toString()
+    articles.push({ ...data, id: newId })
+    console.log("Article created (simulated).")
+    return true
   }
+}
 
-  const title = formData.get("title") as string;
-  const content = formData.get("content") as string;
-  const imageFile = formData.get("image") as File;
+export async function deleteArticle(id: string): Promise<boolean> {
+  console.log(`Simulating delete article with ID: ${id}`)
+  await new Promise((resolve) => setTimeout(resolve, 500)) // Simulate network delay
 
-  if (!title || !content || !imageFile || imageFile.size === 0) {
-    return { error: "Semua field harus diisi." };
+  const initialLength = articles.length
+  articles = articles.filter((article) => article.id !== id)
+  if (articles.length < initialLength) {
+    console.log("Article deleted (simulated).")
+    return true
+  } else {
+    console.error("Failed to delete article (simulated). Article not found.")
+    return false
   }
+}
 
-  try {
-    // 1. Simpan file gambar
-    const buffer = Buffer.from(await imageFile.arrayBuffer());
-    const filename = `${Date.now()}-${imageFile.name.replace(/\s+/g, '_')}`;
-    const uploadDir = path.join(process.cwd(), "public/uploads");
-    
-    // Pastikan direktori ada
-    await fs.mkdir(uploadDir, { recursive: true });
-    
-    await fs.writeFile(
-      path.join(uploadDir, filename),
-      buffer
-    );
-
-    const imageUrl = `/uploads/${filename}`;
-
-    // 2. Simpan data ke database
-    await query(
-      "INSERT INTO articles (title, content, imageUrl, authorId) VALUES (?, ?, ?, ?)",
-      [title, content, imageUrl, session.user.id]
-    );
-
-  } catch (e: any) {
-    return { error: `Terjadi kesalahan: ${e.message}` };
-  }
-
-  // 3. Revalidate path agar halaman news menampilkan data baru
-  revalidatePath("/news");
-  revalidatePath("/admin/dashboard");
-
-  // 4. Redirect ke dashboard
-  redirect("/admin/dashboard");
+export async function getArticles(): Promise<ArticleData[]> {
+  console.log("Simulating fetching articles.")
+  await new Promise((resolve) => setTimeout(resolve, 300)) // Simulate network delay
+  return articles
 }

@@ -137,31 +137,9 @@ export default function RegisterPage() {
             </div>
 
             {/* Google ReCAPTCHA */}
-            <div className="grid gap-2">
-              <Label>Verifikasi Keamanan</Label>
-              <div className="flex justify-center">
-                <ReCAPTCHA
-                  ref={recaptchaRef}
-                  sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
-                  onChange={handleRecaptchaChange}
-                  onExpired={handleRecaptchaExpired}
-                  theme="light"
-                  size="normal"
-                  hl="id"
-                />
-              </div>
-              <p className="text-xs text-gray-500 text-center">
-                Setelah centang, Anda mungkin diminta memilih gambar untuk verifikasi
-              </p>
-            </div>
+            
 
-            <Button
-              type="submit"
-              className="w-full bg-[#007bff] hover:bg-[#0056b3]"
-              disabled={isPending || !recaptchaToken}
-            >
-              {isPending ? "Mendaftar..." : "Daftar"}
-            </Button>
+          
           </form>
           <div style={{ fontFamily: "Inter, sans-serif" }} className="mt-4 text-center text-sm">
             Sudah punya akun?{" "}
