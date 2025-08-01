@@ -1,4 +1,4 @@
-import { MersifNumbersCrud } from "@/components/admin/mersif-numbers-crud"
+import { MersifNumbersCrud } from "@/components/admin/user-management/mersif-numbers-crud"
 
 export default function MersifNumbersPage() {
   return (

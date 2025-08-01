@@ -221,7 +221,7 @@ export default function PartnersCRUD() {
                       <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
                         <DropdownMenuItem onClick={() => openEditDialog(partner)}>
-                          <Edit className="mr-2 h-4 w-4" />
+                          <Edit className="mr-2 h-4 w-4" />   
                           Edit
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />

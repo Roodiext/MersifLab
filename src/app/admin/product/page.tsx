@@ -1,4 +1,4 @@
-import { ProductsCrud } from "@/components/admin/products-crud"
+import { ProductsCrud } from "@/components/admin/user-management/products-crud"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 

@@ -23,6 +23,7 @@ import {
   Settings,
 } from "lucide-react"
 import Link from "next/link"
+import { logout } from "@/app/admin/login/action"
 
 export function AdminHeader() {
   return (
@@ -120,9 +121,16 @@ export function AdminHeader() {
           <DropdownMenuItem>Settings</DropdownMenuItem>
           <DropdownMenuItem>Support</DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Logout</DropdownMenuItem>
+          <DropdownMenuItem>
+            <form action={logout} className="w-full">
+              <Button type="submit" variant="ghost" className="w-full justify-start p-0">
+                Logout
+              </Button>
+            </form>
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </header>
   )
 }
+  

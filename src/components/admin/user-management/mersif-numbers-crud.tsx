@@ -5,8 +5,9 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { updateMersifNumber } from "@/app/admin/mersif-numbers/actions"
-import { toast } from "@/hooks/use-toast"
+import { updateMersifNumber } from "@/app/admin/mersif-numbers/action"
+// import { toast } from "@/hooks/use-toast"
+import { toast } from "@/components/ui/use-toast"
 
 interface MersifNumber {
   id: string

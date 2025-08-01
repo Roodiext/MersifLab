@@ -5,7 +5,7 @@ import Image from "next/image"
 import { ArrowRight } from "lucide-react"
 import { useState, useEffect } from "react"
 
-export function HeroSection() {
+export function HeroSectionIoT() {
   const [showGlitch, setShowGlitch] = useState(false)
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export function HeroSection() {
                 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold tracking-tighter leading-tight"
                 style={{ fontFamily: "Poppins, sans-serif" }}
               >
-                Mersif<span className="text-[#007bff]">Lab</span>
+                Mersif<span className="text-[#007bff]">IoT</span>
               </h1>
               <p
                 className="max-w-[280px] xs:max-w-[320px] sm:max-w-[500px] md:max-w-[600px] text-sm xs:text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed px-2 sm:px-4"
@@ -47,12 +47,11 @@ export function HeroSection() {
                 Platform Laboratorium Virtual Berbasis Mixed Reality Kolaboratif dan Imersif
               </p>
             </div>
-            <a href="#about" className="flex justify-center pt-1 sm:pt-2">
-  <Button className="inline-flex h-9 sm:h-10 md:h-11 items-center justify-center rounded-full bg-[#007bff] px-4 sm:px-5 md:px-6 text-sm sm:text-base font-medium text-white shadow transition-colors hover:bg-[#007bff]/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50">
-    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
-  </Button>
-</a>
-            
+            <div className="flex justify-center pt-1 sm:pt-2">
+              <Button className="inline-flex h-9 sm:h-10 md:h-11 items-center justify-center rounded-full bg-[#007bff] px-4 sm:px-5 md:px-6 text-sm sm:text-base font-medium text-white shadow transition-colors hover:bg-[#007bff]/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50">
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+              </Button>
+            </div>
           </div>
         </div>
 

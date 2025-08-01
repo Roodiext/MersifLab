@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 
 // Context for managing sidebar state
 interface SidebarContextType {
-  open: boolean
+  open: boolean 
   setOpen: (open: boolean) => void
   collapsible: "icon" | "none"
 }

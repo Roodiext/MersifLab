@@ -19,10 +19,7 @@ export async function goToUserManagement() {
   redirect("/admin/user-management");
 }
 
-/**
- * Untuk me-refresh cache halaman dashboard setelah update data.
- * Cocok digunakan setelah aksi CRUD pada server actions.
- */
+
 export async function refreshDashboardData() {
   const session = await getServerSession(authOptions);
 
