@@ -1,116 +1,133 @@
   "use client"
 
-  import Link from "next/link"
-  import Image from "next/image"
-  import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-  } from "@/components/ui/card"
-  import { Button } from "@/components/ui/button"
-  import { Badge } from "@/components/ui/badge"
+  import { useState, useEffect } from 'react'
+  import Link from 'next/link'
+  import { Badge } from '@/components/ui/badge'
+  import { Button } from '@/components/ui/button'
+  import { Calendar, ArrowRight } from 'lucide-react'
+
+  interface ContentItem {
+    id: number
+    title: string
+    slug: string
+    content: string
+    thumbnail?: string
+    category: { name: string }
+    createdAt: string
+    type: 'article' | 'news'
+  }
 
   export function NewsBlogSection() {
-    const newsPosts = [
-      {
-        title: "Potensi Kerja Sama Berkelanjutan MersifLab dan SMP Negeri 13 Surakarta Pasca Workshop 3D Printing",
-        date: "25 Jun, 2025",
-        image: "/img/h3.jpg",
-        snippet:
-          "Surakarta - Kesuksesan workshop 3D printing yang dilaksanakan di SMP Negeri 13 Surakarta dengan melibatkan tim MersifLab sebagai narasumber membuka berbagai peluang untuk pengembangan kerja sama berkelanjutan di bidang teknologi pendidikan.",
-        category: "Update",
-        link: "/blog/mersif-room-2-0",
-      },
-      {
-        title: "Hari ke-2: MersifLab Menjadi Narasumber Peningkatan Kompetensi Guru Pemanfaatan Teknologi Printer 3D Dalam Media Pembelajaran Inovatif di SMP Negeri 13 Surakarta",
-        date: "24 Jun, 2025",
-        image: "/img/h2.jpg",
-        snippet:
-          "Surakarta - Hari kedua Peningkatan Kompetensi Guru Pemanfaatan Teknologi Printer 3D Dalam Media Pembelajaran Inovatif di SMP Negeri 13 Surakarta berlangsung dengan fokus pada praktik langsung teknologi 3D printing. Tim MersifLab berperan sebagai pembimbing untuk membantu para guru mempraktikan sendiri teknologi yang telah dipelajari pada hari sebelumnya.",
-        category: "Partnership",
-        link: "/blog/kolaborasi-kemendikbud",
-      },
-      {
-        title: "Hari ke-1: MersifLab Menjadi Narasumber Peningkatan Kompetensi Guru Pemanfaatan Teknologi Printer 3D Dalam Media Pembelajaran Inovatif di SMP Negeri 13 Surakarta",
-        date: "23 Jun, 2025",
-        image: "/img/h1.jpg",
-        snippet:
-          "Surakarta - Pada hari pertama Peningkatan Kompetensi Guru Pemanfaatan Teknologi Printer 3D Dalam Media Pembelajaran Inovatif di SMP Negeri 13 Surakarta, tim startup MersifLab hadir sebagai narasumber dengan memberikan pelatihan teknologi 3D printing kepada para guru.Sebagai narasumber yang diundang dalam workshop tersebut, tim MersifLab pada hari pertama memberikan pelatihan komprehensif tentang teknologi 3D printing kepada para guru SMP Negeri 13 Surakarta. Pelatihan ini mencakup pemahaman dasar tentang cara kerja printer 3D, software desain, hingga aplikasi praktis dalam dunia pendidikan.",
-        category: "Event",
-        link: "/blog/edutech-expo-2024",
-      },
-    ]
+    const [latestContent, setLatestContent] = useState<ContentItem[]>([])
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+      fetchLatestContent()
+    }, [])
+
+    const fetchLatestContent = async () => {
+      try {
+        const response = await fetch('/api/content')
+        const data = await response.json()
+        setLatestContent(data.slice(0, 6)) // Get latest 6 items
+      } catch (error) {
+        console.error('Failed to fetch content')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    const truncateContent = (content: string, maxLength: number = 120) => {
+      const textContent = content.replace(/<[^>]*>/g, '')
+      return textContent.length > maxLength 
+        ? textContent.substring(0, maxLength) + '...'
+        : textContent
+    }
+
+    if (loading) {
+      return (
+        <section className="py-20 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <div className="text-center">Loading...</div>
+          </div>
+        </section>
+      )
+    }
 
     return (
-      <section id="news" className="w-full py-20 lg:py-24 bg-white">
-        <div className="container px-4 md:px-6 max-w-6xl mx-auto text-center">
-          <div className="space-y-3 mb-10">
-            <h2 style={{ fontFamily: "Poppins, sans-serif" }} className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 font-poppins">
+      <section className="py-20 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4" style={{ fontFamily: "Poppins, sans-serif" }}>
               Berita & Artikel Terbaru
             </h2>
-            <p style={{ fontFamily: "Poppins, sans-serif" }} className="max-w-2xl mx-auto text-slate-600 text-base md:text-lg">
-              Ikuti perkembangan terbaru, inovasi, dan cerita inspiratif dari MersifLab.
+            <p style={{ fontFamily: "Inter, sans-serif" }} className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Ikuti perkembangan terbaru dan insight menarik dari MersifLab
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {newsPosts.map((post, index) => (
-              <Card
-                key={index}
-                className="group border border-slate-200 shadow-sm hover:shadow-md transition duration-300 rounded-2xl overflow-hidden"
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            {latestContent.map((item) => (
+              <Link 
+                key={`${item.type}-${item.id}`}
+                href={`/news-detail/${item.slug}`}
+                className="group"
               >
-                <div className="relative">
-                  <Image
-                    src={post.image || "/placeholder.svg"}
-                    alt={post.title}
-                    width={400}
-                    height={200}
-                    className="w-full h-44 object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                </div>
-
-                <CardHeader style={{ fontFamily: "Inter, sans-serif" }} className="p-5 pb-3 space-y-2">
-                  <div className="flex justify-between items-start gap-2">
-                    <CardTitle className="text-base font-semibold text-left text-slate-900 leading-snug group-hover:text-blue-600 line-clamp-2">
-                      {post.title}
-                    </CardTitle>
-                    <Badge
-                      variant="secondary"
-                      className="text-xs bg-blue-100 text-blue-700 border border-blue-200"
-                    >
-                      {post.category}
-                    </Badge>
+                <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                  {item.thumbnail && (
+                    <div className="aspect-video overflow-hidden">
+                      <img 
+                        src={item.thumbnail} 
+                        alt={item.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+                  )}
+                  
+                  <div className="p-6">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Badge variant="outline" className="text-xs">
+                        {item.category.name}
+                      </Badge>
+                      <Badge 
+                        variant={item.type === 'article' ? 'default' : 'secondary'}
+                        className="text-xs"
+                      >
+                        {item.type === 'article' ? 'Artikel' : 'Berita'}
+                      </Badge>
+                    </div>
+                    
+                    <h3 className="font-bold text-lg mb-3 group-hover:text-blue-600 transition-colors line-clamp-2">
+                      {item.title}
+                    </h3>
+                    
+                    <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                      {truncateContent(item.content)}
+                    </p>
+                    
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center text-xs text-gray-500">
+                        <Calendar className="h-3 w-3 mr-1" />
+                        {new Date(item.createdAt).toLocaleDateString('id-ID', {
+                          day: 'numeric',
+                          month: 'short',
+                          year: 'numeric'
+                        })}
+                      </div>
+                      <ArrowRight className="h-4 w-4 text-blue-600 group-hover:translate-x-1 transition-transform" />
+                    </div>
                   </div>
-                  <CardDescription className="text-left text-xs text-slate-500">
-                    Diupload: {post.date}
-                  </CardDescription>
-                </CardHeader>
-
-                <CardContent className="px-5 pb-5 pt-0">
-                  <p className="text-slate-600 text-left mb-4 text-sm leading-relaxed line-clamp-3">
-                    {post.snippet}
-                  </p>
-                  <Button
-                    variant="link"
-                    asChild
-                    className="text-sm text-blue-600 hover:text-blue-700 p-0 h-auto font-medium"
-                  >
-                    <Link style={{ fontFamily: "Poppins, sans-serif" }} href={post.link}>Baca selengkapnya →</Link>
-                  </Button>
-                </CardContent>
-              </Card>
+                </div>
+              </Link>
             ))}
           </div>
 
-          <div className="mt-12">
-            <Button
-              variant="outline"
-              asChild
-              className="px-6 py-3 text-blue-600 border border-blue-300 hover:bg-blue-50 font-medium rounded-xl"
-            >
-              <Link style={{ fontFamily: "Poppins, sans-serif" }}  href="/blog">Lihat Semua Berita</Link>
+          <div className="text-center">
+            <Button asChild size="lg">
+              <Link href="/news" style={{ fontFamily: "Poppins, sans-serif" }}>
+                Lihat Semua Berita & Artikel
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
             </Button>
           </div>
         </div>

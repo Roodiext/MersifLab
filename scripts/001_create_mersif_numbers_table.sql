@@ -1,6 +1,0 @@
-CREATE TABLE IF NOT EXISTS mersif_numbers (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    value INT NOT NULL,
-    unit VARCHAR(50)
-);

@@ -31,28 +31,30 @@ export default function RegisterPage() {
       return
     }
 
-    if (!recaptchaToken) {
-      Swal.fire({
-        icon: "warning",
-        title: "Verifikasi Diperlukan",
-        text: "Harap selesaikan verifikasi reCAPTCHA terlebih dahulu.",
-        confirmButtonColor: "#007bff",
-      })
-      return
-    }
+    // Disable ReCAPTCHA check for now
+    // if (!recaptchaToken) {
+    //   Swal.fire({
+    //     icon: "warning",
+    //     title: "Verifikasi Diperlukan",
+    //     text: "Harap selesaikan verifikasi reCAPTCHA terlebih dahulu.",
+    //     confirmButtonColor: "#007bff",
+    //   })
+    //   return
+    // }
 
     const formData = new FormData(e.currentTarget)
-    formData.append("recaptcha-token", recaptchaToken)
+    // formData.append("recaptcha-token", recaptchaToken)
+    formData.append("recaptcha-token", "disabled") // Dummy token
 
     startTransition(async () => {
       try {
         const result = await registerAction(null, formData)
 
         // Reset reCAPTCHA after submission
-        if (recaptchaRef.current) {
-          recaptchaRef.current.reset()
-          setRecaptchaToken(null)
-        }
+        // if (recaptchaRef.current) {
+        //   recaptchaRef.current.reset()
+        //   setRecaptchaToken(null)
+        // }
 
         // Handle success with SweetAlert2
         if (result.success) {
@@ -136,11 +138,27 @@ export default function RegisterPage() {
               {passwordMatchError && <p className="text-sm text-red-600">Password tidak cocok.</p>}
             </div>
 
-            {/* Google ReCAPTCHA */}
-            
+            {/* Google ReCAPTCHA - Disabled for now */}
+            {/* <div className="flex justify-center">
+              <ReCAPTCHA
+                ref={recaptchaRef}
+                sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
+                onChange={handleRecaptchaChange}
+                onExpired={handleRecaptchaExpired}
+              />
+            </div> */}
 
-          
+            {/* Submit Button */}
+            <Button 
+              type="submit" 
+              className="w-full"
+              disabled={isPending}
+              style={{ backgroundColor: "#007bff" }}
+            >
+              {isPending ? "Mendaftar..." : "Daftar"}
+            </Button>
           </form>
+          
           <div style={{ fontFamily: "Inter, sans-serif" }} className="mt-4 text-center text-sm">
             Sudah punya akun?{" "}
             <Link href="/login" className="underline text-[#007bff]">

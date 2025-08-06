@@ -66,13 +66,13 @@ export function HeroSection() {
                 className="lg:text-4xl xl:text-5xl 2xl:text-6xl font-bold tracking-tighter leading-tight"
                 style={{ fontFamily: "Poppins, sans-serif" }}
               >
-                Mersif<span className="text-[#007bff]">Lab</span>
+                Membangun Ekosistem <span className="text-[#007bff]">Inovasi Digital Indonesia</span>
               </h1>
               <p
                 className="max-w-[450px] xl:max-w-[500px] 2xl:max-w-[550px] lg:text-base xl:text-lg 2xl:text-xl text-gray-600 leading-relaxed"
                 style={{ fontFamily: "Inter, sans-serif" }}
               >
-                Platform Laboratorium Virtual Berbasis Mixed Reality Kolaboratif dan Imersif
+                MersifLab berkomitmen untuk mengakselerasi talenta dan solusi digital melalui pilar layanan kami di bidang IoT, Edukasi, Kreativitas, dan Dampak Sosial.
               </p>
             </div>
             <div className="flex pt-1 lg:pt-2 xl:pt-3">

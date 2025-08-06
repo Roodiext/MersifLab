@@ -1,18 +1,17 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Inter, Poppins } from "next/font/google" // Import Poppins and Inter
+import { Inter, Poppins } from "next/font/google"
+import { Providers } from "@/components/providers"
 import "./globals.css"
 
-// Konfigurasi font Inter
 const inter = Inter({
   subsets: ["latin"], 
-  variable: "--font-inter", // Definisikan sebagai CSS variable
+  variable: "--font-inter",
 })
 
-// Konfigurasi font Poppins
 const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["400", "600", "700", "800", "900"], // Pilih weight yang dibutuhkan, termasuk untuk bold/extrabold
+  weight: ["400", "600", "700", "800", "900"],
   variable: "--font-poppins",
 })
 
@@ -23,15 +22,22 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-  params: { locale }
-}: Readonly<{
+}: {
   children: React.ReactNode
-  params: { locale: string };
-}>) {
+}) {
   return (
-    <html lang={locale}>
-      {/* Tambahkan kelas font ke body */}
-      <body className={`${inter.variable} ${poppins.variable}`}>{children}</body>
+    <html lang="en">
+      <body className={`${inter.variable} ${poppins.variable}`}>
+        <Providers>
+          {children}
+        </Providers>
+      </body>
     </html>
   )
 }
+
+
+
+
+
+

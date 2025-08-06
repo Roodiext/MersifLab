@@ -1,0 +1,26 @@
+<svg viewBox="0 0 1000 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Simplified Indonesia archipelago outline -->
+  <g fill="currentColor" opacity="0.3">
+    <!-- Sumatra -->
+    <path d="M100 150 Q120 120 140 160 Q160 180 150 220 Q130 250 110 240 Q90 200 100 150Z"/>
+    
+    <!-- Java -->
+    <path d="M200 280 Q250 270 300 285 Q350 290 380 300 Q400 310 390 320 Q340 325 290 320 Q240 315 200 300Z"/>
+    
+    <!-- Kalimantan -->
+    <path d="M300 150 Q350 140 400 160 Q450 180 460 220 Q450 260 420 280 Q380 290 340 280 Q300 260 290 220 Q285 180 300 150Z"/>
+    
+    <!-- Sulawesi -->
+    <path d="M500 200 Q520 180 540 200 Q560 220 550 250 Q540 280 520 290 Q500 280 490 250 Q485 220 500 200Z"/>
+    
+    <!-- Papua -->
+    <path d="M650 220 Q700 210 750 230 Q800 250 820 280 Q810 310 780 320 Q730 325 680 315 Q630 300 620 270 Q615 240 650 220Z"/>
+    
+    <!-- Smaller islands scattered around -->
+    <circle cx="180" cy="200" r="8"/>
+    <circle cx="420" cy="320" r="6"/>
+    <circle cx="580" cy="280" r="5"/>
+    <circle cx="480" cy="150" r="4"/>
+    <circle cx="350" cy="320" r="7"/>
+  </g>
+</svg>

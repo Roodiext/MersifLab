@@ -51,15 +51,16 @@ export async function registerAction(prevState: RegisterResult | null, formData:
       return { success: false, message: "Semua kolom harus diisi." }
     }
 
-    if (!recaptchaToken) {
-      return { success: false, message: "Harap selesaikan verifikasi reCAPTCHA." }
-    }
+    // Disable ReCAPTCHA check for now
+    // if (!recaptchaToken) {
+    //   return { success: false, message: "Harap selesaikan verifikasi reCAPTCHA." }
+    // }
 
-    // Verify reCAPTCHA token
-    const isRecaptchaValid = await verifyRecaptcha(recaptchaToken)
-    if (!isRecaptchaValid) {
-      return { success: false, message: "Verifikasi reCAPTCHA gagal. Silakan coba lagi." }
-    }
+    // // Verify reCAPTCHA token
+    // const isRecaptchaValid = await verifyRecaptcha(recaptchaToken)
+    // if (!isRecaptchaValid) {
+    //   return { success: false, message: "Verifikasi reCAPTCHA gagal. Silakan coba lagi." }
+    // }
 
     if (password !== rePassword) {
       return { success: false, message: "Password tidak cocok." }
@@ -81,27 +82,22 @@ export async function registerAction(prevState: RegisterResult | null, formData:
       username,
     ])
 
-    console.log("Existing users check:", existingUsers)
-
-    if (Array.isArray(existingUsers) && existingUsers.length > 0) {
-      const isEmailTaken = existingUsers.some((user: any) => user.email === email)
-      const isUsernameTaken = existingUsers.some((user: any) => user.username === username)
-
-      if (isEmailTaken && isUsernameTaken) {
-        return { success: false, message: "Email dan Username sudah terdaftar." }
-      } else if (isEmailTaken) {
+    if (existingUsers.length > 0) {
+      const existingUser = existingUsers[0]
+      if (existingUser.email === email) {
         return { success: false, message: "Email sudah terdaftar." }
-      } else if (isUsernameTaken) {
-        return { success: false, message: "Username sudah terdaftar." }
+      }
+      if (existingUser.username === username) {
+        return { success: false, message: "Username sudah digunakan." }
       }
     }
 
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10)
 
-    // Simpan user ke database dengan created_at dan role default
+    // Simpan user ke database dengan timestamps
     const insertResult: any = await query(
-      "INSERT INTO users (username, email, password, created_at, role) VALUES (?, ?, ?, NOW(), 'user')",
+      "INSERT INTO users (username, email, password, created_at, updated_at, role) VALUES (?, ?, ?, NOW(), NOW(), 'user')",
       [username, email, hashedPassword],
     )
 

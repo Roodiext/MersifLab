@@ -10,4 +10,4 @@ export default function MersifNumbersPage() {
   )
 }
 // This page is for managing the Mersif numbers displayed on the homepage.
-// It includes a CRUD interface for adding, editing, and deleting impact numbers.   
+// It includes a CRUD interface for adding, editing, and deleting impact numbers.   di mersif-numbers-section

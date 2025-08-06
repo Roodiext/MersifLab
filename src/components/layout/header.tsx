@@ -3,12 +3,14 @@
 import React from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Menu, ChevronDown, User, Home, Info, Package, Star, Mail } from "lucide-react"
+import { Menu, ChevronDown, User, Home, Info, Package, Star, Mail, Settings, LogOut, Shield } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from "@/components/ui/dropdown-menu"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useState, useEffect } from "react"
 import { useRouter, usePathname } from "next/navigation"
+import { useSession, signOut } from "next-auth/react"
 
 // Define translations
 const translations = {
@@ -24,8 +26,14 @@ const translations = {
     categories: "Categories",
     contact: "Contact",
     login: "Login",
+    register: "Register",
     mersifLabLogo: "MersifLab Logo",
     language: "Language",
+    profile: "Profile",
+    settings: "Settings",
+    adminPanel: "Admin Panel",
+    logout: "Logout",
+    articles: "Articles",
   },
   id: {
     home: "Beranda",
@@ -39,8 +47,14 @@ const translations = {
     categories: "Kategori",
     contact: "Kontak",
     login: "Masuk",
+    register: "Daftar",
     mersifLabLogo: "Logo MersifLab",
     language: "Bahasa",
+    profile: "Profile",
+    settings: "Pengaturan",
+    adminPanel: "Panel Admin",
+    logout: "Keluar",
+    articles: "Artikel",
   },
 }
 
@@ -55,10 +69,11 @@ interface NavItem {
 
 // Base navigation items - Updated with proper section links
 const baseNavItems: NavItem[] = [
-  { href: "/#hero", labelKey: "home", icon: Home }, // Link ke hero section
-  { href: "/#about", labelKey: "about", icon: Info }, // Link ke about section
-  { href: "/#product", labelKey: "product", icon: Package }, // Link ke product section (singular)
-  { href: "/#testimonials", labelKey: "testimonial", icon: Star }, // Link ke testimonials section
+  { href: "/#hero", labelKey: "home", icon: Home },
+  { href: "/#about", labelKey: "about", icon: Info },
+  { href: "/#product", labelKey: "product", icon: Package },
+  { href: "/#testimonials", labelKey: "testimonial", icon: Star },
+  { href: "/articles", labelKey: "articles", icon: Package },
   {
     labelKey: "news",
     icon: Package,
@@ -70,7 +85,7 @@ const baseNavItems: NavItem[] = [
       { href: "/news/categories", labelKey: "categories" },
     ],
   },
-  { href: "/#contact", labelKey: "contact", icon: Mail }, // Link ke contact section
+  { href: "/#contact", labelKey: "contact", icon: Mail },
 ]
 
 interface NavLinkProps {
@@ -184,6 +199,7 @@ export function Header() {
   const [currentLanguage, setCurrentLanguage] = useState<"en" | "id">("id")
   const [isLanguageLoaded, setIsLanguageLoaded] = useState(false)
   const router = useRouter()
+  const { data: session, status } = useSession()
 
   // Load language preference from localStorage on component mount
   useEffect(() => {
@@ -355,6 +371,7 @@ export function Header() {
           )}
         </nav>
 
+        {/* Desktop User Section */}
         <div className="hidden lg:flex items-center gap-4">
           <Button
             variant="outline"
@@ -364,9 +381,87 @@ export function Header() {
           >
             {currentLanguage === "en" ? "ID" : "EN"}
           </Button>
-          <Link href="/login" className="hover:text-blue-600 transition-colors">
-            <User className="h-6 w-6" />
-          </Link>
+          
+          {status === "loading" ? (
+            <div className="w-8 h-8 bg-gray-200 rounded-full animate-pulse"></div>
+          ) : session ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="relative h-10 w-auto px-3 rounded-full">
+                  <div className="flex items-center space-x-2">
+                    <Avatar className="h-8 w-8">
+                      <AvatarImage src={session.user?.avatar || undefined} />
+                      <AvatarFallback className="bg-blue-500 text-white">
+                        {session.user?.name?.substring(0, 2).toUpperCase() || 'U'}
+                      </AvatarFallback>
+                    </Avatar>
+                    <span className="hidden md:block text-sm font-medium">
+                      {session.user?.name || session.user?.username}
+                    </span>
+                  </div>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56" align="end">
+                <div className="flex items-center justify-start gap-2 p-2">
+                  <div className="flex flex-col space-y-1 leading-none">
+                    <p className="font-medium text-sm">
+                      {session.user?.name || session.user?.username}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      {session.user?.email}
+                    </p>
+                    {session.user?.role === 'admin' && (
+                      <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                        <Shield className="w-3 h-3 mr-1" />
+                        Admin
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link href="/profile" className="flex items-center">
+                    <User className="mr-2 h-4 w-4" />
+                    {t.profile}
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/settings" className="flex items-center">
+                    <Settings className="mr-2 h-4 w-4" />
+                    {t.settings}
+                  </Link>
+                </DropdownMenuItem>
+                {session.user?.role === 'admin' && (
+                  <>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                      <Link href="/admin" className="flex items-center">
+                        <Shield className="mr-2 h-4 w-4" />
+                        {t.adminPanel}
+                      </Link>
+                    </DropdownMenuItem>
+                  </>
+                )}
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={() => signOut()}
+                  className="text-red-600 focus:text-red-600"
+                >
+                  <LogOut className="mr-2 h-4 w-4" />
+                  {t.logout}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <div className="flex items-center space-x-2">
+              <Button variant="ghost" asChild>
+                <Link href="/login">{t.login}</Link>
+              </Button>
+              <Button asChild>
+                <Link href="/register">{t.register}</Link>
+              </Button>
+            </div>
+          )}
         </div>
 
         {/* Mobile Sheet */}
@@ -449,15 +544,98 @@ export function Header() {
                   >
                     {t.language}: {currentLanguage === "en" ? "English" : "Indonesia"}
                   </Button>
-                  <button
-                    className="flex w-full items-center gap-3 text-base font-semibold text-blue-600 hover:text-blue-700 px-4 py-2 rounded-md hover:bg-blue-50 transition"
-                    onClick={() => {
-                      router.push("/login")
-                      closeSheet()
-                    }}
-                  >
-                    <User className="h-5 w-5" /> {t.login}
-                  </button>
+                  
+                  {status === "loading" ? (
+                    <div className="w-full h-10 bg-gray-200 rounded animate-pulse"></div>
+                  ) : session ? (
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-3 px-4 py-2 bg-gray-50 rounded-md">
+                        <Avatar className="h-8 w-8">
+                          <AvatarImage src={session.user?.avatar || undefined} />
+                          <AvatarFallback className="bg-blue-500 text-white text-xs">
+                            {session.user?.name?.substring(0, 2).toUpperCase() || 'U'}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div className="flex flex-col">
+                          <span className="text-sm font-medium">
+                            {session.user?.name || session.user?.username}
+                          </span>
+                          <span className="text-xs text-gray-500">
+                            {session.user?.email}
+                          </span>
+                        </div>
+                      </div>
+                      
+                      <button
+                        className="flex w-full items-center gap-3 text-base font-medium px-4 py-2 hover:bg-gray-50 rounded-md transition-colors hover:text-blue-600"
+                        onClick={() => {
+                          router.push("/profile")
+                          closeSheet()
+                        }}
+                      >
+                        <User className="h-5 w-5" />
+                        {t.profile}
+                      </button>
+                      
+                      <button
+                        className="flex w-full items-center gap-3 text-base font-medium px-4 py-2 hover:bg-gray-50 rounded-md transition-colors hover:text-blue-600"
+                        onClick={() => {
+                          router.push("/settings")
+                          closeSheet()
+                        }}
+                      >
+                        <Settings className="h-5 w-5" />
+                        {t.settings}
+                      </button>
+                      
+                      {session.user?.role === 'admin' && (
+                        <button
+                          className="flex w-full items-center gap-3 text-base font-medium px-4 py-2 hover:bg-gray-50 rounded-md transition-colors hover:text-blue-600"
+                          onClick={() => {
+                            router.push("/admin")
+                            closeSheet()
+                          }}
+                        >
+                          <Shield className="h-5 w-5" />
+                          {t.adminPanel}
+                        </button>
+                      )}
+                      
+                      <button
+                        className="flex w-full items-center gap-3 text-base font-semibold text-red-600 hover:text-red-700 px-4 py-2 rounded-md hover:bg-red-50 transition"
+                        onClick={() => {
+                          signOut()
+                          closeSheet()
+                        }}
+                      >
+                        <LogOut className="h-5 w-5" />
+                        {t.logout}
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="space-y-2">
+                      <button
+                        className="flex w-full items-center gap-3 text-base font-medium text-blue-600 hover:text-blue-700 px-4 py-2 rounded-md hover:bg-blue-50 transition"
+                        onClick={() => {
+                          router.push("/login")
+                          closeSheet()
+                        }}
+                      >
+                        <User className="h-5 w-5" />
+                        {t.login}
+                      </button>
+                      <button
+                        className="flex w-full items-center gap-3 text-base font-semibold text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-md transition"
+                        onClick={() => {
+                          router.push("/register")
+                          closeSheet()
+                        }}
+                      >
+                        <User className="h-5 w-5" />
+                        {t.register}
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
