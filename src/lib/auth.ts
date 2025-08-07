@@ -11,7 +11,9 @@ declare module "next-auth" {
       id: string
       email: string
       name: string
+      username?: string
       role: string
+      avatar?: string
     }
   }
   
@@ -19,13 +21,18 @@ declare module "next-auth" {
     id: string
     email: string
     name: string
+    username?: string
     role: string
+    avatar?: string
   }
 }
 
 declare module "next-auth/jwt" {
   interface JWT {
+    id: string
     role: string
+    username?: string
+    avatar?: string
   }
 }
 
@@ -34,47 +41,63 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: "credentials",
       credentials: {
-        identifier: { label: "Email or Username", type: "text" },
+        email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
-        if (!credentials?.identifier || !credentials?.password) {
+        console.log('Auth attempt with credentials:', { 
+          email: credentials?.email, 
+          hasPassword: !!credentials?.password 
+        })
+
+        if (!credentials?.email || !credentials?.password) {
+          console.log('Missing credentials')
           return null
         }
 
-        try {
-          const user = await prisma.user.findFirst({
-            where: {
-              OR: [
-                { email: credentials.identifier },
-                { username: credentials.identifier }
-              ]
-            }
-          })
-
-          if (!user) {
-            return null
+        const user = await prisma.user.findFirst({
+          where: {
+            OR: [
+              { email: credentials.email },
+              { username: credentials.email }
+            ]
           }
+        })
 
-          const isPasswordValid = await bcrypt.compare(credentials.password, user.password)
-          
-          if (!isPasswordValid) {
-            return null
-          }
+        console.log('User found:', user ? { id: user.id, email: user.email, username: user.username } : 'No user found')
 
-          return {
-            id: user.id.toString(),
-            email: user.email,
-            name: user.username,
-            role: user.role
-          }
-        } catch (error) {
-          console.error("Auth error:", error)
+        if (!user) {
           return null
         }
+
+        const isPasswordValid = await bcrypt.compare(
+          credentials.password,
+          user.password
+        )
+
+        console.log('Password valid:', isPasswordValid)
+
+        if (!isPasswordValid) {
+          return null
+        }
+
+        const returnUser = {
+          id: user.id.toString(),
+          email: user.email,
+          name: user.name || user.username,
+          username: user.username,
+          role: user.role,
+          avatar: user.avatar
+        }
+
+        console.log('Returning user:', returnUser)
+        return returnUser
       }
     })
   ],
+  session: {
+    strategy: "jwt"
+  },
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
@@ -83,24 +106,44 @@ export const authOptions: NextAuthOptions = {
         token.username = user.username
         token.avatar = user.avatar
       }
+      
+      // Always fetch fresh user data from database
+      if (token.id) {
+        const freshUser = await prisma.user.findUnique({
+          where: { id: parseInt(token.id) },
+          select: { avatar: true, name: true, username: true, email: true, role: true }
+        })
+        
+        if (freshUser) {
+          token.avatar = freshUser.avatar
+          token.name = freshUser.name || freshUser.username
+          token.username = freshUser.username
+        }
+      }
+      
       return token
     },
     async session({ session, token }) {
       if (token) {
-        session.user.id = token.id as string
-        session.user.role = token.role as string
-        session.user.username = token.username as string
-        session.user.avatar = token.avatar as string
+        session.user.id = token.id
+        session.user.role = token.role
+        session.user.username = token.username
+        session.user.avatar = token.avatar
+        session.user.name = token.name as string
       }
       return session
     }
   },
   pages: {
-    signIn: "/login",
-  },
-  session: {
-    strategy: "jwt"
+    signIn: "/login"
   }
 }
+
+
+
+
+
+
+
 
 

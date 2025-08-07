@@ -1,118 +1,164 @@
 "use client"
 
 import { Star } from "lucide-react"
+import { useEffect, useState } from "react"
 
-const testimonials = [
-  {
-    name: "Elnoah Agustinus Markus Manalu",
-    role: "Siswa SMK Negeri 6 Surakarta",
-    initials: "EL",
-    text: "Mersif sangat membantu dalam mengelola pembelajaran digital. Platformnya mudah digunakan dan sangat responsif terhadap kebutuhan kami.",
-  },
-  {
-    name: "Febrian Bayu Purwanto",
-    role: "Siswa SMK Negeri 2 Surakarta",
-    initials: "FB",
-    text: "Kolaborasi dengan Mersif telah meningkatkan efektivitas pelatihan guru dan siswa. Materi yang disediakan lengkap dan aplikatif.",
-  },
-  {
-    name: "Abdullah Rudi Athaya",
-    role: "Siswa SMA Negeri 4 Surakarta",
-    initials: "AR",
-    text: "Saya sangat terbantu dengan Mersif dalam mengembangkan kemampuan saya dalam bidang teknologi.",
-  },
-  {
-    name: "Narendra Fatin Fahrezi",
-    role: "Siswa SMA Pradita Dirgantara",
-    initials: "NF",
-    text: "Saya sangat terbantu dengan Mersif dalam mengembangkan kemampuan saya dalam bidang teknologi.",
-  },
-]
-
-// Duplikat 2x agar bisa scroll 50%
-const scrollingTestimonials = [...testimonials, ...testimonials]
+interface Testimonial {
+  id: number
+  name: string
+  role: string
+  initials: string
+  text: string
+  imageUrl: string | null
+}
 
 export function TestimonialsSection() {
-  return (
-    <section id="testimonials" className="bg-white py-12 md:py-20 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 md:px-6">
-        <h2 style={{ fontFamily: "Poppins, sans-serif" }} className="text-2xl md:text-4xl font-bold text-gray-900 text-center mb-3 md:mb-4">
-          Apa Kata Mereka
-        </h2>
-        <p style={{ fontFamily: "Inter, sans-serif" }}  className="text-center text-gray-500 mb-8 md:mb-12 text-sm md:text-base">
-          Pendapat para pengguna tentang layanan dan dukungan dari Mersif.
-        </p>
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([])
+  const [loading, setLoading] = useState(true)
 
-        <div className="relative w-full overflow-hidden">
-          {/* Gradient overlay kiri-kanan */}
-          <div className="absolute left-0 top-0 w-6 md:w-20 h-full bg-gradient-to-r from-white via-white to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 w-6 md:w-20 h-full bg-gradient-to-l from-white via-white to-transparent z-10 pointer-events-none" />
+  useEffect(() => {
+    fetchTestimonials()
+  }, [])
 
-          {/* Kontainer scroll otomatis */}
-          <div className="animate-scroll flex gap-4 md:gap-6 w-max">
-            {scrollingTestimonials.map((t, idx) => (
-              <div
-                key={idx}
-                className="w-[240px] md:w-[350px] border rounded-xl p-3 md:p-6 shadow-md bg-white hover:shadow-lg transition-all duration-300 flex-shrink-0"
-              >
-                <div className="flex items-center gap-2 md:gap-4 mb-2 md:mb-4">
-                  <div className="w-8 h-8 md:w-12 md:h-12 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold shadow-sm border text-xs md:text-base">
-                    {t.initials}
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <h4 style={{ fontFamily: "Poppins, sans-serif" }} className="text-xs md:text-base font-semibold text-gray-900 leading-tight break-words">
-                      {t.name}
-                    </h4>
-                    <p style={{ fontFamily: "Inter, sans-serif" }} className="text-xs md:text-sm text-gray-500 break-words">{t.role}</p>
-                  </div>
-                </div>
+  const fetchTestimonials = async () => {
+    try {
+      console.log("Frontend: Fetching testimonials from API...")
+      const response = await fetch('/api/testimonials')
+      console.log("Frontend: Response status:", response.status)
+      
+      if (response.ok) {
+        const data = await response.json()
+        console.log("Frontend: Data received:", data)
+        
+        if (data.testimonials && Array.isArray(data.testimonials)) {
+          setTestimonials(data.testimonials)
+          console.log("Frontend: Testimonials set:", data.testimonials)
+        } else {
+          console.log("Frontend: No testimonials in response")
+        }
+      } else {
+        console.error("Frontend: Response not ok:", response.statusText)
+      }
+    } catch (error) {
+      console.error('Frontend: Error fetching testimonials:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
 
-                <div className="flex items-center gap-1 mb-2 md:mb-3 text-yellow-500">
-                  {Array(5)
-                    .fill(0)
-                    .map((_, i) => (
-                      <Star
-                        key={i}
-                        size={10}
-                        className="md:w-[14px] md:h-[14px]"
-                        fill="currentColor"
-                      />
-                    ))}
-                </div>
-
-                <div className="h-[80px] md:h-[90px] overflow-hidden">
-                  <p style={{ fontFamily: "Inter, sans-serif" }} className="text-xs md:text-sm text-gray-700 leading-relaxed italic border-l-4 border-blue-500 pl-2 md:pl-4 break-words">
-                    "{t.text}"
-                  </p>
-                </div>
-              </div>
-            ))}
+  if (loading) {
+    return (
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Apa Kata Mereka</h2>
+            <p className="text-gray-600">Loading testimonials...</p>
           </div>
         </div>
+      </section>
+    )
+  }
+
+  return (
+    <section className="py-16 bg-gray-50">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">Apa Kata Mereka</h2>
+          <p className="text-gray-600">
+            Pendapat para pengguna tentang layanan dan dukungan dari Mersif.
+          </p>
+        </div>
+
+        {testimonials.length > 0 ? (
+          <div className="relative overflow-hidden">
+            <div className="flex animate-scroll space-x-6">
+              {/* Original testimonials */}
+              {testimonials.map((testimonial) => (
+                <div
+                  key={testimonial.id}
+                  className="flex-shrink-0 w-80 bg-white rounded-lg p-6 shadow-md"
+                >
+                  <div className="flex items-center mb-4">
+                    <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold mr-4">
+                      {testimonial.imageUrl ? (
+                        <img 
+                          src={testimonial.imageUrl} 
+                          alt={testimonial.name}
+                          className="w-12 h-12 rounded-full object-cover"
+                        />
+                      ) : (
+                        testimonial.initials
+                      )}
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900">{testimonial.name}</h4>
+                      <p className="text-sm text-gray-600">{testimonial.role}</p>
+                    </div>
+                  </div>
+                  <div className="flex mb-3">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                  <p className="text-gray-700 italic">"{testimonial.text}"</p>
+                </div>
+              ))}
+              {/* Duplicate for seamless loop */}
+              {testimonials.map((testimonial) => (
+                <div
+                  key={`duplicate-${testimonial.id}`}
+                  className="flex-shrink-0 w-80 bg-white rounded-lg p-6 shadow-md"
+                >
+                  <div className="flex items-center mb-4">
+                    <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold mr-4">
+                      {testimonial.imageUrl ? (
+                        <img 
+                          src={testimonial.imageUrl} 
+                          alt={testimonial.name}
+                          className="w-12 h-12 rounded-full object-cover"
+                        />
+                      ) : (
+                        testimonial.initials
+                      )}
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900">{testimonial.name}</h4>
+                      <p className="text-sm text-gray-600">{testimonial.role}</p>
+                    </div>
+                  </div>
+                  <div className="flex mb-3">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                  <p className="text-gray-700 italic">"{testimonial.text}"</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div className="text-center text-gray-500">
+            <p>Belum ada testimonial yang tersedia.</p>
+          </div>
+        )}
       </div>
 
-      {/* Animasi scroll CSS */}
-      <style dangerouslySetInnerHTML={{ __html: `
+      <style jsx>{`
         @keyframes scroll {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
         }
-
         .animate-scroll {
-          animation: scroll 25s linear infinite;
-          will-change: transform;
+          animation: scroll 60s linear infinite;
         }
-
         .animate-scroll:hover {
           animation-play-state: paused;
         }
-
-        @media (max-width: 768px) {
-          .animate-scroll {
-            animation-duration: 20s;
-          }
-        }
-      `}} />
+      `}</style>
     </section>
   )
 }

@@ -26,18 +26,22 @@ export default function LoginPage() {
 
     try {
       const result = await signIn('credentials', {
-        identifier: formData.identifier,
+        email: formData.identifier, // Kirim sebagai email field
         password: formData.password,
         redirect: false,
       })
 
+      console.log('SignIn result:', result) // Debug log
+
       if (result?.error) {
+        console.error('Login error:', result.error)
         toast.error('Login gagal. Periksa email/username dan password Anda.')
       } else {
         toast.success('Login berhasil!')
         
         // Get session to check user role
         const session = await getSession()
+        console.log('Session after login:', session) // Debug log
         
         // Redirect based on role or callback URL
         if (session?.user?.role === 'admin') {
@@ -47,6 +51,7 @@ export default function LoginPage() {
         }
       }
     } catch (error) {
+      console.error('Login catch error:', error)
       toast.error('Terjadi kesalahan saat login')
     } finally {
       setLoading(false)

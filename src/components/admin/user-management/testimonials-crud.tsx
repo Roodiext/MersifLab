@@ -68,10 +68,14 @@ export default function TestimonialsCRUD() {
   const { toast } = useToast()
 
   const fetchTestimonials = async () => {
+    console.log("Fetching testimonials...")
     const result = await getTestimonials()
+    console.log("Result:", result)
     if (result.testimonials) {
+      console.log("Setting testimonials:", result.testimonials)
       setTestimonials(result.testimonials as Testimonial[])
     } else if (result.error) {
+      console.error("Error:", result.error)
       toast({
         title: "Error",
         description: result.error,
@@ -96,7 +100,8 @@ export default function TestimonialsCRUD() {
       })
     } else {
       setIsCreateDialogOpen(false)
-      fetchTestimonials()
+      // Force refresh
+      await fetchTestimonials()
       toast({
         title: "Success",
         description: "Testimonial added successfully.",

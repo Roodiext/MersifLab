@@ -5,14 +5,16 @@ import { Providers } from "@/components/providers"
 import "./globals.css"
 
 const inter = Inter({
-  subsets: ["latin"], 
+  subsets: ["latin"],
   variable: "--font-inter",
+  display: "swap",
 })
 
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "600", "700", "800", "900"],
   variable: "--font-poppins",
+  display: "swap",
 })
 
 export const metadata: Metadata = {
@@ -27,7 +29,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${poppins.variable}`}>
+      <body className={`${inter.variable} ${poppins.variable} font-sans antialiased`}>
         <Providers>
           {children}
         </Providers>
@@ -35,6 +37,9 @@ export default function RootLayout({
     </html>
   )
 }
+
+
+
 
 
 

@@ -35,6 +35,7 @@ interface Comment {
   createdAt: string
   updatedAt: string
   status: string
+  parentId?: number | null
   user?: {
     id: number
     username: string
@@ -52,8 +53,15 @@ interface CommentSectionProps {
 }
 
 export function CommentSection({ articleId, newsId, contentType }: CommentSectionProps) {
-  const { data: session } = useSession()
+  const { data: session, update } = useSession()
   const { toast } = useToast()
+
+  // Force refresh session to get latest avatar
+  useEffect(() => {
+    if (session) {
+      update()
+    }
+  }, [])
   
   // ADD DEBUG LOGS
   console.log('CommentSection props:', { articleId, newsId, contentType })
@@ -196,30 +204,45 @@ export function CommentSection({ articleId, newsId, contentType }: CommentSectio
 
     setLoading(true)
     try {
+      console.log('=== SUBMITTING REPLY ===')
+      console.log('Parent ID:', parentId)
+      console.log('Reply content:', replyContent)
+      console.log('Article ID:', articleId)
+      console.log('News ID:', newsId)
+
+      const requestBody = {
+        content: replyContent,
+        articleId,
+        newsId,
+        parentId
+      }
+      console.log('Reply request body:', requestBody)
+
       const response = await fetch('/api/comments', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          content: replyContent,
-          articleId,
-          newsId,
-          parentId
-        })
+        body: JSON.stringify(requestBody)
       })
+
+      const responseData = await response.json()
+      console.log('Reply response:', responseData)
 
       if (response.ok) {
         setReplyContent("")
         setReplyingTo(null)
-        fetchComments()
+        fetchComments() // Refresh comments to show new reply
         toast({
           title: "Berhasil",
           description: "Balasan berhasil ditambahkan"
         })
       } else {
-        const error = await response.json()
-        throw new Error(error.error || 'Failed to submit reply')
+        console.error('Reply API Error Response:', responseData)
+        throw new Error(responseData.error || responseData.details || `HTTP ${response.status}`)
       }
     } catch (error) {
+      console.error('=== REPLY SUBMISSION ERROR ===')
+      console.error('Error:', error)
+      
       toast({
         title: "Error",
         description: error instanceof Error ? error.message : "Gagal menambahkan balasan",
@@ -342,9 +365,24 @@ export function CommentSection({ articleId, newsId, contentType }: CommentSectio
     )
   }
 
-  const totalComments = comments.reduce((total, comment) => {
-    return total + 1 + (comment.replies?.length || 0)
-  }, 0)
+  // Add this function to count total comments including replies
+  const countTotalComments = (comments: Comment[]): number => {
+    let total = comments.length
+    comments.forEach(comment => {
+      if (comment.replies) {
+        total += countTotalComments(comment.replies)
+      }
+    })
+    return total
+  }
+
+  // Update the totalComments calculation
+  const totalComments = countTotalComments(comments)
+
+  // Get current user avatar from session
+  const getCurrentUserAvatar = () => {
+    return session?.user?.avatar || undefined
+  }
 
   return (
     <div className="mt-12 pt-8 border-t border-slate-200">
@@ -356,6 +394,8 @@ export function CommentSection({ articleId, newsId, contentType }: CommentSectio
         <p>Content Type: {contentType}</p>
         <p>Session: {session ? 'Logged in' : 'Not logged in'}</p>
         <p>User Role: {session?.user?.role}</p>
+        <p>Replying To: {replyingTo}</p>
+        <p>Total Comments: {totalComments}</p>
       </div>
       
       <div className="flex items-center justify-between mb-6">
@@ -380,7 +420,7 @@ export function CommentSection({ articleId, newsId, contentType }: CommentSectio
               <CardContent className="p-6">
                 <div className="flex items-start gap-4">
                   <Avatar className="w-10 h-10 ring-2 ring-slate-200">
-                    <AvatarImage src={session?.user?.avatar || undefined} />
+                    <AvatarImage src={getCurrentUserAvatar()} />
                     <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white">
                       {session?.user?.name?.substring(0, 2).toUpperCase() || 'U'}
                     </AvatarFallback>
@@ -557,7 +597,7 @@ export function CommentSection({ articleId, newsId, contentType }: CommentSectio
                         <div className="mt-4 pl-4 border-l-2 border-blue-200">
                           <div className="flex items-start gap-3">
                             <Avatar className="w-8 h-8">
-                              <AvatarImage src={session?.user?.avatar || undefined} />
+                              <AvatarImage src={getCurrentUserAvatar()} />
                               <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white text-xs">
                                 {session?.user?.name?.substring(0, 2).toUpperCase() || 'U'}
                               </AvatarFallback>
@@ -727,6 +767,13 @@ export function CommentSection({ articleId, newsId, contentType }: CommentSectio
     </div>
   )
 }
+
+
+
+
+
+
+
 
 
 

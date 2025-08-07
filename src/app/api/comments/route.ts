@@ -41,6 +41,21 @@ export async function GET(request: NextRequest) {
                 avatar: true,
                 role: true
               }
+            },
+            replies: {
+              include: {
+                user: {
+                  select: {
+                    id: true,
+                    username: true,
+                    email: true,
+                    avatar: true,
+                    role: true
+                  }
+                }
+              },
+              orderBy: { createdAt: 'asc' },
+              where: { status: 'approved' }
             }
           },
           orderBy: { createdAt: 'asc' },
@@ -61,11 +76,6 @@ export async function POST(request: NextRequest) {
   console.log('=== POST /api/comments START ===')
   
   try {
-    // Step 1: Test basic response
-    console.log('Step 1: API route accessed')
-    
-    // Step 2: Test session
-    console.log('Step 2: Getting session...')
     const session = await getServerSession(authOptions)
     console.log('Session:', session)
     
@@ -76,15 +86,11 @@ export async function POST(request: NextRequest) {
       }, { status: 401 })
     }
 
-    // Step 3: Parse request
-    console.log('Step 3: Parsing request...')
     const data = await request.json()
     console.log('Request data:', data)
     
-    const { content, articleId, newsId } = data
+    const { content, articleId, newsId, parentId } = data
 
-    // Step 4: Basic validation
-    console.log('Step 4: Validation...')
     if (!content?.trim()) {
       return NextResponse.json({ 
         error: 'Content is required' 
@@ -97,20 +103,41 @@ export async function POST(request: NextRequest) {
       }, { status: 400 })
     }
 
-    // Step 5: Test database connection
-    console.log('Step 5: Testing database...')
+    // If parentId exists, verify parent comment exists
+    if (parentId) {
+      const parentComment = await prisma.comment.findUnique({
+        where: { id: parseInt(parentId) }
+      })
+      
+      if (!parentComment) {
+        return NextResponse.json({ 
+          error: 'Parent comment not found' 
+        }, { status: 400 })
+      }
+    }
+
     await prisma.$connect()
     console.log('Database connected')
 
-    // Step 6: Create comment
-    console.log('Step 6: Creating comment...')
     const comment = await prisma.comment.create({
       data: {
         content: content.trim(),
         userId: parseInt(session.user.id),
         articleId: articleId ? parseInt(articleId) : null,
         newsId: newsId ? parseInt(newsId) : null,
+        parentId: parentId ? parseInt(parentId) : null,
         status: 'approved'
+      },
+      include: {
+        user: {
+          select: {
+            id: true,
+            username: true,
+            email: true,
+            avatar: true,
+            role: true
+          }
+        }
       }
     })
 
@@ -118,7 +145,6 @@ export async function POST(request: NextRequest) {
     console.log('=== POST /api/comments SUCCESS ===')
     
     return NextResponse.json(comment)
-    
   } catch (error) {
     console.error('=== POST /api/comments ERROR ===')
     console.error('Error:', error)
@@ -131,4 +157,6 @@ export async function POST(request: NextRequest) {
     await prisma.$disconnect()
   }
 }
+
+
 

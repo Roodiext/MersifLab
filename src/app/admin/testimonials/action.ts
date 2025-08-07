@@ -74,7 +74,8 @@ export async function addTestimonial(formData: FormData) {
   }
 
   revalidatePath("/admin/dashboard");
-  revalidatePath("/"); // Revalidate homepage
+  revalidatePath("/"); // Revalidate homepage to update testimonials
+  revalidatePath("/api/testimonials"); // Revalidate API route
 }
 
 export async function updateTestimonial(formData: FormData) {
@@ -114,7 +115,8 @@ export async function updateTestimonial(formData: FormData) {
   }
 
   revalidatePath("/admin/dashboard");
-  revalidatePath("/"); // Revalidate homepage
+  revalidatePath("/"); // Revalidate homepage to update testimonials
+  revalidatePath("/api/testimonials"); // Revalidate API route
 }
 
 export async function deleteTestimonial(id: number) {
@@ -139,9 +141,9 @@ export async function deleteTestimonial(id: number) {
   }
 
   revalidatePath("/admin/dashboard");
-  revalidatePath("/"); // Revalidate homepage
-}
-export async function reorderTestimonials(ids: number[]) {
+  revalidatePath("/"); // Revalidate homepage to update testimonials
+  revalidatePath("/api/testimonials"); // Revalidate API route
+}export async function reorderTestimonials(ids: number[]) {
   const session = await getServerSession(authOptions);
   if (session?.user?.role !== "admin") {
     return { error: "Akses ditolak. Anda bukan admin." };
@@ -159,5 +161,6 @@ export async function reorderTestimonials(ids: number[]) {
   }
 
   revalidatePath("/admin/dashboard");
-  revalidatePath("/"); // Revalidate homepage
+  revalidatePath("/"); // Revalidate homepage to update testimonials
+  revalidatePath("/api/testimonials"); // Revalidate API route
 }

@@ -201,7 +201,8 @@ export function Header() {
   const router = useRouter()
   const { data: session, status } = useSession()
 
-  // Load language preference from localStorage on component mount
+  // Remove all session refresh - causing spam
+  // Only keep language loading
   useEffect(() => {
     const savedLanguage = localStorage.getItem("mersiflab-language")
     if (savedLanguage && (savedLanguage === "en" || savedLanguage === "id")) {
@@ -210,7 +211,6 @@ export function Header() {
     setIsLanguageLoaded(true)
   }, [])
 
-  // Save language preference to localStorage whenever it changes
   useEffect(() => {
     if (isLanguageLoaded) {
       localStorage.setItem("mersiflab-language", currentLanguage)
@@ -387,7 +387,7 @@ export function Header() {
           ) : session ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-10 w-auto px-3 rounded-full">
+                <Button variant="ghost" className="relative h-10 w-auto px-3 rounded-full hover:bg-gray-100">
                   <div className="flex items-center space-x-2">
                     <Avatar className="h-8 w-8">
                       <AvatarImage src={session.user?.avatar || undefined} />
