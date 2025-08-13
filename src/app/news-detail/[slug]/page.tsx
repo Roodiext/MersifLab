@@ -87,7 +87,7 @@ export default async function NewsDetailPage({ params }: PageProps) {
         {/* Back Button */}
         <div className="mb-8">
           <Button variant="ghost" asChild className="text-gray-600 hover:text-gray-900 transition-colors duration-200">
-            <Link href="/news" className="flex items-center gap-2 text-sm font-medium">
+            <Link style={{ fontFamily: "Poppins, sans-serif"}} href="/news" className="flex items-center gap-2 text-sm font-medium">
               <ArrowLeft className="h-4 w-4" />
               Kembali ke Berita & Artikel
             </Link>
@@ -97,19 +97,19 @@ export default async function NewsDetailPage({ params }: PageProps) {
         {/* Header */}
         <header className="mb-10">
           <div className="flex flex-wrap items-center gap-3 mb-5">
-            <Badge variant="outline" className="bg-white text-gray-700 border-gray-300 px-3 py-1 text-xs font-medium rounded-full">
+            <Badge style={{ fontFamily: "Inter, sans-serif"}} variant="outline" className="bg-white text-gray-700 border-gray-300 px-3 py-1 text-xs font-medium rounded-full">
               {content.category.name}
             </Badge>
-            <Badge variant={content.type === 'article' ? 'default' : 'secondary'} className="bg-blue-700 text-white px-3 py-1 text-xs font-medium rounded-full">
+            <Badge style={{ fontFamily: "Inter, sans-serif"}} variant={content.type === 'article' ? 'default' : 'secondary'} className="bg-blue-700 text-white px-3 py-1 text-xs font-medium rounded-full">
               {content.type === 'article' ? 'Artikel' : 'Berita'}
             </Badge>
           </div>
 
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 mb-6 leading-tight tracking-tight">
+          <h1 style={{ fontFamily: "Poppins, sans-serif"}} className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight tracking-tight">
             {content.title}
           </h1>
 
-          <div className="flex flex-wrap items-center gap-x-8 gap-y-2 text-gray-600 text-sm mb-8">
+          <div style={{ fontFamily: "Inter, sans-serif"}} className="flex flex-wrap items-center gap-x-8 gap-y-2 text-gray-600 text-sm mb-8">
             <div className="flex items-center gap-2">
               <Calendar className="h-4 w-4 text-gray-500" />
               <span className="font-medium">
@@ -127,7 +127,7 @@ export default async function NewsDetailPage({ params }: PageProps) {
           </div>
 
           {/* Share Button */}
-          <div className="flex gap-3">
+          <div style={{ fontFamily: "Poppins, sans-serif"}} className="flex gap-3">
             <Button variant="outline" size="sm" className="text-gray-700 border-gray-300 hover:bg-gray-100 transition-colors duration-200 px-4 py-2 rounded-md">
               <Share2 className="h-4 w-4 mr-2" />
               Bagikan
@@ -147,7 +147,7 @@ export default async function NewsDetailPage({ params }: PageProps) {
         )}
 
         {/* Content */}
-        <article className="prose prose-lg max-w-none mb-16 text-gray-800 leading-relaxed prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl prose-a:text-blue-700 prose-a:hover:underline">
+        <article style={{ fontFamily: "Inter, sans-serif"}} className="prose prose-lg max-w-none mb-16 text-gray-800 leading-relaxed prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl prose-a:text-blue-700 prose-a:hover:underline">
           <div dangerouslySetInnerHTML={{ __html: content.content }} />
         </article>
 
@@ -170,16 +170,16 @@ export default async function NewsDetailPage({ params }: PageProps) {
 
         {/* Related Content */}
         {relatedContent.length > 0 && (
-          <section className="border-t border-gray-200 pt-16">
-            <h3 className="text-3xl font-bold text-gray-900 mb-8">Konten Terkait</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <section  className="border-t border-gray-200 pt-16">
+            <h3 style={{ fontFamily: "Poppins, sans-serif"}} className="text-3xl font-bold text-gray-900 mb-8">Konten Terkait</h3>
+            <div  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {relatedContent.map((item) => (
                 <Link
                   key={`${item.type}-${item.id}`}
                   href={`/news-detail/${item.slug}`}
                   className="group block"
                 >
-                  <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-blue-200">
+                  <div  className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-blue-200">
                     {item.thumbnail ? (
                       <img
                         src={item.thumbnail || "/placeholder.svg?height=160&width=300&query=related content thumbnail"}
@@ -191,7 +191,7 @@ export default async function NewsDetailPage({ params }: PageProps) {
                         <span>Tidak Ada Gambar</span>
                       </div>
                     )}
-                    <div className="p-5">
+                    <div style={{ fontFamily: "Inter, sans-serif"}} className="p-5">
                       <div className="flex flex-wrap items-center gap-2 mb-3">
                         <Badge variant="outline" className="text-xs bg-gray-50 text-gray-600 border-gray-200 px-2 py-0.5 rounded-full">
                           {item.category.name}
@@ -203,10 +203,10 @@ export default async function NewsDetailPage({ params }: PageProps) {
                           {item.type === 'article' ? 'Artikel' : 'Berita'}
                         </Badge>
                       </div>
-                      <h4 className="font-bold text-lg text-gray-900 group-hover:text-blue-700 transition-colors line-clamp-2 mb-2">
+                      <h4 style={{ fontFamily: "Poppins, sans-serif"}} className="font-bold text-lg text-gray-900 group-hover:text-blue-700 transition-colors line-clamp-2 mb-2">
                         {item.title}
                       </h4>
-                      <p className="text-sm text-gray-500">
+                      <p style={{ fontFamily: "Inter, sans-serif"}} className="text-sm text-gray-500">
                         {new Date(item.createdAt).toLocaleDateString('id-ID', {
                           year: 'numeric',
                           month: 'short',
@@ -222,7 +222,8 @@ export default async function NewsDetailPage({ params }: PageProps) {
         )}
 
         {/* Comment Section */}
-        <CommentSection 
+        <CommentSection
+        style={{ fontFamily: "Inter, sans-serif"}} 
           newsId={content.type === 'news' ? content.id : undefined}
           articleId={content.type === 'article' ? content.id : undefined}
           contentType={content.type as 'article' | 'news'}

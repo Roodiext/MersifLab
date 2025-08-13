@@ -9,6 +9,8 @@ import { useState } from "react"
 import { signIn, getSession } from "next-auth/react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { toast } from "sonner"
+import Image from 'next/image';
+import { Eye, EyeOff } from "lucide-react"
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
@@ -16,6 +18,7 @@ export default function LoginPage() {
     password: ''
   })
   const [loading, setLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
   const callbackUrl = searchParams.get('callbackUrl') || '/'
@@ -65,6 +68,10 @@ export default function LoginPage() {
     }))
   }
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword)
+  }
+
   return (
     <div className="h-screen w-screen bg-gradient-to-br from-gray-50 to-blue-50 flex items-center justify-center p-6 relative overflow-hidden" style={{ fontFamily: 'Inter, sans-serif' }}>
       
@@ -76,10 +83,16 @@ export default function LoginPage() {
         
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-6xl font-bold text-gray-900 mb-2" style={{ fontFamily: 'Poppins, sans-serif' }}>
-            MersifLab
-          </h1>
-        </div>
+  <div className="flex items-center justify-center gap-2">
+    <Image 
+      src="/img/logomersiflab.png" 
+      alt="MersifLab Logo" 
+      width={120} 
+      height={30} 
+    />
+  </div>
+</div>
+
 
         {/* Login Card */}
         <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
@@ -106,16 +119,29 @@ export default function LoginPage() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="password" className="text-gray-700 font-medium">Password</Label>
-                <Input
-                  id="password"
-                  name="password"
-                  type="password"
-                  placeholder="Masukkan password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                  className="h-11 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-                />
+                <div className="relative">
+                  <Input
+                    id="password"
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Masukkan password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    required
+                    className="h-11 border-gray-300 focus:border-blue-500 focus:ring-blue-500 pr-10"
+                  />
+                  <button
+                    type="button"
+                    onClick={togglePasswordVisibility}
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 transition-colors"
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
+                  </button>
+                </div>
               </div>
               
               <Button 

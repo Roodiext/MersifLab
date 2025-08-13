@@ -8,84 +8,47 @@ import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useRouter, usePathname } from "next/navigation"
 import { useSession, signOut } from "next-auth/react"
 
-// Define translations
-const translations = {
-  en: {
-    home: "Home",
-    about: "About",
-    product: "Product",
-    testimonial: "Testimonial",
-    news: "News",
-    newsPage: "News Page",
-    latestNews: "Latest News",
-    newsArchive: "News Archive",
-    categories: "Categories",
-    contact: "Contact",
-    login: "Login",
-    register: "Register",
-    mersifLabLogo: "MersifLab Logo",
-    language: "Language",
-    profile: "Profile",
-    settings: "Settings",
-    adminPanel: "Admin Panel",
-    logout: "Logout",
-    articles: "Articles",
-  },
-  id: {
-    home: "Beranda",
-    about: "Tentang",
-    product: "Produk",
-    testimonial: "Testimoni",
-    news: "Berita",
-    newsPage: "Halaman Berita",
-    latestNews: "Berita Terbaru",
-    newsArchive: "Arsip Berita",
-    categories: "Kategori",
-    contact: "Kontak",
-    login: "Masuk",
-    register: "Daftar",
-    mersifLabLogo: "Logo MersifLab",
-    language: "Bahasa",
-    profile: "Profile",
-    settings: "Pengaturan",
-    adminPanel: "Panel Admin",
-    logout: "Keluar",
-    articles: "Artikel",
-  },
-}
-
-// Define NavItem interface using translation keys
+// Define NavItem interface with direct labels
 interface NavItem {
   href?: string
-  labelKey: keyof typeof translations.en
+  label: string
   icon?: React.ElementType
   isDropdown?: boolean
-  subLinks?: { href: string; labelKey: keyof typeof translations.en }[]
+  subLinks?: { href: string; label: string }[]
 }
 
-// Base navigation items - Updated with proper section links
-const baseNavItems: NavItem[] = [
-  { href: "/#hero", labelKey: "home", icon: Home },
-  { href: "/#about", labelKey: "about", icon: Info },
-  { href: "/#product", labelKey: "product", icon: Package },
-  { href: "/#testimonials", labelKey: "testimonial", icon: Star },
-  { href: "/articles", labelKey: "articles", icon: Package },
+// Navigation items with Indonesian labels
+const navItems: NavItem[] = [
+  { href: "/#hero", label: "Beranda", icon: Home },
+  { href: "/#about", label: "Tentang", icon: Info },
+  { href: "/#testimonials", label: "Testimoni", icon: Star },
   {
-    labelKey: "news",
+    label: "Layanan",
     icon: Package,
     isDropdown: true,
     subLinks: [
-      { href: "/news", labelKey: "newsPage" },
-      { href: "/news/latest", labelKey: "latestNews" },
-      { href: "/news/archive", labelKey: "newsArchive" },
-      { href: "/news/categories", labelKey: "categories" },
+      { href: "/mersif-academy/index.html", label: "Mersif Academy" },
+      { href: "/mersifiot", label: "Mersif IoT" },
+      { href: "/mersifvista", label: "Mersif Vista" },
+      { href: "/mersifcreator", label: "Mersif Creator" },
     ],
   },
-  { href: "/#contact", labelKey: "contact", icon: Mail },
+  {
+    label: "Berita",
+    icon: Package,
+    isDropdown: true,
+    subLinks: [
+      { href: "/news", label: "Halaman Berita" },
+      { href: "/news", label: "Berita Terbaru" },
+      { href: "/news", label: "Arsip Berita" },
+      { href: "/news", label: "Kategori" },
+    ],
+  },
+  { href: "/#contact", label: "Kontak", icon: Mail },
 ]
 
 interface NavLinkProps {
@@ -195,36 +158,14 @@ function NavLink({ href, children, icon: Icon, isMobile = false, onClick }: NavL
 
 export function Header() {
   const [isSheetOpen, setIsSheetOpen] = useState(false)
+  const [isMobileServiceOpen, setIsMobileServiceOpen] = useState(false)
   const [isMobileNewsOpen, setIsMobileNewsOpen] = useState(false)
-  const [currentLanguage, setCurrentLanguage] = useState<"en" | "id">("id")
-  const [isLanguageLoaded, setIsLanguageLoaded] = useState(false)
   const router = useRouter()
   const { data: session, status } = useSession()
 
-  // Remove all session refresh - causing spam
-  // Only keep language loading
-  useEffect(() => {
-    const savedLanguage = localStorage.getItem("mersiflab-language")
-    if (savedLanguage && (savedLanguage === "en" || savedLanguage === "id")) {
-      setCurrentLanguage(savedLanguage as "en" | "id")
-    }
-    setIsLanguageLoaded(true)
-  }, [])
-
-  useEffect(() => {
-    if (isLanguageLoaded) {
-      localStorage.setItem("mersiflab-language", currentLanguage)
-    }
-  }, [currentLanguage, isLanguageLoaded])
-
-  const t = translations[currentLanguage]
-
-  const toggleLanguage = () => {
-    setCurrentLanguage((prevLang) => (prevLang === "en" ? "id" : "en"))
-  }
-
   const closeSheet = () => {
     setIsSheetOpen(false)
+    setIsMobileServiceOpen(false)
     setIsMobileNewsOpen(false)
   }
 
@@ -241,7 +182,6 @@ export function Header() {
       
       // Define possible IDs for each section
       const possibleIds: { [key: string]: string[] } = {
-        'product': ['product', 'products', 'our-products', 'produk'],
         'about': ['about', 'about-us', 'tentang', 'tentang-kami'],
         'hero': ['hero', 'home', 'banner', 'header-section'],
         'testimonials': ['testimonials', 'testimonial', 'testimoni'],
@@ -293,38 +233,8 @@ export function Header() {
     closeSheet()
   }
 
-  // Map baseNavItems to actual navItems with current language labels
-  const navItems = baseNavItems.map((item) => ({
-    ...item,
-    label: t[item.labelKey],
-    subLinks: item.subLinks?.map((subLink) => ({
-      ...subLink,
-      label: t[subLink.labelKey],
-    })),
-  }))
-
-  // Loading state
-  if (!isLanguageLoaded) {
-    return (
-      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200 px-4 lg:px-6 h-16 flex items-center shadow-sm">
-        <div className="max-w-7xl mx-auto w-full flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Image src="/img/logomersiflab.png" alt="MersifLab Logo" width={120} height={30} />
-          </div>
-          <div className="hidden lg:flex items-center gap-4">
-            <div className="w-12 h-8 bg-gray-200 rounded animate-pulse"></div>
-            <div className="w-6 h-6 bg-gray-200 rounded animate-pulse"></div>
-          </div>
-          <div className="lg:hidden">
-            <div className="w-10 h-10 bg-gray-200 rounded animate-pulse"></div>
-          </div>
-        </div>
-      </header>
-    )
-  }
-
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200 px-4 lg:px-6 h-16 flex items-center shadow-sm">
+    <header style={{ fontFamily: "Poppins, sans-serif" }} className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200 px-4 lg:px-6 h-16 flex items-center shadow-sm">
       <div className="max-w-7xl mx-auto w-full flex items-center justify-between">
         <Link 
           href="/#hero" 
@@ -334,11 +244,11 @@ export function Header() {
             handleMobileNavigation("/#hero")
           }}
         >
-          <Image src="/img/logomersiflab.png" alt={t.mersifLabLogo} width={120} height={30} />
+          <Image src="/img/logomersiflab.png" alt="Logo MersifLab" width={120} height={30} />
         </Link>
         
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex gap-6 items-center flex-grow justify-center">
+        <nav style={{ fontFamily: "Poppins, sans-serif" }} className="hidden lg:flex gap-6 items-center flex-grow justify-center">
           {navItems.map((item) =>
             item.isDropdown ? (
               <DropdownMenu key={item.label}>
@@ -346,7 +256,7 @@ export function Header() {
                   {item.label} <ChevronDown className="h-4 w-4" />
                   <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-current transition-all duration-300 ease-out group-hover:w-full" />
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="start" className="w-48">
+                <DropdownMenuContent style={{ fontFamily: "Poppins, sans-serif" }}align="start" className="w-48">
                   {item.subLinks?.map((subLink) => (
                     <DropdownMenuItem key={subLink.href} asChild>
                       <Link 
@@ -373,35 +283,28 @@ export function Header() {
 
         {/* Desktop User Section */}
         <div className="hidden lg:flex items-center gap-4">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={toggleLanguage}
-            className="text-sm font-medium px-3 py-1 rounded-md border border-gray-300 hover:bg-gray-100 transition-colors bg-transparent"
-          >
-            {currentLanguage === "en" ? "ID" : "EN"}
-          </Button>
-          
           {status === "loading" ? (
-            <div className="w-8 h-8 bg-gray-200 rounded-full animate-pulse"></div>
+            <div className="w-8 h-8 bg-gray-200 rounded-full animate-pulse" style={{ fontFamily: "Poppins, sans-serif" }}></div>
           ) : session ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="relative h-10 w-auto px-3 rounded-full hover:bg-gray-100">
                   <div className="flex items-center space-x-2">
-                    <Avatar className="h-8 w-8">
-                      <AvatarImage src={session.user?.avatar || undefined} />
-                      <AvatarFallback className="bg-blue-500 text-white">
-                        {session.user?.name?.substring(0, 2).toUpperCase() || 'U'}
-                      </AvatarFallback>
-                    </Avatar>
+                   <Avatar className="h-8 w-8">
+  <AvatarImage src={session.user?.avatar || undefined} />
+  <AvatarFallback className="bg-blue-500 text-white">
+    {session.user?.name
+      ? session.user.name.split(" ")[0].substring(0, 2).toUpperCase()
+      : 'U'}
+  </AvatarFallback>
+</Avatar>
                     <span className="hidden md:block text-sm font-medium">
-                      {session.user?.name || session.user?.username}
-                    </span>
+  {session.user?.name?.split(" ")[0] || session.user?.username}
+</span>
                   </div>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56" align="end">
+              <DropdownMenuContent style={{ fontFamily: "Poppins, sans-serif" }} className="w-56" align="end">
                 <div className="flex items-center justify-start gap-2 p-2">
                   <div className="flex flex-col space-y-1 leading-none">
                     <p className="font-medium text-sm">
@@ -422,22 +325,22 @@ export function Header() {
                 <DropdownMenuItem asChild>
                   <Link href="/profile" className="flex items-center">
                     <User className="mr-2 h-4 w-4" />
-                    {t.profile}
+                    Profile
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link href="/settings" className="flex items-center">
                     <Settings className="mr-2 h-4 w-4" />
-                    {t.settings}
+                    Pengaturan
                   </Link>
                 </DropdownMenuItem>
                 {session.user?.role === 'admin' && (
                   <>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem asChild>
-                      <Link href="/admin" className="flex items-center">
+                      <Link href="/admin/dashboard" className="flex items-center">
                         <Shield className="mr-2 h-4 w-4" />
-                        {t.adminPanel}
+                        Panel Admin
                       </Link>
                     </DropdownMenuItem>
                   </>
@@ -448,17 +351,17 @@ export function Header() {
                   className="text-red-600 focus:text-red-600"
                 >
                   <LogOut className="mr-2 h-4 w-4" />
-                  {t.logout}
+                  Keluar
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
             <div className="flex items-center space-x-2">
               <Button variant="ghost" asChild>
-                <Link href="/login">{t.login}</Link>
+                <Link href="/login">Masuk</Link>
               </Button>
               <Button asChild>
-                <Link href="/register">{t.register}</Link>
+                <Link href="/register">Daftar</Link>
               </Button>
             </div>
           )}
@@ -485,7 +388,7 @@ export function Header() {
                     handleMobileNavigation("/#hero")
                   }}
                 >
-                  <Image src="/img/logomersiflab.png" alt={t.mersifLabLogo} width={120} height={30} />
+                  <Image src="/img/logomersiflab.png" alt="Logo MersifLab" width={120} height={30} />
                 </Link>
               </div>
               
@@ -495,16 +398,27 @@ export function Header() {
                     <React.Fragment key={item.label}>
                       <button
                         className="flex w-full items-center justify-between text-base font-medium px-4 py-2 hover:bg-gray-100 rounded-md transition-colors"
-                        onClick={() => setIsMobileNewsOpen(!isMobileNewsOpen)}
+                        onClick={() => {
+                          if (item.label === "Layanan") {
+                            setIsMobileServiceOpen(!isMobileServiceOpen)
+                          } else if (item.label === "Berita") {
+                            setIsMobileNewsOpen(!isMobileNewsOpen)
+                          }
+                        }}
                       >
                         <span className="flex items-center gap-3">
                           {item.icon && <item.icon className="h-5 w-5" />} {item.label}
                         </span>
                         <ChevronDown
-                          className={`h-4 w-4 transition-transform ${isMobileNewsOpen ? "rotate-180" : ""}`}
+                          className={`h-4 w-4 transition-transform ${
+                            (item.label === "Layanan" && isMobileServiceOpen) || 
+                            (item.label === "Berita" && isMobileNewsOpen) 
+                              ? "rotate-180" : ""
+                          }`}
                         />
                       </button>
-                      {isMobileNewsOpen && (
+                      {((item.label === "Layanan" && isMobileServiceOpen) || 
+                        (item.label === "Berita" && isMobileNewsOpen)) && (
                         <div className="pl-10 space-y-1">
                           {item.subLinks?.map((subLink) => (
                             <button
@@ -534,17 +448,6 @@ export function Header() {
                 )}
                 
                 <div className="pt-4 border-t mt-4 space-y-2">
-                  <Button
-                    variant="outline"
-                    onClick={() => {
-                      toggleLanguage()
-                      closeSheet()
-                    }}
-                    className="w-full flex items-center gap-3 text-base font-semibold px-4 py-2 rounded-md hover:bg-gray-50 transition justify-start"
-                  >
-                    {t.language}: {currentLanguage === "en" ? "English" : "Indonesia"}
-                  </Button>
-                  
                   {status === "loading" ? (
                     <div className="w-full h-10 bg-gray-200 rounded animate-pulse"></div>
                   ) : session ? (
@@ -574,7 +477,7 @@ export function Header() {
                         }}
                       >
                         <User className="h-5 w-5" />
-                        {t.profile}
+                        Profile
                       </button>
                       
                       <button
@@ -585,7 +488,7 @@ export function Header() {
                         }}
                       >
                         <Settings className="h-5 w-5" />
-                        {t.settings}
+                        Pengaturan
                       </button>
                       
                       {session.user?.role === 'admin' && (
@@ -597,7 +500,7 @@ export function Header() {
                           }}
                         >
                           <Shield className="h-5 w-5" />
-                          {t.adminPanel}
+                          Panel Admin
                         </button>
                       )}
                       
@@ -609,7 +512,7 @@ export function Header() {
                         }}
                       >
                         <LogOut className="h-5 w-5" />
-                        {t.logout}
+                        Keluar
                       </button>
                     </div>
                   ) : (
@@ -622,7 +525,7 @@ export function Header() {
                         }}
                       >
                         <User className="h-5 w-5" />
-                        {t.login}
+                        Masuk
                       </button>
                       <button
                         className="flex w-full items-center gap-3 text-base font-semibold text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-md transition"
@@ -632,7 +535,7 @@ export function Header() {
                         }}
                       >
                         <User className="h-5 w-5" />
-                        {t.register}
+                        Daftar
                       </button>
                     </div>
                   )}

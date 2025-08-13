@@ -7,83 +7,124 @@ import { useState, useEffect } from "react"
 
 export function HeroSection() {
   const [showGlitch, setShowGlitch] = useState(false)
+  const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
-    // Trigger the glitch effect when the component mounts
-    setShowGlitch(true)
+    // Trigger animations with slight delay for natural feel
+    const timer = setTimeout(() => {
+      setShowGlitch(true)
+      setIsVisible(true)
+    }, 100)
+
+    return () => clearTimeout(timer)
   }, [])
 
   return (
-    <section id="hero" className="w-full py-3 sm:py-4 md:py-6 lg:py-8 xl:py-10 2xl:py-12 from-white to-gray-50">
-      <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-12 max-w-[1600px]">
+    <section id="hero" className="w-full h-screen flex flex-col justify-center items-center lg:py-8 xl:py-10 2xl:py-12 from-white to-gray-50">
+      <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-12 max-w-[1600px] flex-1 flex flex-col justify-center">
         
-        {/* Mobile and Tablet layout (up to lg) - image first, then text below */}
-        <div className="flex flex-col items-center text-center lg:hidden space-y-4 sm:space-y-6 md:space-y-8">
-          <div className="relative w-full max-w-[400px] xs:max-w-[480px] sm:max-w-[600px] md:max-w-[720px]">
-            <Image
-              src="/img/home.svg"
-              width="2100"
-              height="1950"
-              alt="Mersif Lab Illustration"
-              className={`mx-auto aspect-[1.2/1] overflow-hidden rounded-xl object-cover object-center w-full ${showGlitch ? "glitch-image" : ""}`}
-              priority
-            />
-            {/* Bottom white fade overlay */}
-            <div className="absolute bottom-0 left-0 right-0 h-12 sm:h-14 md:h-16 bg-gradient-to-t from-white via-white/90 to-transparent rounded-b-xl pointer-events-none z-10"></div>
+        {/* Mobile and Tablet layout (up to lg) - 50:50 ratio */}
+        <div className="flex flex-col items-center text-center lg:hidden h-full justify-center">
+          {/* Image Section - 45% of available space */}
+          <div className="flex-[0.45] flex items-end justify-center w-full min-h-0 pb-4">
+            <div className="relative w-full max-w-[280px] xs:max-w-[320px] sm:max-w-[360px] md:max-w-[400px] h-full max-h-[250px] xs:max-h-[280px] sm:max-h-[320px] md:max-h-[360px]">
+              <Image
+                src="/img/home.svg"
+                width="2100"
+                height="1950"
+                alt="Mersif Lab Illustration"
+                className={`mx-auto aspect-[1.2/1] overflow-hidden rounded-xl object-cover object-center w-full h-full transition-all duration-700 ease-out ${showGlitch ? "glitch-image opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+                priority
+              />
+              {/* Bottom white fade overlay */}
+              <div className="absolute bottom-0 left-0 right-0 h-6 sm:h-8 md:h-10 bg-gradient-to-t from-white via-white/90 to-transparent rounded-b-xl pointer-events-none z-10"></div>
+            </div>
           </div>
           
-          <div className="flex flex-col justify-center space-y-3 sm:space-y-4 md:space-y-5">
+          {/* Text Section - 55% of available space */}
+          <div className={`flex-[0.55] flex flex-col justify-start pt-2 space-y-3 sm:space-y-4 md:space-y-5 px-4 sm:px-6 md:px-8 transition-all duration-700 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`} style={{ transitionDelay: "200ms" }}>
             <div className="space-y-2 sm:space-y-3">
               <h1
-                className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold tracking-tighter leading-tight"
-                style={{ fontFamily: "Poppins, sans-serif" }}
+                className={`text-4xl xs:text-5xl sm:text-6xl md:text-7xl font-bold tracking-tighter leading-tight transition-all duration-700 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+                style={{ fontFamily: "Poppins, sans-serif", transitionDelay: "300ms" }}
               >
                 Mersif<span className="text-[#007bff]">Lab</span>
               </h1>
               <p
-                className="max-w-[280px] xs:max-w-[320px] sm:max-w-[500px] md:max-w-[600px] text-sm xs:text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed px-2 sm:px-4"
-                style={{ fontFamily: "Inter, sans-serif" }}
+                className={`max-w-[320px] xs:max-w-[380px] sm:max-w-[480px] md:max-w-[600px] text-sm xs:text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed mx-auto transition-all duration-700 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+                style={{ fontFamily: "Inter, sans-serif", transitionDelay: "400ms" }}
               >
                 Platform Laboratorium Virtual Berbasis Mixed Reality Kolaboratif dan Imersif
               </p>
             </div>
-            <a href="#about" className="flex justify-center pt-1 sm:pt-2">
-  <Button className="inline-flex h-9 sm:h-10 md:h-11 items-center justify-center rounded-full bg-[#007bff] px-4 sm:px-5 md:px-6 text-sm sm:text-base font-medium text-white shadow transition-colors hover:bg-[#007bff]/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50">
-    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
-  </Button>
-</a>
-            
+            <div className={`flex justify-center pt-1 sm:pt-2 transition-all duration-700 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`} style={{ transitionDelay: "500ms" }}>
+              <a 
+                href="#services"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.querySelector('#services')?.scrollIntoView({
+                    behavior: 'smooth'
+                  });
+                }}
+              >
+                <Button 
+                  className="inline-flex h-9 sm:h-10 md:h-10 items-center justify-center rounded-full bg-[#007bff] px-4 sm:px-5 md:px-6 text-sm sm:text-sm md:text-base font-medium text-white shadow transition-all duration-300 hover:bg-[#007bff]/90 hover:shadow-lg hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+                  style={{ fontFamily: "Poppins, sans-serif" }}
+                >
+                  Jelajahi Mersif
+                  <ArrowRight className="ml-2 w-4 h-4 sm:w-4 sm:h-4 md:w-5 md:h-5" />
+                </Button>
+              </a>
+            </div>
           </div>
         </div>
 
         {/* Desktop layout (lg and above) - side by side */}
-        <div className="hidden lg:grid gap-4 lg:gap-6 xl:gap-8 2xl:gap-10 items-center lg:grid-cols-[1fr_580px] xl:grid-cols-[1fr_650px] 2xl:grid-cols-[1fr_720px]">
+        <div className="hidden lg:grid gap-4 lg:gap-6 xl:gap-8 2xl:gap-10 items-center lg:grid-cols-[1fr_580px] xl:grid-cols-[1fr_650px] 2xl:grid-cols-[1fr_720px] flex-1">
           
           {/* Text Content */}
-          <div className="flex flex-col justify-center space-y-3 lg:space-y-4 xl:space-y-5 2xl:space-y-6 lg:pl-6 xl:pl-8 2xl:pl-10">
+          <div className={`flex flex-col justify-center space-y-3 lg:space-y-4 xl:space-y-5 2xl:space-y-6 lg:pl-6 xl:pl-8 2xl:pl-10 transition-all duration-800 ease-out ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"}`} style={{ transitionDelay: "200ms" }}>
             <div className="space-y-2 lg:space-y-2 xl:space-y-3">
               <h1
-                className="lg:text-4xl xl:text-5xl 2xl:text-6xl font-bold tracking-tighter leading-tight"
-                style={{ fontFamily: "Poppins, sans-serif" }}
+                className={`text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-gray-900 transition-all duration-800 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+                style={{ 
+                  fontFamily: "Poppins, sans-serif",
+                  transitionDelay: "300ms"
+                }}
               >
-                Membangun Ekosistem <span className="text-[#007bff]">Inovasi Digital Indonesia</span>
+                Membangun Ekosistem{" "}
+                <span className="text-[#007bff]">Inovasi Digital Indonesia</span>
               </h1>
               <p
-                className="max-w-[450px] xl:max-w-[500px] 2xl:max-w-[550px] lg:text-base xl:text-lg 2xl:text-xl text-gray-600 leading-relaxed"
-                style={{ fontFamily: "Inter, sans-serif" }}
+                className={`max-w-[450px] xl:max-w-[500px] 2xl:max-w-[550px] lg:text-base xl:text-lg 2xl:text-xl text-gray-600 leading-relaxed transition-all duration-800 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+                style={{ 
+                  fontFamily: "Inter, sans-serif",
+                  transitionDelay: "400ms"
+                }}
               >
                 MersifLab berkomitmen untuk mengakselerasi talenta dan solusi digital melalui pilar layanan kami di bidang IoT, Edukasi, Kreativitas, dan Dampak Sosial.
               </p>
             </div>
-            <div className="flex pt-1 lg:pt-2 xl:pt-3">
-              <Button className="inline-flex lg:h-10 xl:h-11 2xl:h-12 items-center justify-center rounded-full bg-[#007bff] lg:px-4 xl:px-5 2xl:px-6 lg:text-sm xl:text-base 2xl:text-lg font-medium text-white shadow transition-colors hover:bg-[#007bff]/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50">
-                <ArrowRight className="lg:w-4 lg:h-4 xl:w-5 xl:h-5 2xl:w-6 2xl:h-6" />
-              </Button>
+            <div className={`flex pt-1 lg:pt-2 xl:pt-3 transition-all duration-800 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`} style={{ transitionDelay: "500ms" }}>
+              <a
+                style={{ fontFamily: "Poppins, sans-serif" }}
+                href="#services"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.querySelector('#services')?.scrollIntoView({
+                    behavior: 'smooth'
+                  });
+                }}
+                className="inline-flex lg:h-10 xl:h-11 2xl:h-12 items-center justify-center rounded-full bg-[#007bff] lg:px-4 xl:px-5 2xl:px-6 lg:text-sm xl:text-base 2xl:text-lg font-medium text-white shadow transition-all duration-300 hover:bg-[#007bff]/90 hover:shadow-lg hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              >
+                Jelajahi Mersif
+                <ArrowRight className="ml-2 lg:w-4 lg:h-4 xl:w-5 xl:h-5 2xl:w-6 2xl:h-6" />
+              </a>
             </div>
           </div>
 
           {/* Image - Now Larger */}
-          <div className="relative lg:order-last">
+          <div className={`relative lg:order-last transition-all duration-800 ease-out ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`} style={{ transitionDelay: "100ms" }}>
             <Image
               src="/img/home.svg"
               width="2100"

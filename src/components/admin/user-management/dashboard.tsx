@@ -182,7 +182,7 @@ export default function AdminDashboard() {
                 <Badge variant="secondary" className="bg-yellow-50 text-yellow-700 border-yellow-200">
                   {stats?.news.draft} Draft
                 </Badge>
-              )}
+              )}  
             </div>
             <Button variant="ghost" size="sm" asChild className="w-full justify-between text-green-600 hover:text-green-700 hover:bg-green-50">
               <Link href="/admin/articles-news">

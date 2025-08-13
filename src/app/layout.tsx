@@ -20,7 +20,11 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "MersifLab",
   description: "Platform Laboratorium Virtual Berbasis Mixed Reality Kolaboratif dan Imersif",
-}
+  icons: {
+    icon: "/img/iconmersiflab.png",
+  },
+};
+
 
 export default function RootLayout({
   children,

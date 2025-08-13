@@ -28,6 +28,29 @@ export function PartnersSection() {
   return (
     <section id="partners" className="w-full py-8 md:py-12 lg:py-16 bg-white overflow-hidden">
       <div className="w-full text-center">
+
+{/* Heading */}
+        <h2
+          style={{ fontFamily: "Poppins, sans-serif" }}
+          className="text-4xl md:text-5xl font-bold text-gray-800 mb-3"
+        >
+          PARTNER KAMI
+          <span className="text-[#007bff]"> TERPERCAYA</span>
+        </h2>
+
+        {/* Subheading */}
+        <p
+          style={{ fontFamily: "Inter, sans-serif" }}
+          className="text-gray-600 max-w-2xl mx-auto text-base md:text-lg leading-relaxed"
+        >
+          Kami berkolaborasi dengan partner terpercaya untuk menghadirkan solusi
+          terbaik dan menciptakan nilai bersama.
+        </p>
+
+
+
+
+        {/* Container Logo */}
         <div className="mt-6 relative w-full">
           <div className="flex animate-scroll w-full">
             {/* First set of logos */}
@@ -62,6 +85,7 @@ export function PartnersSection() {
         </div>
       </div>
 
+      {/* CSS Khusus */}
       <style jsx>{`
         @keyframes scroll {
           0% {

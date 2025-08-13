@@ -2,12 +2,12 @@
 
 import { useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
-import Image from 'next/image' // Import Image component for optimized images
+import Image from 'next/image'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Calendar, Search, Filter, Newspaper, BookOpen } from 'lucide-react' // Added Newspaper and BookOpen icons
+import { Calendar, Search, Filter } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 
 interface ContentItem {
@@ -53,7 +53,6 @@ export default function NewsPage() {
       if (data.error) {
         throw new Error(data.error)
       }
-      // Sort content items by creation date in descending order
       const sortedData = data.sort((a: ContentItem, b: ContentItem) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
       setContentItems(sortedData)
     } catch (error) {
@@ -76,18 +75,17 @@ export default function NewsPage() {
     }
   }
 
-  const truncateContent = (content: string, maxLength: number = 150) => {
+  const truncateContent = (content: string, maxLength: number = 100) => {
     const textContent = content.replace(/<[^>]*>/g, '')
     return textContent.length > maxLength
       ? textContent.substring(0, maxLength) + '...'
       : textContent
   }
 
-  // Determine featured article and filter the rest
   const featuredArticle = useMemo(() => contentItems.length > 0 ? contentItems[0] : null, [contentItems]);
 
   const filteredItems = useMemo(() => {
-    const itemsToFilter = featuredArticle ? contentItems.slice(1) : contentItems; // Exclude featured from main grid
+    const itemsToFilter = featuredArticle ? contentItems.slice(1) : contentItems;
     return itemsToFilter.filter(item => {
       const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase())
       const matchesCategory = categoryFilter === 'all' || item.category.name === categoryFilter
@@ -96,13 +94,12 @@ export default function NewsPage() {
     });
   }, [contentItems, featuredArticle, searchTerm, categoryFilter, typeFilter]);
 
-
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 py-12 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 py-8 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-600 mx-auto mb-6"></div>
-          <p className="text-lg text-gray-700 font-medium">Loading content...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-base text-gray-700 font-medium">Loading content...</p>
         </div>
       </div>
     )
@@ -110,12 +107,12 @@ export default function NewsPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 py-12 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 py-8 flex items-center justify-center">
         <div className="container mx-auto px-4">
           <div className="text-center">
-            <div className="bg-red-50 border border-red-200 rounded-lg p-8 max-w-md mx-auto shadow-lg">
-              <h3 className="text-red-800 font-bold text-xl mb-3">Error Loading Content</h3>
-              <p className="text-red-600 text-base mb-6">{error}</p>
+            <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md mx-auto shadow-lg">
+              <h3 className="text-red-800 font-bold text-lg mb-2">Error Loading Content</h3>
+              <p className="text-red-600 text-sm mb-4">{error}</p>
               <Button
                 onClick={() => {
                   setError(null)
@@ -124,6 +121,7 @@ export default function NewsPage() {
                 }}
                 className="w-full"
                 variant="destructive"
+                size="sm"
               >
                 Try Again
               </Button>
@@ -135,49 +133,50 @@ export default function NewsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 py-12">
+    <div className="min-h-screen bg-gray-100 py-6">
       <div className="container mx-auto px-4">
-        {/* Header */}
-        <div className="text-center mb-16 pt-8">
-          <h1 style={{ fontFamily: "Poppins, sans-serif" }} className="text-4xl md:text-6xl font-extrabold text-gray-900 mb-4 leading-tight">
+        {/* Header - Compact */}
+        <div className="text-center mb-8">
+          <h1 style={{ fontFamily: 'Poppins, sans-serif' }} className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
             Berita & Artikel
           </h1>
-          <p style={{ fontFamily: "Inter, sans-serif" }} className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+          <p style={{ fontFamily: 'Poppins, sans-serif' }}  className="text-sm md:text-base text-gray-600">
             Informasi terkini dan analisis mendalam dari MersifLab.
           </p>
         </div>
 
-        {/* Filters */}
-        <div className="mb-10 p-6 bg-white rounded-lg shadow-sm border border-gray-100 flex flex-col md:flex-row md:items-center gap-4">
+        {/* Filters - Compact */}
+        <div className="mb-6 p-3 bg-white rounded-lg shadow-sm border border-gray-100 flex flex-col md:flex-row md:items-center gap-3">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+            <Search  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
             <Input
+            style={{ fontFamily: 'Inter, sans-serif' }} 
               placeholder="Cari berita atau artikel..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 pr-4 py-2 w-full rounded-md border border-input focus:ring-2 focus:ring-blue-200 focus:border-blue-400"
+              className="pl-9 pr-4 py-2 text-sm h-9"
             />
           </div>
 
           <Select value={typeFilter} onValueChange={setTypeFilter}>
-            <SelectTrigger className="w-full md:w-48">
+            <SelectTrigger style={{ fontFamily: 'Inter, sans-serif' }} className="w-full md:w-36 h-9">
               <Filter className="h-4 w-4 mr-2 text-gray-500" />
               <SelectValue placeholder="Semua Tipe" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">Semua Tipe</SelectItem>
-              <SelectItem value="article">Artikel</SelectItem>
-              <SelectItem value="news">Berita</SelectItem>
+              <SelectItem style={{ fontFamily: 'Inter, sans-serif' }} value="all">Semua Tipe</SelectItem>
+              <SelectItem style={{ fontFamily: 'Inter, sans-serif' }} value="article">Artikel</SelectItem>
+              <SelectItem style={{ fontFamily: 'Inter, sans-serif' }} value="news">Berita</SelectItem>
             </SelectContent>
           </Select>
 
           <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-            <SelectTrigger className="w-full md:w-48">
+            <SelectTrigger style={{ fontFamily: 'Inter, sans-serif' }} className="w-full md:w-36 h-9">
               <Filter className="h-4 w-4 mr-2 text-gray-500" />
-              <SelectValue placeholder="Semua Kategori" />
+              <SelectValue placeholder="Kategori" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">Semua Kategori</SelectItem>
+              <SelectItem value="all" style={{ fontFamily: 'Inter, sans-serif' }}>Semua Kategori</SelectItem>
               {categories.map(category => (
                 <SelectItem key={category.id} value={category.name}>
                   {category.name}
@@ -187,60 +186,60 @@ export default function NewsPage() {
           </Select>
         </div>
 
-        {/* Featured Article Section */}
+        {/* Featured Article - Compact */}
         {featuredArticle && (
-          <div className="mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6 border-b-2 border-blue-600 pb-2">Berita Utama</h2>
-            <Card className="rounded-xl shadow-lg overflow-hidden">
+          <div className="mb-8">
+            <h2 className="text-lg font-bold text-gray-900 mb-3 border-b border-blue-600 pb-1" style={{ fontFamily: 'Poppins, sans-serif' }}>Berita Utama</h2>
+            <Card className="rounded-lg shadow-md overflow-hidden">
               <Link href={`/news-detail/${featuredArticle.slug}`} className="flex flex-col md:flex-row">
-                <div className="md:w-1/2 aspect-video md:aspect-auto overflow-hidden">
+                <div className="md:w-2/5 aspect-video md:aspect-auto overflow-hidden">
                   {featuredArticle.thumbnail ? (
                     <Image
                       src={featuredArticle.thumbnail || "/placeholder.svg"}
                       alt={featuredArticle.title}
-                      width={800}
-                      height={450}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                      width={400}
+                      height={225}
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                     />
                   ) : (
-                    <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500">
+                    <div className="w-full h-full bg-gray-200 flex items-center justify-center">
                       <Image
                         src="/news-article-placeholder.png"
                         alt="Placeholder image"
-                        width={800}
-                        height={450}
+                        width={400}
+                        height={225}
                         className="w-full h-full object-cover"
                       />
                     </div>
                   )}
                 </div>
-                <CardContent className="md:w-1/2 p-6 flex flex-col justify-center">
-                  <div className="flex flex-wrap items-center gap-2 mb-3">
-                    <Badge variant="outline" className="text-sm px-3 py-1 rounded-full border-gray-300 text-gray-700">
+                <CardContent className="md:w-3/5 p-4">
+                  <div style={{ fontFamily: 'Inter, sans-serif' }} className="flex flex-wrap items-center gap-2 mb-2">
+                    <Badge variant="outline" className="text-xs px-2 py-1">
                       {featuredArticle.category.name}
                     </Badge>
-                    <Badge variant={featuredArticle.type === 'article' ? 'default' : 'secondary'} className="text-sm px-3 py-1 rounded-full">
+                    <Badge variant={featuredArticle.type === 'article' ? 'default' : 'secondary'} className="text-xs px-2 py-1">
                       {featuredArticle.type === 'article' ? 'Artikel' : 'Berita'}
                     </Badge>
                   </div>
-                  <h3 className="font-bold text-3xl md:text-4xl mb-4 leading-tight text-gray-900 hover:text-blue-700 transition-colors duration-200">
+                  <h3 style={{ fontFamily: 'Poppins, sans-serif' }} className="font-bold text-lg md:text-xl mb-2 text-gray-900 hover:text-blue-700 transition-colors line-clamp-2">
                     {featuredArticle.title}
                   </h3>
-                  <p className="text-gray-700 text-lg mb-6 line-clamp-4">
-                    {truncateContent(featuredArticle.content, 250)}
+                  <p style={{ fontFamily: 'Inter, sans-serif' }} className="text-gray-700 text-sm mb-3 line-clamp-3">
+                    {truncateContent(featuredArticle.content, 180)}
                   </p>
-                  <div className="flex items-center justify-between text-base text-gray-600">
-                    <div className="flex items-center gap-2">
-                      <Calendar className="h-5 w-5 text-gray-500" />
+                  <div style={{ fontFamily: 'Inter, sans-serif' }} className="flex items-center justify-between text-xs text-gray-600">
+                    <div className="flex items-center gap-1">
+                      <Calendar className="h-3 w-3" />
                       <span>
                         {new Date(featuredArticle.createdAt).toLocaleDateString('id-ID', {
-                          year: 'numeric',
-                          month: 'long',
-                          day: 'numeric'
+                          day: 'numeric',
+                          month: 'short',
+                          year: 'numeric'
                         })}
                       </span>
                     </div>
-                    <span className="font-semibold">By {featuredArticle.author.username}</span>
+                    <span className="font-medium">{featuredArticle.author.username}</span>
                   </div>
                 </CardContent>
               </Link>
@@ -248,67 +247,66 @@ export default function NewsPage() {
           </div>
         )}
 
-        {/* Main Content Grid */}
-        <h2 className="text-3xl font-bold text-gray-900 mb-6 border-b-2 border-gray-300 pb-2">Konten Lainnya</h2>
-        <div className="mb-8 text-gray-700 text-lg font-medium">
-          <p>
-            Menampilkan {filteredItems.length} dari {contentItems.length - (featuredArticle ? 1 : 0)} konten
+        {/* Main Content Grid - More items, smaller cards */}
+        <div className="flex items-center justify-between mb-4">
+          <h2 style={{ fontFamily: 'Poppins, sans-serif' }} className="text-lg font-bold text-gray-900">Konten Lainnya</h2>
+          <p style={{ fontFamily: 'Inter, sans-serif' }} className="text-sm text-gray-600">
+            {filteredItems.length} dari {contentItems.length - (featuredArticle ? 1 : 0)} konten
           </p>
         </div>
 
         {filteredItems.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
             {filteredItems.map((item) => (
-              <Card key={`${item.type}-${item.id}`} className="rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
+              <Card key={`${item.type}-${item.id}`} className="rounded-lg shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden">
                 <Link href={`/news-detail/${item.slug}`}>
-                  <div className="aspect-video overflow-hidden rounded-t-xl">
+                  <div className="aspect-video overflow-hidden">
                     {item.thumbnail ? (
                       <Image
                         src={item.thumbnail || "/placeholder.svg"}
                         alt={item.title}
-                        width={600}
-                        height={337}
-                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                        width={300}
+                        height={169}
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                       />
                     ) : (
-                      <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500">
+                      <div className="w-full h-full bg-gray-200 flex items-center justify-center">
                         <Image
                           src="/news-article-placeholder.png"
                           alt="Placeholder image"
-                          width={600}
-                          height={337}
+                          width={300}
+                          height={169}
                           className="w-full h-full object-cover"
                         />
                       </div>
                     )}
                   </div>
-                  <CardContent className="p-6">
-                    <div className="flex flex-wrap items-center gap-2 mb-3">
-                      <Badge variant="outline" className="text-sm px-3 py-1 rounded-full border-gray-300 text-gray-700">
+                  <CardContent className="p-3">
+                    <div style={{ fontFamily: 'Inter, sans-serif' }} className="flex flex-wrap items-center gap-1 mb-2">
+                      <Badge variant="outline" className="text-xs px-1.5 py-0.5 text-xs">
                         {item.category.name}
                       </Badge>
-                      <Badge variant={item.type === 'article' ? 'default' : 'secondary'} className="text-sm px-3 py-1 rounded-full">
+                      <Badge variant={item.type === 'article' ? 'default' : 'secondary'} className="text-xs px-1.5 py-0.5">
                         {item.type === 'article' ? 'Artikel' : 'Berita'}
                       </Badge>
                     </div>
-                    <h3 className="font-bold text-xl mb-3 line-clamp-2 text-gray-900 hover:text-blue-700 transition-colors duration-200">
+                    <h3 style={{ fontFamily: 'Poppins, sans-serif' }} className="font-semibold text-sm mb-2 line-clamp-2 text-gray-900 hover:text-blue-700 transition-colors">
                       {item.title}
                     </h3>
-                    <p className="text-gray-600 text-base mb-4 line-clamp-3">
-                      {truncateContent(item.content)}
+                    <p style={{ fontFamily: 'Inter, sans-serif' }} className="text-gray-600 text-xs mb-2 line-clamp-2">
+                      {truncateContent(item.content, 80)}
                     </p>
-                    <div className="flex items-center justify-between text-sm text-gray-500">
-                      <div className="flex items-center gap-2">
-                        <Calendar className="h-4 w-4 text-gray-400" />
+                    <div style={{ fontFamily: 'Inter, sans-serif' }} className="flex items-center justify-between text-xs text-gray-500">
+                      <div className="flex items-center gap-1">
+                        <Calendar className="h-3 w-3" />
                         <span>
                           {new Date(item.createdAt).toLocaleDateString('id-ID', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric'
+                            day: 'numeric',
+                            month: 'short'
                           })}
                         </span>
                       </div>
-                      <span className="font-medium">By {item.author.username}</span>
+                      <span className="font-medium text-xs truncate max-w-16">{item.author.username}</span>
                     </div>
                   </CardContent>
                 </Link>
@@ -316,21 +314,21 @@ export default function NewsPage() {
             ))}
           </div>
         ) : (
-          <div className="text-center py-20 bg-white rounded-lg shadow-sm border border-gray-100">
-            <div className="text-gray-400 mb-6">
-              <Filter className="h-20 w-20 mx-auto" />
+          <div className="text-center py-12 bg-white rounded-lg shadow-sm border border-gray-100">
+            <div className="text-gray-400 mb-4">
+              <Filter className="h-12 w-12 mx-auto" />
             </div>
-            <h3 className="text-2xl font-bold text-gray-700 mb-3">
+            <h3 className="text-lg font-bold text-gray-700 mb-2">
               Tidak ada konten ditemukan
             </h3>
-            <p className="text-gray-500 text-lg mb-6 max-w-md mx-auto">
+            <p className="text-gray-500 text-sm mb-4 max-w-md mx-auto">
               {contentItems.length === 0
-                ? 'Belum ada artikel atau berita yang dipublikasikan. Silakan buat sample data terlebih dahulu.'
-                : 'Coba ubah filter atau kata kunci pencarian Anda untuk menemukan konten.'
+                ? 'Belum ada artikel atau berita yang dipublikasikan.'
+                : 'Coba ubah filter atau kata kunci pencarian Anda.'
               }
             </p>
             {contentItems.length === 0 ? (
-              <Button asChild size="lg">
+              <Button asChild size="sm">
                 <Link href="/seed-data">
                   Buat Sample Data
                 </Link>
@@ -338,7 +336,7 @@ export default function NewsPage() {
             ) : (
               <Button
                 variant="outline"
-                size="lg"
+                size="sm"
                 onClick={() => {
                   setSearchTerm('')
                   setCategoryFilter('all')

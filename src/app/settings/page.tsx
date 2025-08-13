@@ -79,20 +79,33 @@ export default function SettingsPage() {
         {/* Header */}
         <div className="mb-8">
           <Button variant="ghost" asChild className="mb-4">
-            <Link href="/profile" className="flex items-center gap-2">
-              <ArrowLeft className="h-4 w-4" />
+            <Link href="/profile"  style={{ fontFamily: "Poppins, sans-serif" }} className="flex items-center gap-2">
+              <ArrowLeft className="h-4 w-4"  />
               Kembali ke Profil
             </Link>
           </Button>
-          <h1 className="text-3xl font-bold text-gray-900">Pengaturan</h1>
-          <p className="text-gray-600 mt-2">Kelola pengaturan keamanan dan privasi akun Anda</p>
+          <h1
+            className="text-3xl font-bold text-gray-900"
+            style={{ fontFamily: "Poppins, sans-serif" }}
+          >
+            Pengaturan
+          </h1>
+          <p
+            className="text-gray-600 mt-2"
+            style={{ fontFamily: "Inter, sans-serif" }}
+          >
+            Kelola pengaturan keamanan dan privasi akun Anda
+          </p>
         </div>
 
         <div className="space-y-6">
           {/* Account Info */}
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
+              <CardTitle
+                className="flex items-center gap-2"
+                style={{ fontFamily: "Poppins, sans-serif" }}
+              >
                 <Shield className="w-5 h-5" />
                 Informasi Akun
               </CardTitle>
@@ -100,20 +113,60 @@ export default function SettingsPage() {
             <CardContent className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2">
                 <div>
-                  <Label className="text-sm font-medium text-gray-700">Username</Label>
-                  <p className="text-gray-900 font-medium">{session.user.username}</p>
+                  <Label
+                    className="text-sm font-medium text-gray-700"
+                    style={{ fontFamily: "Inter, sans-serif" }}
+                  >
+                    Username
+                  </Label>
+                  <p
+                    className="text-gray-900 font-medium"
+                    style={{ fontFamily: "Inter, sans-serif" }}
+                  >
+                    {session.user.username}
+                  </p>
                 </div>
                 <div>
-                  <Label className="text-sm font-medium text-gray-700">Email</Label>
-                  <p className="text-gray-900 font-medium">{session.user.email}</p>
+                  <Label
+                    className="text-sm font-medium text-gray-700"
+                    style={{ fontFamily: "Inter, sans-serif" }}
+                  >
+                    Email
+                  </Label>
+                  <p
+                    className="text-gray-900 font-medium"
+                    style={{ fontFamily: "Inter, sans-serif" }}
+                  >
+                    {session.user.email}
+                  </p>
                 </div>
                 <div>
-                  <Label className="text-sm font-medium text-gray-700">Role</Label>
-                  <p className="text-gray-900 font-medium capitalize">{session.user.role}</p>
+                  <Label
+                    className="text-sm font-medium text-gray-700"
+                    style={{ fontFamily: "Inter, sans-serif" }}
+                  >
+                    Role
+                  </Label>
+                  <p
+                    className="text-gray-900 font-medium capitalize"
+                    style={{ fontFamily: "Inter, sans-serif" }}
+                  >
+                    {session.user.role}
+                  </p>
                 </div>
                 <div>
-                  <Label className="text-sm font-medium text-gray-700">User ID</Label>
-                  <p className="text-gray-900 font-medium">{session.user.id}</p>
+                  <Label
+                    className="text-sm font-medium text-gray-700"
+                    style={{ fontFamily: "Inter, sans-serif" }}
+                  >
+                    User ID
+                  </Label>
+                  <p
+                    className="text-gray-900 font-medium"
+                    style={{ fontFamily: "Inter, sans-serif" }}
+                  >
+                    {session.user.id}
+                  </p>
                 </div>
               </div>
               
@@ -121,7 +174,7 @@ export default function SettingsPage() {
               
               <div className="flex justify-end">
                 <Button asChild variant="outline">
-                  <Link href="/profile">Edit Profil</Link>
+                  <Link href="/profile" style={{ fontFamily: "Poppins, sans-serif" }}>Edit Profil</Link>
                 </Button>
               </div>
             </CardContent>
@@ -130,15 +183,23 @@ export default function SettingsPage() {
           {/* Change Password */}
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Lock className="w-5 h-5" />
+              <CardTitle
+                className="flex items-center gap-2"
+                style={{ fontFamily: "Poppins, sans-serif" }}
+              >
+                <Lock className="w-5 h-5"/>
                 Ubah Password
               </CardTitle>
             </CardHeader>
             <CardContent>
               <form onSubmit={handlePasswordChange} className="space-y-4">
                 <div>
-                  <Label htmlFor="currentPassword">Password Saat Ini</Label>
+                  <Label
+                    htmlFor="currentPassword"
+                    style={{ fontFamily: "Inter, sans-serif" }}
+                  >
+                    Password Saat Ini
+                  </Label>
                   <div className="relative">
                     <Input
                       id="currentPassword"
@@ -147,6 +208,7 @@ export default function SettingsPage() {
                       onChange={(e) => setPasswordData(prev => ({ ...prev, currentPassword: e.target.value }))}
                       placeholder="Masukkan password saat ini"
                       required
+                      style={{ fontFamily: "Inter, sans-serif" }}
                     />
                     <Button
                       type="button"
@@ -161,7 +223,12 @@ export default function SettingsPage() {
                 </div>
 
                 <div>
-                  <Label htmlFor="newPassword">Password Baru</Label>
+                  <Label
+                    htmlFor="newPassword"
+                    style={{ fontFamily: "Inter, sans-serif" }}
+                  >
+                    Password Baru
+                  </Label>
                   <div className="relative">
                     <Input
                       id="newPassword"
@@ -171,6 +238,7 @@ export default function SettingsPage() {
                       placeholder="Masukkan password baru (minimal 6 karakter)"
                       required
                       minLength={6}
+                      style={{ fontFamily: "Inter, sans-serif" }}
                     />
                     <Button
                       type="button"
@@ -185,7 +253,12 @@ export default function SettingsPage() {
                 </div>
 
                 <div>
-                  <Label htmlFor="confirmPassword">Konfirmasi Password Baru</Label>
+                  <Label
+                    htmlFor="confirmPassword"
+                    style={{ fontFamily: "Inter, sans-serif" }}
+                  >
+                    Konfirmasi Password Baru
+                  </Label>
                   <div className="relative">
                     <Input
                       id="confirmPassword"
@@ -194,6 +267,7 @@ export default function SettingsPage() {
                       onChange={(e) => setPasswordData(prev => ({ ...prev, confirmPassword: e.target.value }))}
                       placeholder="Konfirmasi password baru"
                       required
+                      style={{ fontFamily: "Inter, sans-serif" }}
                     />
                     <Button
                       type="button"
@@ -208,7 +282,7 @@ export default function SettingsPage() {
                 </div>
 
                 <div className="flex justify-end pt-4">
-                  <Button type="submit" disabled={loading}>
+                  <Button type="submit" style={{ fontFamily: "Poppins, sans-serif" }} disabled={loading}>
                     {loading ? 'Mengubah...' : 'Ubah Password'}
                   </Button>
                 </div>

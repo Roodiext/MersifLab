@@ -204,12 +204,14 @@ export function MersifNumbersSection() {
         
         {/* Title Section */}
         <div className="text-center mb-8 sm:mb-10 md:mb-12 lg:mb-16 xl:mb-20 2xl:mb-24">
-          <h2
-            className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl 2xl:text-7xl 3xl:text-8xl font-bold text-gray-800 mb-3 sm:mb-4 md:mb-5 lg:mb-6 xl:mb-7 2xl:mb-8"
-            style={{ fontFamily: "Poppins, sans-serif" }}
-          >
-            OUR IMPACT IN NUMBERS
-          </h2>
+<h2
+  className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl 2xl:text-7xl 3xl:text-8xl font-bold text-gray-800 mb-3 sm:mb-4 md:mb-5 lg:mb-6 xl:mb-7 2xl:mb-8"
+  style={{ fontFamily: "Poppins, sans-serif" }}
+>
+  OUR <span className="text-[#007bff]">IMPACT</span> IN NUMBERS
+</h2>
+
+
           <p
             className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-xl xl:text-2xl 2xl:text-3xl 3xl:text-4xl text-gray-600 max-w-xl sm:max-w-2xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto leading-relaxed px-2 sm:px-0"
             style={{ fontFamily: "Inter, sans-serif" }}

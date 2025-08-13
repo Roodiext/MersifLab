@@ -187,18 +187,18 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-gray-50 py-8" >
       <div className="container mx-auto px-4 max-w-4xl">
         {/* Header */}
         <div className="mb-8">
           <Button variant="ghost" asChild className="mb-4">
-            <Link href="/" className="flex items-center gap-2">
+            <Link href="/" style={{ fontFamily: "Inter, sans-serif" }} className="flex items-center gap-2">
               <ArrowLeft className="h-4 w-4" />
               Kembali ke Beranda
             </Link>
           </Button>
-          <h1 className="text-3xl font-bold text-gray-900">Profil Saya</h1>
-          <p className="text-gray-600 mt-2">Kelola informasi profil dan pengaturan akun Anda</p>
+          <h1 className="text-3xl font-bold text-gray-900" style={{ fontFamily: "Poppins, sans-serif" }}>Profil Saya</h1>
+          <p className="text-gray-600 mt-2" style={{ fontFamily: "Inter, sans-serif" }}>Kelola informasi profil dan pengaturan akun Anda</p>
         </div>
 
         <div className="grid gap-8 lg:grid-cols-3">
@@ -231,12 +231,12 @@ export default function ProfilePage() {
                   )}
                 </div>
                 
-                <h2 className="text-xl font-semibold text-gray-900 mb-1">
+                <h2 className="text-xl font-semibold text-gray-900 mb-1" style={{ fontFamily: "Poppins, sans-serif" }}>
                   {profile.name || profile.username}
                 </h2>
-                <p className="text-gray-500 mb-3">@{profile.username}</p>
+                <p className="text-gray-500 mb-3" style={{ fontFamily: "Inter, sans-serif" }}>@{profile.username}</p>
                 
-                <Badge variant="secondary" className="mb-4">
+                <Badge variant="secondary" style={{ fontFamily: "Inter, sans-serif" }} className="mb-4">
                   <Shield className="w-3 h-3 mr-1" />
                   {profile.role}
                 </Badge>
@@ -245,12 +245,12 @@ export default function ProfilePage() {
                 
                 <div className="space-y-3 text-sm">
                   <div className="flex items-center gap-2 text-gray-600">
-                    <Mail className="w-4 h-4" />
-                    <span>{profile.email}</span>
+                    <Mail className="w-4 h-4"  />
+                    <span style={{ fontFamily: "Inter, sans-serif" }}>{profile.email}</span>
                   </div>
                   <div className="flex items-center gap-2 text-gray-600">
                     <Calendar className="w-4 h-4" />
-                    <span>Bergabung {new Date(profile.createdAt).toLocaleDateString('id-ID', { 
+                    <span style={{ fontFamily: "Inter, sans-serif" }} >Bergabung {new Date(profile.createdAt).toLocaleDateString('id-ID', { 
                       year: 'numeric', 
                       month: 'long' 
                     })}</span>
@@ -264,7 +264,7 @@ export default function ProfilePage() {
           <div className="lg:col-span-2">
             <Card>
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+                <CardTitle style={{ fontFamily: "Poppins, sans-serif" }} className="flex items-center gap-2">
                   <User className="w-5 h-5" />
                   Edit Profil
                 </CardTitle>
@@ -273,17 +273,19 @@ export default function ProfilePage() {
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid gap-4 md:grid-cols-2">
                     <div>
-                      <Label htmlFor="name">Nama Lengkap</Label>
+                      <Label htmlFor="name" style={{ fontFamily: "Inter, sans-serif" }}>Nama Lengkap</Label>
                       <Input
                         id="name"
+                        style={{ fontFamily: "Inter, sans-serif" }}
                         value={formData.name}
                         onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
                         placeholder="Masukkan nama lengkap"
                       />
                     </div>
                     <div>
-                      <Label htmlFor="username">Username</Label>
+                      <Label htmlFor="username" style={{ fontFamily: "Inter, sans-serif" }}>Username</Label>
                       <Input
+                      style={{ fontFamily: "Inter, sans-serif" }}
                         id="username"
                         value={formData.username}
                         onChange={(e) => setFormData(prev => ({ ...prev, username: e.target.value }))}
@@ -293,7 +295,7 @@ export default function ProfilePage() {
                     </div>
                   </div>
                   
-                  <div>
+                  <div style={{ fontFamily: "Inter, sans-serif" }}>
                     <Label htmlFor="email">Email</Label>
                     <Input
                       id="email"
@@ -306,11 +308,11 @@ export default function ProfilePage() {
                   </div>
 
                   <div className="flex gap-4 pt-4">
-                    <Button type="submit" disabled={saving} className="flex items-center gap-2">
+                    <Button style={{ fontFamily: "Poppins, sans-serif" }} type="submit" disabled={saving} className="flex items-center gap-2">
                       <Save className="w-4 h-4" />
                       {saving ? 'Menyimpan...' : 'Simpan Perubahan'}
                     </Button>
-                    <Button type="button" variant="outline" asChild>
+                    <Button style={{ fontFamily: "Poppins, sans-serif" }} type="button" variant="outline" asChild>
                       <Link href="/settings">Pengaturan Lanjutan</Link>
                     </Button>
                   </div>
