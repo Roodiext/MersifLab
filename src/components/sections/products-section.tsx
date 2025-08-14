@@ -27,12 +27,17 @@ export function ProductsSection() {
 
   const fetchServices = async () => {
   try {
+    console.log('Fetching services from API...');
     const response = await fetch('/api/services');
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
-    setServices(data.services || []);
+    console.log('API response:', data);
+    // API mengembalikan array langsung, bukan {services: [...]}
+    const servicesArray = Array.isArray(data) ? data : [];
+    console.log('Services array:', servicesArray);
+    setServices(servicesArray);
   } catch (error) {
     console.error('Error fetching services:', error);
     // Fallback data biar tidak kosong
@@ -114,12 +119,14 @@ export function ProductsSection() {
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
+          style={{ opacity: 1 }} // Force opacity to be visible
         >
           {services.map((service) => (
             <motion.div
               key={service.id}
               className="relative flex flex-col items-center group transition-all duration-300 hover:-translate-y-2 max-w-[12rem] w-full"
               variants={itemVariants}
+              style={{ opacity: 1, transform: 'translateY(0)' }} // Force visibility
             >
               <Link href={service.link} className="block w-full h-full">
                 <div className="w-full h-full bg-gray-200 rounded-xl relative overflow-hidden aspect-[3/4] shadow-md border">
@@ -130,6 +137,9 @@ export function ProductsSection() {
                       fill
                       style={{ objectFit: "cover" }}
                       className="rounded-xl transition-all duration-300 group-hover:opacity-50"
+                      onLoad={() => {
+                        console.log("Image loaded successfully:", service.image)
+                      }}
                       onError={(e) => {
                         console.log("Image failed to load:", service.image)
                         e.currentTarget.style.display = "none"
