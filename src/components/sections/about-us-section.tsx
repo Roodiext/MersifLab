@@ -1,9 +1,11 @@
 "use client"
 import Image from "next/image"
 import { useEffect, useRef } from "react"
+import { useLanguage } from "@/contexts/language-context"
 
 export function AboutUsSection() {
   const sectionRef = useRef(null)
+  const { t } = useLanguage()
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -116,22 +118,17 @@ export function AboutUsSection() {
                   className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#252B42] leading-tight"
                   style={{ fontFamily: "Poppins, sans-serif" }}
                 >
-                  <span className="title-letter animate-on-scroll">A</span>
-                  <span className="title-letter animate-on-scroll">b</span>
-                  <span className="title-letter animate-on-scroll">o</span>
-                  <span className="title-letter animate-on-scroll">u</span>
-                  <span className="title-letter animate-on-scroll">t</span>
-                  <span className="title-letter animate-on-scroll">&nbsp;</span>
-                  <span className="title-letter animate-on-scroll">U</span>
-                  <span className="title-letter animate-on-scroll">s</span>
+                  {t('about.title').split('').map((letter, index) => (
+                    <span key={index} className="title-letter animate-on-scroll">
+                      {letter}
+                    </span>
+                  ))}
                 </h2>
               </div>
 
               <div className="space-y-4">
                 <p className="animate-on-scroll text-[#737373] text-base sm:text-lg leading-relaxed" style={{ fontFamily: "Inter, sans-serif" }}>
-                  MersifLab merevolusi pengalaman belajar yang didukung oleh teknologi Augmented Reality, Virtual Reality,
-                  dan Internet of Things. Misi kami adalah untuk meningkatkan kualitas pendidikan di Indonesia dengan
-                  membuat pembelajaran yang imersif dan interaktif yang dapat diakses oleh semua orang.
+                  {t('about.description')}
                 </p>
               </div>
 

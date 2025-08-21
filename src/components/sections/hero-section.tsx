@@ -4,10 +4,12 @@ import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { ArrowRight } from "lucide-react"
 import { useState, useEffect } from "react"
+import { useLanguage } from "@/contexts/language-context"
 
 export function HeroSection() {
   const [showGlitch, setShowGlitch] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
+  const { t } = useLanguage()
 
   useEffect(() => {
     // Trigger animations with slight delay for natural feel
@@ -48,13 +50,13 @@ export function HeroSection() {
                 className={`text-4xl xs:text-5xl sm:text-6xl md:text-7xl font-bold tracking-tighter leading-tight transition-all duration-700 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
                 style={{ fontFamily: "Poppins, sans-serif", transitionDelay: "300ms" }}
               >
-                Mersif<span className="text-[#007bff]">Lab</span>
+                {t('hero.mobile.title')}
               </h1>
               <p
                 className={`max-w-[320px] xs:max-w-[380px] sm:max-w-[480px] md:max-w-[600px] text-sm xs:text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed mx-auto transition-all duration-700 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
                 style={{ fontFamily: "Inter, sans-serif", transitionDelay: "400ms" }}
               >
-                Platform Laboratorium Virtual Berbasis Mixed Reality Kolaboratif dan Imersif
+                {t('hero.mobile.subtitle')}
               </p>
             </div>
             <div className={`flex justify-center pt-1 sm:pt-2 transition-all duration-700 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`} style={{ transitionDelay: "500ms" }}>
@@ -71,7 +73,7 @@ export function HeroSection() {
                   className="inline-flex h-9 sm:h-10 md:h-10 items-center justify-center rounded-full bg-[#007bff] px-4 sm:px-5 md:px-6 text-sm sm:text-sm md:text-base font-medium text-white shadow transition-all duration-300 hover:bg-[#007bff]/90 hover:shadow-lg hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
                   style={{ fontFamily: "Poppins, sans-serif" }}
                 >
-                  Jelajahi Mersif
+                  {t('hero.button')}
                   <ArrowRight className="ml-2 w-4 h-4 sm:w-4 sm:h-4 md:w-5 md:h-5" />
                 </Button>
               </a>
@@ -79,8 +81,8 @@ export function HeroSection() {
           </div>
         </div>
 
-        {/* Desktop layout (lg and above) - side by side */}
-        <div className="hidden lg:grid gap-4 lg:gap-6 xl:gap-8 2xl:gap-10 items-center lg:grid-cols-[1fr_580px] xl:grid-cols-[1fr_650px] 2xl:grid-cols-[1fr_720px] flex-1">
+        {/* Desktop layout (lg and above) - side by side with LARGER IMAGE */}
+        <div className="hidden lg:grid gap-4 lg:gap-6 xl:gap-8 2xl:gap-10 items-center lg:grid-cols-[1fr_700px] xl:grid-cols-[1fr_800px] 2xl:grid-cols-[1fr_900px] 3xl:grid-cols-[1fr_1000px] flex-1">
           
           {/* Text Content */}
           <div className={`flex flex-col justify-center space-y-3 lg:space-y-4 xl:space-y-5 2xl:space-y-6 lg:pl-6 xl:pl-8 2xl:pl-10 transition-all duration-800 ease-out ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"}`} style={{ transitionDelay: "200ms" }}>
@@ -92,8 +94,8 @@ export function HeroSection() {
                   transitionDelay: "300ms"
                 }}
               >
-                Membangun Ekosistem{" "}
-                <span className="text-[#007bff]">Inovasi Digital Indonesia</span>
+                {t('hero.title')}{" "}
+                <span className="text-[#007bff]">{t('hero.title.highlight')}</span>
               </h1>
               <p
                 className={`max-w-[450px] xl:max-w-[500px] 2xl:max-w-[550px] lg:text-base xl:text-lg 2xl:text-xl text-gray-600 leading-relaxed transition-all duration-800 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
@@ -102,7 +104,7 @@ export function HeroSection() {
                   transitionDelay: "400ms"
                 }}
               >
-                MersifLab berkomitmen untuk mengakselerasi talenta dan solusi digital melalui pilar layanan kami di bidang IoT, Edukasi, Kreativitas, dan Dampak Sosial.
+                {t('hero.subtitle')}
               </p>
             </div>
             <div className={`flex pt-1 lg:pt-2 xl:pt-3 transition-all duration-800 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`} style={{ transitionDelay: "500ms" }}>
@@ -117,13 +119,13 @@ export function HeroSection() {
                 }}
                 className="inline-flex lg:h-10 xl:h-11 2xl:h-12 items-center justify-center rounded-full bg-[#007bff] lg:px-4 xl:px-5 2xl:px-6 lg:text-sm xl:text-base 2xl:text-lg font-medium text-white shadow transition-all duration-300 hover:bg-[#007bff]/90 hover:shadow-lg hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
               >
-                Jelajahi Mersif
+                {t('hero.button')}
                 <ArrowRight className="ml-2 lg:w-4 lg:h-4 xl:w-5 xl:h-5 2xl:w-6 2xl:h-6" />
               </a>
             </div>
           </div>
 
-          {/* Image - Now Larger */}
+          {/* Image - SIGNIFICANTLY LARGER */}
           <div className={`relative lg:order-last transition-all duration-800 ease-out ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`} style={{ transitionDelay: "100ms" }}>
             <Image
               src="/img/home.svg"
@@ -138,10 +140,10 @@ export function HeroSection() {
           </div>
         </div>
 
-        {/* Enhanced responsive optimizations */}
+        {/* Enhanced responsive optimizations with LARGER IMAGES */}
         <div className="hidden lg:block">
           <style jsx>{`
-            /* KHUSUS untuk resolusi 1366x768 - Teks Diperbesar */
+            /* KHUSUS untuk resolusi 1366x768 - GAMBAR LEBIH BESAR */
             @media (min-width: 1366px) and (max-width: 1366px) and (min-height: 768px) and (max-height: 768px) {
               .container {
                 max-width: 1320px;
@@ -155,9 +157,9 @@ export function HeroSection() {
                 padding-bottom: 3rem;
               }
               
-              /* Grid layout optimization */
-              .lg\\:grid-cols-\\[1fr_580px\\] {
-                grid-template-columns: 1fr 480px;
+              /* Grid layout optimization - GAMBAR LEBIH BESAR */
+              .lg\\:grid-cols-\\[1fr_700px\\] {
+                grid-template-columns: 1fr 600px;
               }
               
               /* TEKS JUDUL DIPERBESAR KHUSUS 1366x768 */
@@ -191,9 +193,9 @@ export function HeroSection() {
                 height: 1.5rem !important;
               }
               
-              /* Image container optimization */
+              /* Image container optimization - LEBIH BESAR */
               .lg\\:order-last {
-                max-width: 480px;
+                max-width: 600px;
               }
               
               /* Spacing adjustments */
@@ -215,7 +217,7 @@ export function HeroSection() {
               }
             }
 
-            /* Optimization for other 1366x768 laptop screens */
+            /* Optimization for other 1366x768 laptop screens - GAMBAR LEBIH BESAR */
             @media (min-width: 1024px) and (max-width: 1366px) and (min-height: 700px) and (max-height: 800px) {
               .container {
                 max-width: 1300px;
@@ -229,9 +231,9 @@ export function HeroSection() {
                 padding-bottom: 2rem;
               }
               
-              /* Grid layout optimization with larger image */
-              .lg\\:grid-cols-\\[1fr_580px\\] {
-                grid-template-columns: 1fr 500px;
+              /* Grid layout optimization with MUCH LARGER image */
+              .lg\\:grid-cols-\\[1fr_700px\\] {
+                grid-template-columns: 1fr 650px;
               }
               
               /* Text content adjustments */
@@ -255,9 +257,9 @@ export function HeroSection() {
                 padding-right: 1.25rem;
               }
               
-              /* Image container optimization - larger */
+              /* Image container optimization - MUCH LARGER */
               .lg\\:order-last {
-                max-width: 500px;
+                max-width: 650px;
               }
               
               /* Spacing adjustments */
@@ -274,47 +276,73 @@ export function HeroSection() {
               }
             }
 
-            /* Standard FHD 1920x1080 displays with larger images */
+            /* Standard FHD 1920x1080 displays with VERY LARGE images */
             @media (min-width: 1920px) and (min-height: 1080px) {
               .container {
                 max-width: 1800px;
               }
               
-              /* Grid layout for FHD displays */
-              .\\33 xl\\:grid-cols-\\[1fr_720px\\] {
-                grid-template-columns: 1fr 1100px;
+              /* Grid layout for FHD displays - VERY LARGE IMAGE */
+              .\\32 xl\\:grid-cols-\\[1fr_900px\\] {
+                grid-template-columns: 1fr 1200px;
               }
               
-              /* Image container for FHD */
-              .\\33 xl\\:order-last {
-                max-width: 1100px;
+              /* Image container for FHD - VERY LARGE */
+              .\\32 xl\\:order-last {
+                max-width: 1200px;
               }
             }
             
-            /* Ultra-wide and 4K displays */
+            /* Ultra-wide and 4K displays - MASSIVE IMAGES */
             @media (min-width: 2560px) {
               .container {
                 max-width: 2400px;
               }
               
-              /* Ultra-wide displays with very large images */
-              .\\33 xl\\:grid-cols-\\[1fr_720px\\] {
-                grid-template-columns: 1fr 1200px;
+              /* Ultra-wide displays with MASSIVE images */
+              .\\33 xl\\:grid-cols-\\[1fr_1000px\\] {
+                grid-template-columns: 1fr 1400px;
               }
               
               .\\33 xl\\:order-last {
-                max-width: 1200px;
+                max-width: 1400px;
               }
             }
 
-            /* Additional breakpoint for medium desktop screens */
+            /* Additional breakpoint for medium desktop screens - LARGER IMAGE */
             @media (min-width: 1440px) and (max-width: 1919px) {
-              .xl\\:grid-cols-\\[1fr_650px\\] {
-                grid-template-columns: 1fr 850px;
+              .xl\\:grid-cols-\\[1fr_800px\\] {
+                grid-template-columns: 1fr 1000px;
               }
               
               .xl\\:order-last {
-                max-width: 850px;
+                max-width: 1000px;
+              }
+            }
+
+            /* Large desktop screens 1680px+ - EXTRA LARGE IMAGES */
+            @media (min-width: 1680px) and (max-width: 2559px) {
+              .xl\\:grid-cols-\\[1fr_800px\\] {
+                grid-template-columns: 1fr 1100px;
+              }
+              
+              .xl\\:order-last {
+                max-width: 1100px;
+              }
+            }
+
+            /* 5K and 8K displays - ENORMOUS IMAGES */
+            @media (min-width: 3840px) {
+              .container {
+                max-width: 3600px;
+              }
+              
+              .\\33 xl\\:grid-cols-\\[1fr_1000px\\] {
+                grid-template-columns: 1fr 1800px;
+              }
+              
+              .\\33 xl\\:order-last {
+                max-width: 1800px;
               }
             }
           `}</style>

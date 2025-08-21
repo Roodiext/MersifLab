@@ -6,7 +6,10 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed:services": "node scripts/seed-services.js",
+    "reset:services": "node scripts/reset-services.js",
+    "fix:images": "node scripts/fix-image-paths.js"
   },
   "dependencies": {
     "@prisma/client": "^6.13.0",

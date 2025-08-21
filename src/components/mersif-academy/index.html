@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mersif Academy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+    html, body {
+      overflow-x: hidden;
+      width: 100%;
+      position: relative;
+      
+    }
+    
+  * {
+      font-family: 'Inter', sans-serif;
+    }    
+
+    .marquee-wrapper {
+      overflow: hidden;
+      position: relative;
+      width: 100%;
+      padding-inline: 1rem;
+      max-width: 100vw;
+    }
+*
+    .marquee-track {
+      gap: 2rem;
+      display: flex;
+      width: max-content;
+      animation: scrollLeft 15s linear infinite;
+    }
+
+    .marquee-track-reverse {
+      gap: 2rem;
+      display: flex;
+      width: max-content;
+      animation: scrollRight 15s linear infinite;
+    }
+
+    @keyframes scrollLeft {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    @keyframes scrollRight {
+      0% { transform: translateX(-50%); }
+      100% { transform: translateX(0); }
+    }
+
+    .marquee-logo {
+      width: 4rem;
+      height: 4rem;
+      object-fit: contain;
+      margin-right: 2rem;
+    }
+
+    @keyframes slideLeft {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    @keyframes slideRight {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(50%); }
+    }
+
+    .animate-slide-left {
+      animation: slideLeft 30s linear infinite;
+    }
+
+    .animate-slide-right {
+      animation: slideRight 30s linear infinite;
+    }
+
+    /* Custom animations */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+    
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+      50% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.8); }
+    }
+    
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    @keyframes bounce-gentle {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes slide-diagonal {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(20px, -20px); }
+    }
+    
+    @keyframes fade-in-out {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.8; }
+    }
+    
+    @keyframes scale-pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    .pulse-glow {
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+
+    .rotate-slow {
+      animation: rotate 20s linear infinite;
+    }
+    
+    .bounce-gentle {
+      animation: bounce-gentle 2s ease-in-out infinite;
+    }
+    
+    .slide-diagonal {
+      animation: slide-diagonal 4s ease-in-out infinite;
+    }
+    
+    .fade-in-out {
+      animation: fade-in-out 3s ease-in-out infinite;
+    }
+    
+    .scale-pulse {
+      animation: scale-pulse 2s ease-in-out infinite;
+    }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, #3b82f6, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .animated-bg-element {
+      position: absolute;
+      pointer-events: none;
+      max-width: 100vw; 
+    }
+    
+.hero-gradient {
+  position: relative;
+  min-height: 100vh;
+  padding-top: 4rem; 
+  background-image: url('bg.jpg');
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow: hidden;
+}
+
+.hero-gradient::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.8); /* Overlay putih transparan sama seperti parallax */
+  z-index: 1;
+}
+
+.hero-gradient > * {
+  position: relative;
+  z-index: 2;
+}
+
+    .grid-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(148, 163, 184, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148, 163, 184, 0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      filter: none;
+      z-index: 1;
+    }
+    
+    
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .active-nav-link {
+      color: #1d4ed8; /* Warna biru yang sama dengan hover */
+      font-weight: 600; /* Sedikit lebih tebal */
+    }
+
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeDown {
+      0% { opacity: 0; transform: translateY(-20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-up {
+      animation: fadeUp 1s ease-out both;
+    }
+    .animate-fade-down {
+      animation: fadeDown 1s ease-out both;
+    }
+    .parallax-bg {
+  position: relative;
+  background-image: url('bg.jpg');
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.parallax-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.8); /* Overlay putih transparan */
+  z-index: 1;
+}
+
+.parallax-bg > * {
+  position: relative;
+  z-index: 2;
+}
+.parallax-element {
+  transform: translateZ(0);
+  will-change: transform;
+  transition: transform 0.4s ease;
+}
+
+.animated-bg-element {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0; /* atau -1 jika perlu lebih rendah */
+}
+
+nav {
+  transition: all 0.3s ease;
+}
+
+nav:hover {
+  background: rgba(255, 255, 255, 0.95);
+  transform: translateX(-50%) translateY(-2px);
+} 
+/* Tambahkan di dalam <style> */
+nav {
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Styling untuk link navbar */
+nav ul li a {
+  padding: 8px 16px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+nav ul li a:hover {
+  background: rgba(59, 130, 246, 0.1);
+  color: #1d4ed8;
+}
+
+/* Styling khusus untuk tombol daftar */
+nav ul li a.bg-blue-900 {
+  padding: 8px 20px;
+  margin-left: 8px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  nav {
+    top: 1rem;
+    max-width: 95%;
+  }
+  
+  nav .px-8 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+  </style>
+</head>
+
+<body class="bg-gray-50 overflow-x-hidden">
+     <!-- Navbar -->
+<!-- Ganti class navbar -->
+<nav class="fixed top-2 left-1/2 transform -translate-x-1/2 z-50 bg-white/90 backdrop-blur-md shadow-lg rounded-full border border-white/20 max-w-5xl w-11/12">
+  <div class="px-8 py-2.5 flex justify-between items-center w-full">
+    <!-- Logo -->
+    <a href="index.html" class="flex items-center space-x-2">
+      <img src="logo.png" alt="Logo Mersif" class="h-8 sm:h-10" />
+      <span class="sr-only">Mersif Academy</span>
+    </a>
+
+    <!-- Hamburger Button (Mobile) -->
+    <button id="menu-toggle" class="sm:hidden text-gray-700 focus:outline-none w-10 h-10 flex items-center justify-center rounded-md hover:bg-gray-100 transition-colors">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+
+    <!-- Ganti class menu -->
+    <ul id="menu" class="hidden sm:flex flex-col sm:flex-row sm:space-x-8 text-sm font-medium sm:items-center bg-white sm:bg-transparent absolute sm:static left-4 right-4 sm:left-auto sm:right-auto w-auto sm:w-auto top-full sm:top-auto shadow-md sm:shadow-none z-40 sm:z-auto rounded-xl sm:rounded-none mt-2 sm:mt-0">
+      <li><a href="about.html" class="block px-4 py-2 hover:text-blue-700">Tentang Kami</a></li>
+      <li><a href="layanan.html" class="block px-4 py-2 hover:text-blue-700">Layanan</a></li>
+      <li><a href="porto.html" class="block px-4 py-2 hover:text-blue-700">Portofolio</a></li>
+      <li><a href="mentor.html" class="block px-4 py-2 hover:text-blue-700">Mentor</a></li>
+      <li><a href="paket.html" class="block px-4 py-2 hover:text-blue-700">Paket</a></li>
+      <li><a href="daftar.html" class="block bg-blue-900 text-white px-4 py-2 rounded hover:bg-blue-800 mx-4 my-2 sm:my-0">Daftar Sekarang</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero-gradient relative overflow-x-hidden">
+  <!-- Background Image Layer -->
+      <!-- Certificate Icon -->
+    <div class="animated-bg-element top-10 left-10 float-animation" style="animation-delay: 0s;">
+      <svg class="w-12 h-12 text-blue-300" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+      </svg>
+    </div>
+
+    <!-- Book Icon -->
+    <div class="animated-bg-element top-20 right-20 bounce-gentle" style="animation-delay: 1s;">
+      <svg class="w-16 h-16 text-green-300" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
+      </svg>
+    </div>
+
+    <!-- Graduation Cap -->
+    <div class="animated-bg-element bottom-20 left-3rem slide-diagonal" style="animation-delay: 2s;">
+      <svg class="w-14 h-14 text-purple-300" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/>
+      </svg>
+    </div>
+
+    <!-- Lightbulb Icon -->
+    <div class="animated-bg-element top-1/3 left-20 fade-in-out" style="animation-delay: 0.5s;">
+      <svg class="w-10 h-10 text-yellow-400" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M9 21c0 .5.4 1 1 1h4c.6 0 1-.5 1-1v-1H9v1zm3-19C8.1 2 5 5.1 5 9c0 2.4 1.2 4.5 3 5.7V17h8v-2.3c1.8-1.2 3-3.3 3-5.7 0-3.9-3.1-7-7-7z"/>
+      </svg>
+    </div>
+
+    <!-- Atom Icon -->
+    <div class="animated-bg-element bottom-1/3 left-10 rotate-slow" style="animation-delay: 1.5s;">
+      <svg class="w-12 h-12 text-red-300" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 12c0-.8-.7-1.5-1.5-1.5S9 11.2 9 12s.7 1.5 1.5 1.5S12 12.8 12 12zm8.5 0c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zm-13 0c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2z"/>
+      </svg>
+    </div>
+
+    <!-- Calculator Icon -->
+    <div class="animated-bg-element top-2/3 right-1/4 scale-pulse" style="animation-delay: 2.5s;">
+      <svg class="w-11 h-11 text-indigo-300" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+      </svg>
+    </div>
+
+    <!-- Microscope Icon -->
+    <div class="animated-bg-element bottom-10 left-1/3 float-animation" style="animation-delay: 3s;">
+      <svg class="w-13 h-13 text-teal-300" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M9.5 12c0-1.9 1.6-3.5 3.5-3.5s3.5 1.6 3.5 3.5-1.6 3.5-3.5 3.5S9.5 13.9 9.5 12zM20 19c0 1.1-.9 2-2 2H6c-1.1 0-2-.9-2-2s.9-2 2-2h12c1.1 0 2 .9 2 2z"/>
+      </svg>
+    </div>
+
+    <!-- Globe Icon -->
+    <div class="animated-bg-element top-1/2 right-10 bounce-gentle" style="animation-delay: 4s;">
+      <svg class="w-10 h-10 text-blue-400" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+      </svg>
+    </div>
+
+    <!-- Decorative Circles -->
+    <div class="animated-bg-element top-5 right-5 fade-in-out">
+      <div class="w-4 h-4 bg-pink-300 rounded-full"></div>
+    </div>
+    <div class="animated-bg-element bottom-5 left-5 fade-in-out" style="animation-delay: 1s;">
+      <div class="w-6 h-6 bg-orange-300 rounded-full"></div>
+    </div>
+    <div class="animated-bg-element top-1/4 left-1/2 fade-in-out" style="animation-delay: 2s;">
+      <div class="w-3 h-3 bg-green-300 rounded-full"></div>
+    </div>
+
+    <!-- Quality Education SDG Badge -->
+    <div class="animated-bg-element bottom-1/4 right-1/3 scale-pulse" style="animation-delay: 3.5s;">
+      <div class="w-16 h-16 bg-gradient-to-br from-pink-400 to-red-400 rounded-xl flex items-center justify-center">
+        <div class="text-white text-center">
+          <div class="text-xs font-bold">4</div>
+          <div class="text-xs">EDU</div>
+        </div>
+      </div>
+    </div>
+  <!-- Left Content -->
+<div class="container mx-auto px-6 py-20 flex flex-col lg:flex-row items-center justify-between">
+  <!-- KONTEN KIRI: Tulisan -->
+  <div class="w-full max-w-md text-left space-y-4 lg:pr-16 order-2 lg:order-1 transform translate-x-2 translate-y-2 lg:translate-x-16 lg:-translate-y-12">
+    <div class="mb-6">
+      <h1 class="text-4xl lg:text-5xl font-bold"
+            data-aos="fade-down-right" data-aos-duration="1000">
+          <span class="gradient-text">Mersif</span><span class="text-gray-800">Academy</span>
+      </h1>
+    </div>
+    <p class="text-lg text-gray-700 leading-relaxed" data-aos="fade-right" data-aos-duration="1000">
+      Platform pembelajaran riset, sains, dan teknologi berbasis open innovation untuk 
+      mencetak inovator muda Indonesia.
+    </p>
+
+<div class="flex flex-wrap lg:flex-nowrap justify-center lg:justify-start gap-4 pt-4" data-aos="fade-up" data-aos-duration="1000">
+  <a href="about.html" 
+     class="bg-blue-600 text-white py-3 px-4 sm:px-6 rounded-lg hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 pulse-glow text-sm sm:text-base text-center flex-1 sm:flex-none">
+    Selengkapnya
+  </a>
+  <a href="daftar.html" 
+     class="border-2 border-blue-600 text-blue-600 py-3 px-4 sm:px-6 rounded-lg hover:bg-blue-600 hover:text-white transition-all duration-300 text-sm sm:text-base text-center flex-1 sm:flex-none">
+    Daftar Sekarang
+  </a>
+</div>
+
+  </div>
+
+<!-- KONTEN KANAN: Gambar Kartun -->
+<div class="relative z-0 w-full lg:w-1/2 flex justify-center order-3 lg:order-2"
+     data-aos="fade-down" data-aos-duration="1000">
+
+  <!-- Container Utama -->
+<div class="relative w-[250px] sm:w-[300px] lg:w-[400px] transform translate-y-8 lg:-translate-x-4 lg:-translate-y-8"
+     style="margin-top: 10px;"><!-- ← Atur manual -->
+
+    <!-- Gambar Kartun -->
+    <img src="kartun-transparan.png"
+         alt="Ilustrasi Juara"
+         class="w-full pointer-events-none select-none" />
+  </div>
+</div>
+        
+        <!-- Decorative Elements -->
+<!-- Decorative Elements -->
+<div class="absolute top-10 -right-10 lg:-top-10 w-20 h-20 bg-red-400 rounded-full opacity-80"></div>
+<div class="absolute bottom-50 -left-10 lg:-bottom-10 w-16 h-16 bg-yellow-400 rounded-full opacity-80"></div>
+
+<!-- Paper Plane -->
+<div class="absolute bottom-0 right-10 lg:bottom-20 float-animation" style="animation-delay: 1.5s;">
+  <svg class="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+    <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+  </svg>
+</div>
+
+</section>
+
+  <!-- Collaboration Section -->
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold mb-4" data-aos="fade-down" data-aos-duration="1000">Collaborate with</h2>
+        <p class="text-gray-600" data-aos="fade-up" data-aos-duration="1000">Bekerja sama dengan berbagai institusi pendidikan dan organisasi terkemuka</p>
+      </div>
+      
+
+    <!-- ROW 1 - Kiri ke Kanan -->
+    <div class="marquee-wrapper mb-6 px-12">
+      <div class="marquee-track" data-aos="fade-up" data-aos-duration="500">
+        <!-- 6 logo (asli) -->
+        <img src="logo/download1.jpg" class="marquee-logo" />
+        <img src="logo/download2.jpg" class="marquee-logo" />
+        <img src="logo/download3.jpg" class="marquee-logo" />
+        <img src="logo/download4.jpg" class="marquee-logo" />
+        <img src="logo/download5.jpg" class="marquee-logo" />
+        <img src="logo/download6.jpg" class="marquee-logo" />
+        
+        <!-- duplikat untuk loop -->
+        <img src="logo/download1.jpg" class="marquee-logo" />
+        <img src="logo/download2.jpg" class="marquee-logo" />
+        <img src="logo/download3.jpg" class="marquee-logo" />
+        <img src="logo/download4.jpg" class="marquee-logo" />
+        <img src="logo/download5.jpg" class="marquee-logo" />
+        <img src="logo/download6.jpg" class="marquee-logo" />
+      </div>
+    </div>
+
+    <!-- ROW 2 - Kanan ke Kiri -->
+    <div class="marquee-wrapper mb-6 px-12">
+      <div class="marquee-track-reverse" data-aos="fade-down" data-aos-duration="500">
+        <!-- 6 logo (asli) -->
+        <img src="logo/download7.jpg" class="marquee-logo" />
+        <img src="logo/download8.jpg" class="marquee-logo" />
+        <img src="logo/download9.jpg" class="marquee-logo" />
+        <img src="logo/download10.png" class="marquee-logo" />
+        <img src="logo/download11.png" class="marquee-logo" />
+        <img src="logo/download12.png" class="marquee-logo" />
+        
+        <!-- duplikat untuk loop -->
+        <img src="logo/download7.jpg" class="marquee-logo" />
+        <img src="logo/download8.jpg" class="marquee-logo" />
+        <img src="logo/download9.jpg" class="marquee-logo" />
+        <img src="logo/download10.png" class="marquee-logo" />
+        <img src="logo/download11.png" class="marquee-logo" />
+        <img src="logo/download12.png" class="marquee-logo" />
+      </div>
+    </div>
+  </div>
+
+  </section>
+
+<!-- Features Section -->
+<section id="layanan" class="py-12 min-h-[80vh] parallax-bg">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center mb-12">
+      <div class="inline-block bg-white/60 backdrop-blur-sm border border-white/30 rounded-xl p-6 shadow-md" data-aos="fade-up" data-aos-duration="1000">
+      <h2 class="text-3xl font-bold mb-4" data-aos="fade-down-right" data-aos-duration="1000">Layanan Unggulan</h2>
+      <p class="text-gray-600" data-aos="fade-down-left" data-aos-duration="1000">
+        Program pembelajaran yang dirancang khusus untuk mengembangkan potensi inovator muda
+      </p>
+    </div>
+    </div>
+
+    <!-- Grid Layout -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      
+      <!-- Card 1 -->
+      <div class="bg-white p-6 rounded-lg shadow-lg card-hover" data-aos="fade-right" data-aos-duration="500">
+        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+          <span class="text-2xl">🔬</span>
+        </div>
+        <h3 class="text-xl font-semibold mb-3">Riset & Penelitian</h3>
+        <p class="text-gray-600">Bimbingan penelitian dengan metodologi ilmiah untuk menghasilkan karya inovatif</p>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="bg-white p-6 rounded-lg shadow-lg card-hover" data-aos="fade-up" data-aos-duration="500">
+        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+          <span class="text-2xl">💻</span>
+        </div>
+        <h3 class="text-xl font-semibold mb-3">Teknologi Digital</h3>
+        <p class="text-gray-600">Pembelajaran teknologi terkini dengan pendekatan praktis dan project-based</p>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="bg-white p-6 rounded-lg shadow-lg card-hover" data-aos="fade-left"
+     data-aos-duration="500"
+     data-aos-delay="100"
+     data-aos-anchor-placement="top-bottom">
+        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+          <span class="text-2xl">🚀</span>
+        </div>
+        <h3 class="text-xl font-semibold mb-3">Inkubasi Startup</h3>
+        <p class="text-gray-600">Pembinaan ide bisnis teknologi dari konsep hingga implementasi di pasar</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Scripts -->
+<script>
+  // Highlight active nav link
+  document.addEventListener("DOMContentLoaded", function () {
+    const currentPage = window.location.pathname;
+    const navLinks = document.querySelectorAll('nav ul li a');
+    navLinks.forEach(link => {
+      if (!link.href.includes('#')) {
+        const linkHref = link.getAttribute('href');
+        if (currentPage.endsWith(linkHref)) {
+          link.classList.add('active-nav-link');
+        }
+      }
+    });
+  });
+
+  // Toggle hamburger menu
+  document.getElementById("menu-toggle")?.addEventListener("click", function () {
+    const menu = document.getElementById("menu");
+    menu?.classList.toggle("hidden");
+  });
+
+  // AOS animation init with mobile enabled
+  AOS.init({
+  });
+</script>
+
+<!-- Footer -->
+<footer class="bg-blue-900 text-white py-8">
+  <div class="max-w-7xl mx-auto px-4 text-center">
+    <div class="mb-4">
+      <p class="mb-2">📞 +62 822 2684 1762</p>
+      <p class="mb-2">📧 official@mersifacademy.com</p>
+      <p class="mb-2">📍 Daratan, RT.02/RW.06, Senden, Tohudan, Kec. Colomadu, Kabupaten Karanganyar, Jawa Tengah 57173</p>
+    </div>
+    <div class="border-t border-blue-800 pt-4">
+      <p>&copy; 2025 Mersif Academy. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

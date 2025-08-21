@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Calendar, ArrowRight } from 'lucide-react'
+import { useLanguage } from "@/contexts/language-context"
 
 interface ContentItem {
   id: number
@@ -18,6 +19,7 @@ interface ContentItem {
 }
 
 export function NewsBlogSection() {
+  const { language } = useLanguage()
   const [latestContent, setLatestContent] = useState<ContentItem[]>([])
   const [loading, setLoading] = useState(true)
   const [isVisible, setIsVisible] = useState(false)
@@ -27,13 +29,37 @@ export function NewsBlogSection() {
     // Trigger entrance animation
     const timer = setTimeout(() => setIsVisible(true), 100)
     return () => clearTimeout(timer)
-  }, [])
+  }, [language]) // Tambahkan language sebagai dependency
 
   const fetchLatestContent = async () => {
     try {
       const response = await fetch('/api/content')
       const data = await response.json()
-      setLatestContent(data.slice(0, 6)) // Get latest 6 items
+      
+      // Transform data dengan menerjemahkan judul berdasarkan bahasa
+      const transformedData = data.slice(0, 6).map((item: any) => {
+        // Jika judul dalam bahasa Inggris, ganti dengan judul Indonesia
+        const titleTranslations: { [key: string]: { en: string, id: string } } = {
+          "Visit of the Deputy Minister of Higher Education and Science and Technology at Universitas Sebelas Maret": {
+            en: "Visit of the Deputy Minister of Higher Education and Science and Technology at Universitas Sebelas Maret",
+            id: "Kunjungan Wakil Menteri Pendidikan Tinggi dan Ilmu Pengetahuan dan Teknologi di Universitas Sebelas Maret"
+          },
+          "MersifLab and App Media Inc. Sign MoU at Korea-Indonesia Business Meeting 2025": {
+            en: "MersifLab and App Media Inc. Sign MoU at Korea-Indonesia Business Meeting 2025",
+            id: "MersifLab dan App Media Inc. Menandatangani MoU pada Pertemuan Bisnis Korea-Indonesia 2025"
+          }
+        }
+
+        return {
+          ...item,
+          // Gunakan judul yang diterjemahkan jika ada, jika tidak gunakan judul asli
+          title: titleTranslations[item.title] 
+            ? titleTranslations[item.title][language] 
+            : item.title
+        }
+      })
+      
+      setLatestContent(transformedData)
     } catch (error) {
       console.error('Failed to fetch content')
     } finally {
@@ -46,6 +72,25 @@ export function NewsBlogSection() {
     return textContent.length > maxLength 
       ? textContent.substring(0, maxLength) + '...'
       : textContent
+  }
+
+  // Fungsi helper untuk terjemahan
+  const getTranslation = (key: string) => {
+    const translations: { [key: string]: { en: string, id: string } } = {
+      pageTitle: {
+        en: "Latest News & Articles",
+        id: "Berita & Artikel Terbaru"
+      },
+      pageSubtitle: {
+        en: "Follow the latest developments and interesting insights from MersifLab",
+        id: "Ikuti perkembangan terbaru dan insight menarik dari MersifLab"
+      },
+      viewAll: {
+        en: "View All News & Articles",
+        id: "Lihat Semua Berita & Artikel"
+      }
+    }
+    return translations[key][language] || translations[key]['id']
   }
 
   if (loading) {
@@ -66,20 +111,18 @@ export function NewsBlogSection() {
 
   return (
     <section className="py-20 bg-gray-50 relative overflow-hidden">
-
-      
       <div className="container mx-auto px-4 relative">
         <div className={`text-center mb-16 transition-all duration-1000 ease-out ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}>
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4" style={{ fontFamily: "Poppins, sans-serif" }}>
-            Berita & Artikel Terbaru
+            {getTranslation('pageTitle')}
           </h2>
           <p 
             style={{ fontFamily: "Inter, sans-serif" }} 
             className="text-xl text-gray-600 max-w-2xl mx-auto mt-6"
           >
-            Ikuti perkembangan terbaru dan insight menarik dari MersifLab
+            {getTranslation('pageSubtitle')}
           </p>
         </div>
 
@@ -101,7 +144,6 @@ export function NewsBlogSection() {
                   animationDelay: `${index * 150}ms`
                 }}
               >
-                
                 {item.thumbnail && (
                   <div className="aspect-video overflow-hidden relative">
                     <img 
@@ -147,7 +189,7 @@ export function NewsBlogSection() {
                   <div style={{ fontFamily: "Inter, sans-serif" }} className="flex items-center justify-between">
                     <div className="flex items-center text-xs text-gray-500 group-hover:text-gray-600 transition-colors duration-300">
                       <Calendar className="h-3 w-3 mr-1 group-hover:text-blue-500 transition-colors duration-300" />
-                      {new Date(item.createdAt).toLocaleDateString('id-ID', {
+                      {new Date(item.createdAt).toLocaleDateString(language === 'en' ? 'en-US' : 'id-ID', {
                         day: 'numeric',
                         month: 'short',
                         year: 'numeric'
@@ -172,7 +214,7 @@ export function NewsBlogSection() {
             className="group hover:bg-blue-700 transition-all duration-300 hover:scale-105 hover:shadow-lg"
           >
             <Link href="/news" style={{ fontFamily: "Poppins, sans-serif" }}>
-              <span>Lihat Semua Berita & Artikel</span>
+              <span>{getTranslation('viewAll')}</span>
               <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
             </Link>
           </Button>

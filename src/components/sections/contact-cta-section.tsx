@@ -1,8 +1,11 @@
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
+import { useLanguage } from "@/contexts/language-context"
 
 export function ContactCtaSection() {
+  const { t } = useLanguage()
+  
   return (
     <section id="contact" className="w-full py-20 md:py-28 lg:py-36 relative overflow-hidden bg-gray-50">
       <style dangerouslySetInnerHTML={{ __html: `
@@ -61,10 +64,10 @@ export function ContactCtaSection() {
           <div className="lg:order-1 space-y-6">
             <div className="space-y-4">
               <h2 style={{ fontFamily: "Poppins, sans-serif" }} className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
-                Ada yang ingin kamu tanyakan?
+                {t('contact.title')}
               </h2>
               <p style={{ fontFamily: "Inter, sans-serif" }} className="text-lg text-gray-600 leading-relaxed">
-                Ada pertanyaan atau butuh dukungan? Kami siap membantu Anda sukses. Kirimkan pesan kepada kami dan kami akan segera menghubungi Anda kembali.
+                {t('contact.subtitle')}
               </p>
             </div>
           </div>
@@ -73,18 +76,18 @@ export function ContactCtaSection() {
             <div className="w-full max-w-md">
               <div style={{ fontFamily: "Poppins, sans-serif" }} className="space-y-6 bg-white rounded-2xl p-8 shadow-lg border-2 border-gray-900">
                 <h3 className="text-2xl font-bold text-center text-gray-900 mb-6">
-                  Isi Formulir Ini
+                  {t('contact.title')}
                 </h3>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2 font-poppins">Nama :</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2 font-poppins">{t('contact.form.name')} :</label>
                   <Input
                     type="text"
-                    placeholder="Masukkan nama Anda"
+                    placeholder={t('contact.form.name')}
                     className="px-4 py-3 rounded-lg font-inter"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2 font-poppins">Email :</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2 font-poppins">{t('contact.form.email')} :</label>
                   <Input
                     type="email"
                     placeholder="example@gmail.com"
@@ -92,9 +95,9 @@ export function ContactCtaSection() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2 font-poppins">Pertanyaan :</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2 font-poppins">{t('contact.form.message')} :</label>
                   <Textarea
-                    placeholder="aku ingin bertanya..."
+                    placeholder={t('contact.form.message')}
                     className="px-4 py-3 rounded-lg min-h-[120px] font-inter resize-none"
                   />
                 </div>
@@ -102,7 +105,7 @@ export function ContactCtaSection() {
                   type="submit"
                   className="w-full py-3 rounded-lg bg-gray-900 text-white font-semibold text-base hover:bg-gray-800 transition-all"
                 >
-                  Submit
+                  {t('contact.form.submit')}
                 </Button>
               </div>
             </div>

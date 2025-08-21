@@ -38,7 +38,7 @@ import {
   addPartner,
   updatePartner,
   deletePartner,
-} from "@/app/admin/partners/actions"
+} from "@/app/admin/partners/action"
 
 interface Partner {
   id: number
@@ -57,8 +57,6 @@ function SubmitButton({ children }: { children: React.ReactNode }) {
 
 export default function PartnersCRUD() {
   const [partners, setPartners] = useState<Partner[]>([])
-  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
-  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
   const [selectedPartner, setSelectedPartner] = useState<Partner | null>(null)
   const [formError, setFormError] = useState<string | null>(null)
   const { toast } = useToast()
@@ -91,7 +89,6 @@ export default function PartnersCRUD() {
         variant: "destructive",
       })
     } else {
-      setIsCreateDialogOpen(false)
       fetchPartners()
       toast({
         title: "Success",
@@ -111,7 +108,7 @@ export default function PartnersCRUD() {
         variant: "destructive",
       })
     } else {
-      setIsEditDialogOpen(false)
+      setSelectedPartner(null)
       fetchPartners()
       toast({
         title: "Success",
@@ -139,13 +136,12 @@ export default function PartnersCRUD() {
 
   const openEditDialog = (partner: Partner) => {
     setSelectedPartner(partner)
-    setIsEditDialogOpen(true)
   }
 
   return (
     <div className="p-6">
       <div className="flex justify-end mb-4">
-        <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
+        <Dialog>
           <DialogTrigger asChild>
             <Button>
               <Plus className="w-4 h-4 mr-2" />
@@ -168,7 +164,7 @@ export default function PartnersCRUD() {
                 <Input id="logo" name="logo" type="file" accept="image/*" required />
               </div>
               <DialogFooter>
-                <Button type="button" variant="outline" onClick={() => setIsCreateDialogOpen(false)}>
+                <Button type="button" variant="outline">
                   Cancel
                 </Button>
                 <SubmitButton>Add Partner</SubmitButton>
@@ -240,13 +236,13 @@ export default function PartnersCRUD() {
       </div>
 
       {/* Edit Partner Dialog */}
-      {selectedPartner && (
-        <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-          <DialogContent className="sm:max-w-[425px]">
-            <DialogHeader>
-              <DialogTitle>Edit Partner</DialogTitle>
-              <DialogDescription>Update the details of this partner.</DialogDescription>
-            </DialogHeader>
+      <Dialog open={!!selectedPartner} onOpenChange={(open) => !open && setSelectedPartner(null)}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Edit Partner</DialogTitle>
+            <DialogDescription>Update the details of this partner.</DialogDescription>
+          </DialogHeader>
+          {selectedPartner && (
             <form action={handleUpdatePartner} className="grid gap-4 py-4">
               {formError && <p className="text-red-500 text-sm">{formError}</p>}
               <input type="hidden" name="id" value={selectedPartner.id} />
@@ -279,15 +275,15 @@ export default function PartnersCRUD() {
                 <p className="text-xs text-gray-500">Leave blank to keep current logo.</p>
               </div>
               <DialogFooter>
-                <Button type="button" variant="outline" onClick={() => setIsEditDialogOpen(false)}>
+                <Button type="button" variant="outline" onClick={() => setSelectedPartner(null)}>
                   Cancel
                 </Button>
                 <SubmitButton>Save Changes</SubmitButton>
               </DialogFooter>
             </form>
-          </DialogContent>
-        </Dialog>
-      )}
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

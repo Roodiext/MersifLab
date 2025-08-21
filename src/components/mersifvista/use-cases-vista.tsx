@@ -23,7 +23,7 @@ export function VistaUseCases() {
   ]
 
   return (
-    <section className="w-full py-16 bg-white">
+    <section id="pelatihan" className="w-full py-16 bg-white">
       <div className="container mx-auto px-6 md:px-12 lg:px-24 max-w-[1200px]">
         <h2
           className="text-3xl md:text-4xl font-bold text-center mb-12"

@@ -5,9 +5,11 @@ import Link from "next/link"
 import Image from "next/image"
 import { useState, useEffect } from "react"
 import { Mail, Phone, MapPin, ExternalLink, Instagram, Linkedin } from "lucide-react"
+import { useLanguage } from "@/contexts/language-context"
 
 export function Footer() {
   const [year, setYear] = useState<number | null>(null)
+  const { t } = useLanguage()
 
   useEffect(() => {
     setYear(new Date().getFullYear())
@@ -36,15 +38,14 @@ export function Footer() {
                 style={{ fontFamily: "Inter, sans-serif" }}
                 className="text-gray-300 leading-relaxed max-w-lg"
               >
-                MersifLab berdedikasi untuk mendorong pengalaman kolaboratif dan imersif melalui solusi teknologi
-                inovatif yang mengubah cara kita berinteraksi dengan dunia digital.
+                {t('footer.description')}
               </p>
             </div>
 
             {/* Social Media */}
             <div className="space-y-3">
               <h4 style={{ fontFamily: "Poppins, sans-serif" }} className="text-lg font-semibold text-white">
-                Ikuti Kami
+                {t('footer.follow.us')}
               </h4>
               <div className="flex space-x-3">
                 <a
@@ -85,7 +86,7 @@ export function Footer() {
           {/* Tengah: Kontak */}
           <div className="space-y-6">
             <h3 style={{ fontFamily: "Poppins, sans-serif" }} className="text-xl font-semibold text-white">
-              Hubungi Kami
+              {t('footer.contact.us')}
             </h3>
             <div className="space-y-4 text-base">
               <div className="flex items-start gap-4">
@@ -103,7 +104,7 @@ export function Footer() {
                       className="text-white font-medium"
                       style={{ fontFamily: "Poppins, sans-serif" }}
                     >
-                      Alamat
+                      {t('footer.address')}
                     </p>
                     <p
                       style={{ fontFamily: "Inter, sans-serif" }}
@@ -125,7 +126,7 @@ export function Footer() {
                 </div>
                 <div>
                   <p className="font-medium" style={{ fontFamily: "Poppins, sans-serif" }}>
-                    Email
+                    {t('footer.email')}
                   </p>
                   <p
                     className="text-gray-300 text-sm"
@@ -145,7 +146,7 @@ export function Footer() {
                 </div>
                 <div>
                   <p style={{ fontFamily: "Poppins, sans-serif" }} className="font-medium">
-                    Telepon
+                    {t('footer.phone')}
                   </p>
                   <p
                     style={{ fontFamily: "Inter, sans-serif" }}
@@ -164,7 +165,7 @@ export function Footer() {
               className="text-xl font-semibold text-white"
               style={{ fontFamily: "Poppins, sans-serif" }}
             >
-              Lokasi Kami
+              {t('footer.location')}
             </h3>
             <div className="rounded-lg overflow-hidden shadow-lg border border-gray-600">
               <iframe
@@ -185,7 +186,7 @@ export function Footer() {
               style={{ border: 0, fontFamily: "Poppins, sans-serif" }}
               className="inline-flex items-center gap-2 text-gray-300 hover:text-white transition-colors text-sm"
             >
-              Lihat di Google Maps
+              {t('footer.view.on.maps')}
               <ExternalLink className="h-4 w-4" />
             </a>
           </div>
@@ -203,7 +204,7 @@ export function Footer() {
               className="text-lg font-semibold text-white mb-4"
               style={{ fontFamily: "Poppins, sans-serif" }}
             >
-              Layanan
+              {t('footer.quick.links.services')}
             </h4>
             <ul className="space-y-2">
               <li>
@@ -212,7 +213,7 @@ export function Footer() {
                   className="text-gray-300 hover:text-white transition-colors text-sm"
                   style={{ fontFamily: "Inter, sans-serif" }}
                 >
-                  Pengembangan VR
+                  {t('footer.quick.links.vr.development')}
                 </Link>
               </li>
               <li>
@@ -221,7 +222,7 @@ export function Footer() {
                   className="text-gray-300 hover:text-white transition-colors text-sm"
                   style={{ fontFamily: "Inter, sans-serif" }}
                 >
-                  Augmented Reality
+                  {t('footer.quick.links.ar')}
                 </Link>
               </li>
               <li>
@@ -230,7 +231,7 @@ export function Footer() {
                   className="text-gray-300 hover:text-white transition-colors text-sm"
                   style={{ fontFamily: "Inter, sans-serif" }}
                 >
-                  Aplikasi Mobile
+                  {t('footer.quick.links.mobile.apps')}
                 </Link>
               </li>
             </ul>
@@ -240,7 +241,7 @@ export function Footer() {
               className="text-lg font-semibold text-white mb-4"
               style={{ fontFamily: "Poppins, sans-serif" }}
             >
-              Perusahaan
+              {t('footer.quick.links.company')}
             </h4>
             <ul className="space-y-2">
               <li>
@@ -249,7 +250,7 @@ export function Footer() {
                   className="text-gray-300 hover:text-white transition-colors text-sm"
                   style={{ fontFamily: "Inter, sans-serif" }}
                 >
-                  Tentang Kami
+                  {t('footer.quick.links.about.us')}
                 </Link>
               </li>
               <li>
@@ -258,44 +259,7 @@ export function Footer() {
                   className="text-gray-300 hover:text-white transition-colors text-sm"
                   style={{ fontFamily: "Inter, sans-serif" }}
                 >
-                  Karir
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h4
-              className="text-lg font-semibold text-white mb-4"
-              style={{ fontFamily: "Poppins, sans-serif" }}
-            >
-              Dukungan
-            </h4>
-            <ul className="space-y-2">
-              <li>
-                <Link
-                  href="#"
-                  style={{ fontFamily: "Inter, sans-serif" }}
-                  className="text-gray-300 hover:text-white transition-colors text-sm"
-                >
-                  FAQ
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  style={{ fontFamily: "Inter, sans-serif" }}
-                  className="text-gray-300 hover:text-white transition-colors text-sm"
-                >
-                  Dokumentasi
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  style={{ fontFamily: "Inter, sans-serif" }}
-                  className="text-gray-300 hover:text-white transition-colors text-sm"
-                >
-                  Kontak
+                  {t('footer.quick.links.careers')}
                 </Link>
               </li>
             </ul>
@@ -305,7 +269,44 @@ export function Footer() {
               className="text-lg font-semibold text-white mb-4"
               style={{ fontFamily: "Poppins, sans-serif" }}
             >
-              Legal
+              {t('footer.quick.links.support')}
+            </h4>
+            <ul className="space-y-2">
+              <li>
+                <Link
+                  href="#"
+                  style={{ fontFamily: "Inter, sans-serif" }}
+                  className="text-gray-300 hover:text-white transition-colors text-sm"
+                >
+                  {t('footer.quick.links.faq')}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="#"
+                  style={{ fontFamily: "Inter, sans-serif" }}
+                  className="text-gray-300 hover:text-white transition-colors text-sm"
+                >
+                  {t('footer.quick.links.documentation')}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="#"
+                  style={{ fontFamily: "Inter, sans-serif" }}
+                  className="text-gray-300 hover:text-white transition-colors text-sm"
+                >
+                  {t('footer.quick.links.contact')}
+                </Link>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4
+              className="text-lg font-semibold text-white mb-4"
+              style={{ fontFamily: "Poppins, sans-serif" }}
+            >
+              {t('footer.quick.links.legal')}
             </h4>
             <ul className="space-y-2">
               <li>
@@ -314,7 +315,7 @@ export function Footer() {
                   className="text-gray-300 hover:text-white transition-colors text-sm"
                   style={{ fontFamily: "Inter, sans-serif" }}
                 >
-                  Kebijakan Privasi
+                  {t('footer.quick.links.privacy.policy')}
                 </Link>
               </li>
               <li>
@@ -323,7 +324,7 @@ export function Footer() {
                   className="text-gray-300 hover:text-white transition-colors text-sm"
                   style={{ fontFamily: "Inter, sans-serif" }}
                 >
-                  Syarat Layanan
+                  {t('footer.quick.links.terms.service')}
                 </Link>
               </li>
               <li>
@@ -332,7 +333,7 @@ export function Footer() {
                   className="text-gray-300 hover:text-white transition-colors text-sm"
                   style={{ fontFamily: "Inter, sans-serif" }}
                 >
-                  Cookie Policy
+                  {t('footer.quick.links.cookie.policy')}
                 </Link>
               </li>
             </ul>
@@ -347,7 +348,7 @@ export function Footer() {
             style={{ fontFamily: "Inter, sans-serif" }}
             className="flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0"
           >
-            {year && <p>&copy; {year} MersifLab. All rights reserved.</p>}
+            {year && <p>&copy; {year} MersifLab. {t('footer.copyright')}</p>}
           </div>
         </div>
       </div>

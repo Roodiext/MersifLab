@@ -1,8 +1,10 @@
 "use client"
 
-import Image from "next/image"  
+import Image from "next/image"
+import { useLanguage } from "@/contexts/language-context"  
 
 export function PartnersSection() {
+  const { t } = useLanguage()
   const partners = [
     { name: "Partner 1", logo: "/img/partner2/partner1.svg" },
     { name: "Partner 2", logo: "/img/partner2/partner2.svg" },
@@ -34,8 +36,8 @@ export function PartnersSection() {
           style={{ fontFamily: "Poppins, sans-serif" }}
           className="text-4xl md:text-5xl font-bold text-gray-800 mb-3"
         >
-          PARTNER KAMI
-          <span className="text-[#007bff]"> TERPERCAYA</span>
+          {t('partners.title')}
+          <span className="text-[#007bff]"> {t('partners.title.highlight')}</span>
         </h2>
 
         {/* Subheading */}
@@ -43,8 +45,7 @@ export function PartnersSection() {
           style={{ fontFamily: "Inter, sans-serif" }}
           className="text-gray-600 max-w-2xl mx-auto text-base md:text-lg leading-relaxed"
         >
-          Kami berkolaborasi dengan partner terpercaya untuk menghadirkan solusi
-          terbaik dan menciptakan nilai bersama.
+          {t('partners.subtitle')}
         </p>
 
 

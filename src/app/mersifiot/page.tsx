@@ -9,13 +9,14 @@ import { Footer } from "@/components/layout/footer"
 export default function HomePageIoT() {
   return (
     <>
-      <Header />
+     <Header />
       <HeroSectionDummy />
       <ProductIoT />
       <CustomIoTRequest />
       <TestimonialFAQ />
       <ContactForm />
       <Footer />
-    </>
+     
+    </>   
   )
 }

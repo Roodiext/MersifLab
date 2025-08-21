@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import { motion } from "framer-motion"
 import Image from "next/image"
+import { useLanguage } from "@/contexts/language-context"
 
 interface NumberCounterProps {
   end: number
@@ -73,29 +74,47 @@ interface MetricItem {
 }
 
 export function MersifNumbersSection() {
+  const { t, language } = useLanguage()
   const [metrics, setMetrics] = useState<MetricItem[]>([])
   const [loading, setLoading] = useState(true)
 
+  // Tambahkan language ke dalam dependency array
   useEffect(() => {
     fetchMersifNumbers()
-  }, [])
+  }, [language]) // Tambahkan language di sini
 
-  const fetchMersifNumbers = async () => {
+const fetchMersifNumbers = async () => {
     try {
       const response = await fetch('/api/mersif-numbers')
       if (response.ok) {
         const data = await response.json()
         
-        // Transform data untuk CountUp component
         const transformedData = data.map((item: any) => {
-          // Extract number from value string (e.g., "15,000+" -> 15000)
           const numberMatch = item.value.match(/[\d,]+/)
           const number = numberMatch ? parseInt(numberMatch[0].replace(/,/g, '')) : 0
           const suffix = item.value.replace(/[\d,]/g, '') || ""
           
+          // Tambahkan console.log untuk debugging
+          console.log('Original label:', item.label)
+          
+          let translatedLabel = item.label
+          // Cek semua kemungkinan label untuk Mitra
+          if (item.label.includes('Mitra') || 
+              item.label.includes('Institution') || 
+              item.label === "Mitra Institutional" || 
+              item.label === "Mitra Institusional") {
+            translatedLabel = language === 'en' ? "Institutional Partners" : "Mitra Institusional"
+          } else if (item.label === "Siswa Tercapai") {
+            translatedLabel = language === 'en' ? "Students Reached" : "Siswa Tercapai"
+          } else if (item.label === "Guru Terlatih") {
+            translatedLabel = language === 'en' ? "Trained Teachers" : "Guru Terlatih"
+          } else if (item.label === "Negara") {
+            translatedLabel = language === 'en' ? "Countries" : "Negara"
+          }
+
           return {
             id: item.id,
-            label: item.label,
+            label: translatedLabel,
             value: item.value,
             icon: item.icon,
             color: item.color,
@@ -108,13 +127,13 @@ export function MersifNumbersSection() {
       }
     } catch (error) {
       console.error('Error fetching mersif numbers:', error)
-      // Fallback to default data if API fails
+      // Fallback data tetap sama seperti sebelumnya
       setMetrics([
         {
           id: 1,
           end: 15000,
           suffix: "+",
-          label: "Siswa Tercapai",
+          label: language === 'en' ? "Students Reached" : "Siswa Tercapai",
           icon: "/img/mersif-number-img/student-graduate.svg",
           color: "text-teal-600",
           value: "15,000+"
@@ -123,7 +142,7 @@ export function MersifNumbersSection() {
           id: 2,
           end: 200,
           suffix: "+",
-          label: "Guru Terlatih",
+          label: language === 'en' ? "Trained Teachers" : "Guru Terlatih",
           icon: "/img/mersif-number-img/teacher-class.svg",
           color: "text-blue-600",
           value: "200+"
@@ -132,7 +151,7 @@ export function MersifNumbersSection() {
           id: 3,
           end: 30,
           suffix: "+",
-          label: "Mitra Institusional",
+          label: language === 'en' ? "Institutional Partners" : "Mitra Institusional",
           icon: "/img/mersif-number-img/school-icon.svg",
           color: "text-orange-500",
           value: "30+"
@@ -140,7 +159,7 @@ export function MersifNumbersSection() {
         {
           id: 4,
           end: 3,
-          label: "Negara",
+          label: language === 'en' ? "Countries" : "Negara",
           icon: "/img/mersif-number-img/earth-icon.svg",
           color: "text-red-500",
           value: "3"
@@ -204,19 +223,24 @@ export function MersifNumbersSection() {
         
         {/* Title Section */}
         <div className="text-center mb-8 sm:mb-10 md:mb-12 lg:mb-16 xl:mb-20 2xl:mb-24">
-<h2
-  className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl 2xl:text-7xl 3xl:text-8xl font-bold text-gray-800 mb-3 sm:mb-4 md:mb-5 lg:mb-6 xl:mb-7 2xl:mb-8"
-  style={{ fontFamily: "Poppins, sans-serif" }}
->
-  OUR <span className="text-[#007bff]">IMPACT</span> IN NUMBERS
-</h2>
-
+          <h2
+            className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl 2xl:text-7xl 3xl:text-8xl font-bold text-gray-800 mb-3 sm:mb-4 md:mb-5 lg:mb-6 xl:mb-7 2xl:mb-8"
+            style={{ fontFamily: "Poppins, sans-serif" }}
+          >
+            {language === 'en' ? "OUR" : "DAMPAK"}{' '}
+            <span className="text-[#007bff]">
+              {language === 'en' ? "IMPACT" : "KAMI"}
+            </span>{' '}
+            {language === 'en' ? "IN NUMBERS" : "DALAM ANGKA"}
+          </h2>
 
           <p
             className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-xl xl:text-2xl 2xl:text-3xl 3xl:text-4xl text-gray-600 max-w-xl sm:max-w-2xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto leading-relaxed px-2 sm:px-0"
             style={{ fontFamily: "Inter, sans-serif" }}
           >
-            Dampak nyata kami dalam memajukan pendidikan di Indonesia dan sekitarnya melalui pelatihan, kolaborasi, dan inovasi digital.
+            {language === 'en' 
+              ? "Our real impact in advancing education in Indonesia and surrounding areas through training, collaboration, and digital innovation."
+              : "Dampak nyata kami dalam memajukan pendidikan di Indonesia dan sekitarnya melalui pelatihan, kolaborasi, dan inovasi digital."}
           </p>
         </div>
 
@@ -266,7 +290,9 @@ export function MersifNumbersSection() {
             className="text-xs xs:text-sm sm:text-base md:text-lg lg:text-base xl:text-lg 2xl:text-xl 3xl:text-2xl text-gray-500 max-w-sm xs:max-w-lg sm:max-w-2xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl 3xl:max-w-7xl mx-auto leading-relaxed px-2 sm:px-4"
             style={{ fontFamily: "Inter, sans-serif" }}
           >
-            Pencapaian ini merupakan hasil kolaborasi berkelanjutan dengan berbagai stakeholder dalam ekosistem pendidikan Indonesia.
+            {language === 'en'
+              ? "These achievements are the result of ongoing collaboration with various stakeholders in Indonesia's education ecosystem."
+              : "Pencapaian ini adalah hasil kolaborasi berkelanjutan dengan berbagai pemangku kepentingan dalam ekosistem pendidikan Indonesia."}
           </p>
         </div>
       </div>

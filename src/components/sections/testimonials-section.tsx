@@ -2,6 +2,7 @@
 
 import { Star } from "lucide-react"
 import { useEffect, useState } from "react"
+import { useLanguage } from "@/contexts/language-context"
 
 interface Testimonial {
   id: number
@@ -15,6 +16,7 @@ interface Testimonial {
 export function TestimonialsSection() {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([])
   const [loading, setLoading] = useState(true)
+  const { t } = useLanguage()
 
   useEffect(() => {
     fetchTestimonials()
@@ -41,7 +43,7 @@ export function TestimonialsSection() {
       <section className="py-16 ">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold text-gray-900 mb-4" style={{ fontFamily: "Poppins, sans-serif" }}>
-            Apa Kata Mereka
+            {t('testimonials.title')}
           </h2>
           <p className="text-gray-600">Loading testimonials...</p>
         </div>
@@ -57,13 +59,13 @@ export function TestimonialsSection() {
             className="text-3xl font-bold text-gray-900 mb-4"
             style={{ fontFamily: "Poppins, sans-serif" }}
           >
-            Apa Kata Mereka
+            {t('testimonials.title')}
           </h2>
           <p
             className="text-gray-600 max-w-2xl mx-auto"
             style={{ fontFamily: "Inter, sans-serif" }}
           >
-            Pendapat para pengguna tentang layanan dan dukungan dari Mersif.
+            {t('testimonials.subtitle')}
           </p>
         </div>
 
@@ -127,7 +129,7 @@ export function TestimonialsSection() {
           </div>
         ) : (
           <div className="text-center text-gray-500">
-            <p>Belum ada testimonial yang tersedia.</p>
+            <p>No testimonials available yet.</p>
           </div>
         )}
       </div>

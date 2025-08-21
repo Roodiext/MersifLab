@@ -1,39 +1,23 @@
-import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import { NextResponse } from "next/server"
+import { PrismaClient } from "@prisma/client"
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient()
 
-// GET service by ID
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET() {
   try {
-    const id = parseInt(params.id);
+    const services = await prisma.service.findMany({
+      orderBy: {
+        sortOrder: "asc",
+      },
+    })
 
-    if (isNaN(id)) {
-      return NextResponse.json({ error: "Invalid ID" }, { status: 400 });
-    }
-
-    const service = await prisma.service.findUnique({
-      where: { id },
-    });
-
-    if (!service) {
-      return NextResponse.json(
-        { error: "Service not found" },
-        { status: 404 }
-      );
-    }
-
-    return NextResponse.json(service);
+    return NextResponse.json({
+      services: services,
+    })
   } catch (error) {
-    console.error("Error fetching service by ID:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch service" },
-      { status: 500 }
-    );
+    console.error("API Error:", error)
+    return NextResponse.json({ error: "Failed to fetch services" }, { status: 500 })
   } finally {
-    await prisma.$disconnect();
+    await prisma.$disconnect()
   }
 }

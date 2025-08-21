@@ -33,8 +33,8 @@ export async function addService(formData: FormData) {
 
   try {
     await query(
-      "INSERT INTO services (name, description, image, link, sortOrder) VALUES (?, ?, ?, ?, ?)",
-      [name, description, image, link, sortOrder]
+      "INSERT INTO services (name, description, image, link, sortOrder, isActive) VALUES (?, ?, ?, ?, ?, ?)",
+      [name, description, image, link, sortOrder, true]
     )
     
     revalidatePath("/admin/services")

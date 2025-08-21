@@ -1,59 +1,28 @@
 "use client"
-import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { usePathname, useRouter } from "next/navigation" // Import hooks dari next/navigation
-import { ChevronDown } from "lucide-react" // Untuk ikon panah
+
+import React from 'react'
+import { Button } from '@/components/ui/button'
+import { useLanguage } from '@/contexts/language-context'
+import { Globe } from 'lucide-react'
 
 export function LanguageSwitcher() {
-  const router = useRouter()
-  const pathname = usePathname()
+  const { language, setLanguage } = useLanguage()
 
-  // Ambil locale saat ini dari pathname
-  // Misalnya '/en/about' akan menjadi 'en'
-  // Jika tidak ada locale di path (misal: '/about'), default ke 'en'
-  const currentLocale = pathname.split("/")[1] || "en"
-
-  const languages = [
-    { code: "en", name: "English", flag: "🇬🇧" },
-    { code: "id", name: "Indonesian", flag: "🇮🇩" },
-    { code: "de", name: "German", flag: "🇩🇪" },
-    { code: "es", name: "Spanish", flag: "🇪🇸" },
-  ]
-
-  const getLanguageName = (code: string) => {
-    const lang = languages.find((l) => l.code === code)
-    return lang ? `${lang.flag} ${lang.name}` : `${code.toUpperCase()}`
-  }
-
-  const handleLanguageChange = (newLocale: string) => {
-    // Bangun path baru dengan locale yang dipilih
-    const pathSegments = pathname.split("/")
-    // Jika pathSegments[1] adalah locale, ganti. Jika tidak, tambahkan setelah root.
-    if (languages.some((lang) => lang.code === pathSegments[1])) {
-      pathSegments[1] = newLocale
-    } else {
-      pathSegments.splice(1, 0, newLocale) // Insert new locale after the first empty string (root)
-    }
-    const newPath = pathSegments.join("/")
-
-    router.push(newPath)
+  const toggleLanguage = () => {
+    setLanguage(language === 'id' ? 'en' : 'id')
   }
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="gap-2 bg-transparent text-gray-700 hover:text-black">
-          {getLanguageName(currentLocale)}
-          <ChevronDown className="w-4 h-4 ml-1" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        {languages.map((lang) => (
-          <DropdownMenuItem key={lang.code} onClick={() => handleLanguageChange(lang.code)}>
-            {lang.flag} {lang.name}
-          </DropdownMenuItem>
-        ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <Button
+      variant="ghost"
+      size="sm"
+      onClick={toggleLanguage}
+      className="flex items-center gap-2 px-3 py-2 text-sm font-medium transition-colors hover:text-blue-600"
+    >
+      <Globe className="h-4 w-4" />
+      <span className="hidden sm:inline">
+        {language === 'id' ? 'EN' : 'ID'}
+      </span>
+    </Button>
   )
 }

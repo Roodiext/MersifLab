@@ -91,8 +91,20 @@ export default function ServicesCRUD() {
           description: result.error,
           variant: "destructive",
         })
+      } else if (Array.isArray(result.services)) {
+        // Ensure only valid Service objects are set
+        const validServices = result.services.filter(
+          (s: any) =>
+            typeof s.id === "number" &&
+            typeof s.name === "string" &&
+            typeof s.description === "string" &&
+            typeof s.image === "string" &&
+            typeof s.link === "string" &&
+            typeof s.sortOrder === "number"
+        ) as Service[]
+        setServices(validServices)
       } else {
-        setServices(result.services || [])
+        setServices([])
       }
     } catch (error) {
       toast({
@@ -571,4 +583,3 @@ export default function ServicesCRUD() {
     </div>
   )
 }
-

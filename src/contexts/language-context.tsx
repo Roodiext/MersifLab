@@ -1,241 +1,312 @@
 "use client"
-import type React from "react"
-import { createContext, useContext, useState, useEffect } from "react"
 
-// Define all translations
-const translations = {
-  en: {
-    // Header translations
-    home: "Home",
-    about: "About",
-    product: "Product",
-    testimonial: "Testimonial",
-    news: "News",
-    newsPage: "News Page",
-    latestNews: "Latest News",
-    newsArchive: "News Archive",
-    categories: "Categories",
-    contact: "Contact",
-    login: "Login",
-    mersifLabLogo: "MersifLab Logo",
-    language: "Language",
+import React, { createContext, useContext, useState, useEffect } from 'react'
 
-    // Hero section
-    heroTitle: "MersifLab",
-    heroSubtitle: "Virtual Laboratory Platform Based on Collaborative and Immersive Mixed Reality",
-
-    // About section
-    aboutTitle: "About Us",
-    aboutDescription:
-      "MersifLab revolutionizes learning experiences powered by Augmented Reality, Virtual Reality, and Internet of Things technology. Our mission is to improve the quality of education in Indonesia by making immersive and interactive learning accessible to everyone.",
-
-    // Products section
-    servicesTitle: "Services",
-    servicesSubtitle: "Our amazing services for you to try",
-    mersifAcademy: "Mersif Academy",
-    mersifAcademyDesc: "Online learning platform",
-    mersifIot: "Mersif IoT",
-    mersifIotDesc: "Internet of Things solutions",
-    mersifCreatorRoom: "Mersif Creator Room",
-    mersifCreatorRoomDesc: "Virtual space creation platform",
-    mersifVista: "Mersif Vista",
-    mersifVistaDesc: "Data visualization and analytics",
-    mersifMobileApps: "Mersif Mobile Apps",
-    mersifMobileAppsDesc: "Mobile learning applications",
-    mersifAR: "Mersif AR",
-    mersifARDesc: "Augmented Reality learning",
-    bukuAR: "AR-Based Educational Books",
-    bukuARDesc: "Learning data analysis",
-
-    // Numbers section
-    numbersTitle: "OUR IMPACT IN NUMBERS",
-    numbersSubtitle:
-      "Our real impact in advancing education in Indonesia and beyond through training, collaboration, and digital innovation.",
-    studentsReached: "Students Reached",
-    teachersTrained: "Teachers Trained",
-    institutionalPartners: "Institutional Partners",
-    countries: "Countries",
-    numbersFooter:
-      "This achievement is the result of continuous collaboration with various stakeholders in the Indonesian education ecosystem.",
-
-    // Testimonials section
-    testimonialsTitle: "What They Say",
-    testimonialsSubtitle: "User opinions about services and support from Mersif.",
-
-    // News section
-    newsTitle: "Latest News & Articles",
-    newsSubtitle: "Follow the latest developments, innovations, and inspiring stories from MersifLab.",
-    readMore: "Read more",
-    viewAllNews: "View All News",
-
-    // Contact section
-    contactTitle: "Have something you want to ask?",
-    contactSubtitle:
-      "Have questions or need support? We're ready to help you succeed. Send us a message and we'll get back to you soon.",
-    contactFormTitle: "Fill Out This Form",
-    nameLabel: "Name:",
-    namePlaceholder: "Enter your name",
-    emailLabel: "Email:",
-    emailPlaceholder: "example@gmail.com",
-    questionLabel: "Question:",
-    questionPlaceholder: "I want to ask...",
-    submitButton: "Submit",
-
-    // News posts
-    newsPost1Title:
-      "Potential for Sustainable Cooperation between MersifLab and SMP Negeri 13 Surakarta Post 3D Printing Workshop",
-    newsPost1Snippet:
-      "Surakarta - The success of the 3D printing workshop held at SMP Negeri 13 Surakarta with the MersifLab team as resource persons opens various opportunities for developing sustainable cooperation in the field of educational technology.",
-    newsPost2Title:
-      "Day 2: MersifLab Becomes Resource Person for Teacher Competency Enhancement in Utilizing 3D Printer Technology in Innovative Learning Media at SMP Negeri 13 Surakarta",
-    newsPost2Snippet:
-      "Surakarta - The second day of Teacher Competency Enhancement in Utilizing 3D Printer Technology in Innovative Learning Media at SMP Negeri 13 Surakarta took place with a focus on direct practice of 3D printing technology. The MersifLab team served as mentors to help teachers practice the technology they learned the previous day.",
-    newsPost3Title:
-      "Day 1: MersifLab Becomes Resource Person for Teacher Competency Enhancement in Utilizing 3D Printer Technology in Innovative Learning Media at SMP Negeri 13 Surakarta",
-    newsPost3Snippet:
-      "Surakarta - On the first day of Teacher Competency Enhancement in Utilizing 3D Printer Technology in Innovative Learning Media at SMP Negeri 13 Surakarta, the MersifLab startup team was present as a resource person providing 3D printing technology training to teachers.",
-  },
-  id: {
-    // Header translations
-    home: "Beranda",
-    about: "Tentang",
-    product: "Produk",
-    testimonial: "Testimoni",
-    news: "Berita",
-    newsPage: "Halaman Berita",
-    latestNews: "Berita Terbaru",
-    newsArchive: "Arsip Berita",
-    categories: "Kategori",
-    contact: "Kontak",
-    login: "Masuk",
-    mersifLabLogo: "Logo MersifLab",
-    language: "Bahasa",
-
-    // Hero section
-    heroTitle: "MersifLab",
-    heroSubtitle: "Platform Laboratorium Virtual Berbasis Mixed Reality Kolaboratif dan Imersif",
-
-    // About section
-    aboutTitle: "Tentang Kami",
-    aboutDescription:
-      "MersifLab merevolusi pengalaman belajar yang didukung oleh teknologi Augmented Reality, Virtual Reality, dan Internet of Things. Misi kami adalah untuk meningkatkan kualitas pendidikan di Indonesia dengan membuat pembelajaran yang imersif dan interaktif yang dapat diakses oleh semua orang.",
-
-    // Products section
-    servicesTitle: "Layanan",
-    servicesSubtitle: "Layanan menakjubkan kami untuk Anda coba",
-    mersifAcademy: "Mersif Academy",
-    mersifAcademyDesc: "Platform pembelajaran online",
-    mersifIot: "Mersif IoT",
-    mersifIotDesc: "Internet of Things solutions",
-    mersifCreatorRoom: "Mersif Creator Room",
-    mersifCreatorRoomDesc: "Platform kreasi ruang virtual",
-    mersifVista: "Mersif Vista",
-    mersifVistaDesc: "Visualisasi data dan analytics",
-    mersifMobileApps: "Mersif Mobile Apps",
-    mersifMobileAppsDesc: "Aplikasi mobile Pembelajaran",
-    mersifAR: "Mersif AR",
-    mersifARDesc: "Pembelajaran dengan Augmented Reality",
-    bukuAR: "Buku Edukasi Berbasis AR",
-    bukuARDesc: "Analisis Data Pembelajaran",
-
-    // Numbers section
-    numbersTitle: "DAMPAK KAMI DALAM ANGKA",
-    numbersSubtitle:
-      "Dampak nyata kami dalam memajukan pendidikan di Indonesia dan sekitarnya melalui pelatihan, kolaborasi, dan inovasi digital.",
-    studentsReached: "Siswa Tercapai",
-    teachersTrained: "Guru Terlatih",
-    institutionalPartners: "Mitra Institusional",
-    countries: "Negara",
-    numbersFooter:
-      "Pencapaian ini merupakan hasil kolaborasi berkelanjutan dengan berbagai stakeholder dalam ekosistem pendidikan Indonesia.",
-
-    // Testimonials section
-    testimonialsTitle: "Apa Kata Mereka",
-    testimonialsSubtitle: "Pendapat para pengguna tentang layanan dan dukungan dari Mersif.",
-
-    // News section
-    newsTitle: "Berita & Artikel Terbaru",
-    newsSubtitle: "Ikuti perkembangan terbaru, inovasi, dan cerita inspiratif dari MersifLab.",
-    readMore: "Baca selengkapnya",
-    viewAllNews: "Lihat Semua Berita",
-
-    // Contact section
-    contactTitle: "Ada yang ingin kamu tanyakan?",
-    contactSubtitle:
-      "Ada pertanyaan atau butuh dukungan? Kami siap membantu Anda sukses. Kirimkan pesan kepada kami dan kami akan segera menghubungi Anda kembali.",
-    contactFormTitle: "Isi Formulir Ini",
-    nameLabel: "Nama:",
-    namePlaceholder: "Masukkan nama Anda",
-    emailLabel: "Email:",
-    emailPlaceholder: "example@gmail.com",
-    questionLabel: "Pertanyaan:",
-    questionPlaceholder: "aku ingin bertanya...",
-    submitButton: "Submit",
-
-    // News posts
-    newsPost1Title: "Potensi Kerja Sama Berkelanjutan MersifLab dan SMP Negeri 13 Surakarta Pasca Workshop 3D Printing",
-    newsPost1Snippet:
-      "Surakarta - Kesuksesan workshop 3D printing yang dilaksanakan di SMP Negeri 13 Surakarta dengan melibatkan tim MersifLab sebagai narasumber membuka berbagai peluang untuk pengembangan kerja sama berkelanjutan di bidang teknologi pendidikan.",
-    newsPost2Title:
-      "Hari ke-2: MersifLab Menjadi Narasumber Peningkatan Kompetensi Guru Pemanfaatan Teknologi Printer 3D Dalam Media Pembelajaran Inovatif di SMP Negeri 13 Surakarta",
-    newsPost2Snippet:
-      "Surakarta - Hari kedua Peningkatan Kompetensi Guru Pemanfaatan Teknologi Printer 3D Dalam Media Pembelajaran Inovatif di SMP Negeri 13 Surakarta berlangsung dengan fokus pada praktik langsung teknologi 3D printing. Tim MersifLab berperan sebagai pembimbing untuk membantu para guru mempraktikan sendiri teknologi yang telah dipelajari pada hari sebelumnya.",
-    newsPost3Title:
-      "Hari ke-1: MersifLab Menjadi Narasumber Peningkatan Kompetensi Guru Pemanfaatan Teknologi Printer 3D Dalam Media Pembelajaran Inovatif di SMP Negeri 13 Surakarta",
-    newsPost3Snippet:
-      "Surakarta - Pada hari pertama Peningkatan Kompetensi Guru Pemanfaatan Teknologi Printer 3D Dalam Media Pembelajaran Inovatif di SMP Negeri 13 Surakarta, tim startup MersifLab hadir sebagai narasumber dengan memberikan pelatihan teknologi 3D printing kepada para guru.Sebagai narasumber yang diundang dalam workshop tersebut, tim MersifLab pada hari pertama memberikan pelatihan komprehensif tentang teknologi 3D printing kepada para guru SMP Negeri 13 Surakarta. Pelatihan ini mencakup pemahaman dasar tentang cara kerja printer 3D, software desain, hingga aplikasi praktis dalam dunia pendidikan.",
-  },
-}
-
-type Language = "en" | "id"
+type Language = 'id' | 'en'
 
 interface LanguageContextType {
-  currentLanguage: Language
-  setCurrentLanguage: (lang: Language) => void
-  t: typeof translations.en
-  toggleLanguage: () => void
+  language: Language
+  setLanguage: (lang: Language) => void
+  t: (key: string) => string
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined)
 
-export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [currentLanguage, setCurrentLanguage] = useState<Language>("id")
-  const [isLoaded, setIsLoaded] = useState(false)
+// Translation data
+const translations = {
+  id: {
+    // Navigation
+    'nav.home': 'Beranda',
+    'nav.about': 'Tentang',
+    'nav.testimonials': 'Testimoni',
+    'nav.services': 'Layanan',
+    'nav.news': 'Berita',
+    'nav.contact': 'Kontak',
+    'nav.login': 'Masuk',
+    'nav.register': 'Daftar',
+    'nav.profile': 'Profile',
+    'nav.settings': 'Pengaturan',
+    'nav.admin': 'Panel Admin',
+    'nav.logout': 'Keluar',
+    'nav.news.page': 'Halaman Berita',
+    'nav.news.latest': 'Berita Terbaru',
+    'nav.news.archive': 'Arsip Berita',
+    'nav.news.categories': 'Kategori',
+    'nav.services.academy': 'Mersif Academy',
+    'nav.services.iot': 'Mersif IoT',
+    'nav.services.vista': 'Mersif Vista',
+    'nav.services.creator': 'Mersif Creator',
 
-  // Load language preference from localStorage on mount
+    // Hero Section
+    'hero.title': 'Membangun Ekosistem',
+    'hero.title.highlight': 'Inovasi Digital Indonesia',
+    'hero.subtitle': 'MersifLab berkomitmen untuk mengakselerasi talenta dan solusi digital melalui pilar layanan kami di bidang IoT, Edukasi, Kreativitas, dan Dampak Sosial.',
+    'hero.button': 'Jelajahi Mersif',
+    'hero.mobile.title': 'MersifLab',
+    'hero.mobile.subtitle': 'Platform Laboratorium Virtual Berbasis Mixed Reality Kolaboratif dan Imersif',
+
+    // About Section
+    'about.title': 'Tentang Kami',
+    'about.subtitle': 'MersifLab adalah platform inovasi digital yang berfokus pada pengembangan talenta dan solusi teknologi masa depan.',
+    'about.description': 'Kami berkomitmen untuk menciptakan ekosistem digital yang inklusif dan berkelanjutan melalui berbagai layanan dan program yang dirancang untuk mengakselerasi pertumbuhan industri teknologi di Indonesia.',
+
+    // Services Section
+    'services.title': 'Layanan Kami',
+    'services.subtitle': 'Solusi Digital Terdepan untuk Masa Depan',
+    'services.academy.title': 'Mersif Academy',
+    'services.academy.description': 'Platform pembelajaran digital yang inovatif untuk mengembangkan talenta teknologi masa depan.',
+    'services.iot.title': 'Mersif IoT',
+    'services.iot.description': 'Solusi Internet of Things yang terintegrasi untuk transformasi digital industri.',
+    'services.vista.title': 'Mersif Vista',
+    'services.vista.description': 'Platform visualisasi data dan analitik untuk pengambilan keputusan yang lebih baik.',
+    'services.creator.title': 'Mersif Creator',
+    'services.creator.description': 'Tools kreatif untuk mengembangkan konten digital yang menarik dan interaktif.',
+
+    // Products Section
+    'products.title': 'Produk Kami',
+    'products.subtitle': 'Inovasi Teknologi untuk Masa Depan',
+    'products.book.title': 'Buku Berbasis AR',
+    'products.book.description': 'Buku interaktif dengan teknologi Augmented Reality untuk pembelajaran yang lebih menarik.',
+    'products.gamification.title': 'Gamifikasi Pembelajaran',
+    'products.gamification.description': 'Platform pembelajaran berbasis game untuk meningkatkan engagement siswa.',
+    'products.creator.title': 'Mersif Creator',
+    'products.creator.description': 'Tools kreatif untuk mengembangkan konten digital yang menarik.',
+    'products.forum.title': 'Mersif Forum',
+    'products.forum.description': 'Platform diskusi dan kolaborasi untuk komunitas teknologi.',
+    'products.mobile.title': 'Mersif Mobile Apps',
+    'products.mobile.description': 'Aplikasi mobile untuk akses layanan MersifLab di mana saja.',
+    'products.room.title': 'Mersif Room',
+    'products.room.description': 'Ruang virtual untuk kolaborasi dan pembelajaran online.',
+
+    // Testimonials Section
+    'testimonials.title': 'Testimoni',
+    'testimonials.subtitle': 'Apa Kata Mereka Tentang Kami',
+
+    // Partners Section
+    'partners.title': 'Partner Kami',
+    'partners.subtitle': 'Berkolaborasi dengan Institusi Terkemuka',
+
+    // Contact Section
+    'contact.title': 'Hubungi Kami',
+    'contact.subtitle': 'Mari Berdiskusi Tentang Proyek Anda',
+    'contact.form.name': 'Nama Lengkap',
+    'contact.form.email': 'Email',
+    'contact.form.message': 'Pesan',
+    'contact.form.submit': 'Kirim Pesan',
+    'contact.info.address': 'Alamat',
+    'contact.info.phone': 'Telepon',
+    'contact.info.email': 'Email',
+
+    // Footer
+    'footer.description': 'Platform inovasi digital untuk masa depan teknologi Indonesia.',
+    'footer.quick.links': 'Link Cepat',
+    'footer.services': 'Layanan',
+    'footer.contact': 'Kontak',
+    'footer.copyright': '© 2024 MersifLab. Semua hak dilindungi.',
+    'footer.follow.us': 'Ikuti Kami',
+    'footer.contact.us': 'Hubungi Kami',
+    'footer.address': 'Alamat',
+    'footer.phone': 'Telepon',
+    'footer.email': 'Email',
+    'footer.location': 'Lokasi Kami',
+    'footer.view.on.maps': 'Lihat di Google Maps',
+    'footer.quick.links.services': 'Layanan',
+    'footer.quick.links.company': 'Perusahaan',
+    'footer.quick.links.support': 'Dukungan',
+    'footer.quick.links.legal': 'Legal',
+    'footer.quick.links.vr.development': 'Pengembangan VR',
+    'footer.quick.links.ar': 'Augmented Reality',
+    'footer.quick.links.mobile.apps': 'Aplikasi Mobile',
+    'footer.quick.links.about.us': 'Tentang Kami',
+    'footer.quick.links.careers': 'Karir',
+    'footer.quick.links.faq': 'FAQ',
+    'footer.quick.links.documentation': 'Dokumentasi',
+    'footer.quick.links.privacy.policy': 'Kebijakan Privasi',
+    'footer.quick.links.terms.service': 'Syarat Layanan',
+    'footer.quick.links.cookie.policy': 'Cookie Policy',
+    'footer.quick.links.contact': 'Kontak',
+
+    // Partners
+    'partners.title': 'PARTNER KAMI',
+    'partners.title.highlight': 'TERPERCAYA',
+    'partners.subtitle': 'Kami berkolaborasi dengan partner terpercaya untuk menghadirkan solusi terbaik dan menciptakan nilai bersama.',
+
+    // Mersif Numbers
+    'mersif.numbers.title': 'OUR',
+    'mersif.numbers.title.highlight': 'IMPACT',
+    'mersif.numbers.title.suffix': 'IN NUMBERS',
+    'mersif.numbers.subtitle': 'Dampak nyata kami dalam memajukan pendidikan di Indonesia dan sekitarnya melalui pelatihan, kolaborasi, dan inovasi digital.',
+    'mersif.numbers.bottom.text': 'Pencapaian ini merupakan hasil kolaborasi berkelanjutan dengan berbagai stakeholder dalam ekosistem pendidikan Indonesia.',
+
+    // Common
+    'common.learn.more': 'Pelajari Lebih Lanjut',
+    'common.get.started': 'Mulai Sekarang',
+    'common.view.more': 'Lihat Lebih Banyak',
+    'common.read.more': 'Baca Selengkapnya',
+  },
+  en: {
+    // Navigation
+    'nav.home': 'Home',
+    'nav.about': 'About',
+    'nav.testimonials': 'Testimonials',
+    'nav.services': 'Services',
+    'nav.news': 'News',
+    'nav.contact': 'Contact',
+    'nav.login': 'Login',
+    'nav.register': 'Register',
+    'nav.profile': 'Profile',
+    'nav.settings': 'Settings',
+    'nav.admin': 'Admin Panel',
+    'nav.logout': 'Logout',
+    'nav.news.page': 'News Page',
+    'nav.news.latest': 'Latest News',
+    'nav.news.archive': 'News Archive',
+    'nav.news.categories': 'Categories',
+    'nav.services.academy': 'Mersif Academy',
+    'nav.services.iot': 'Mersif IoT',
+    'nav.services.vista': 'Mersif Vista',
+    'nav.services.creator': 'Mersif Creator',
+
+    // Hero Section
+    'hero.title': 'Building Indonesia\'s',
+    'hero.title.highlight': 'Digital Innovation Ecosystem',
+    'hero.subtitle': 'MersifLab is committed to accelerating digital talent and solutions through our service pillars in IoT, Education, Creativity, and Social Impact.',
+    'hero.button': 'Explore Mersif',
+    'hero.mobile.title': 'MersifLab',
+    'hero.mobile.subtitle': 'Collaborative and Immersive Mixed Reality-Based Virtual Laboratory Platform',
+
+    // About Section
+    'about.title': 'About Us',
+    'about.subtitle': 'MersifLab is a digital innovation platform focused on developing future technology talent and solutions.',
+    'about.description': 'We are committed to creating an inclusive and sustainable digital ecosystem through various services and programs designed to accelerate the growth of the technology industry in Indonesia.',
+
+    // Services Section
+    'services.title': 'Our Services',
+    'services.subtitle': 'Leading Digital Solutions for the Future',
+    'services.academy.title': 'Mersif Academy',
+    'services.academy.description': 'Innovative digital learning platform for developing future technology talent.',
+    'services.iot.title': 'Mersif IoT',
+    'services.iot.description': 'Integrated Internet of Things solutions for industrial digital transformation.',
+    'services.vista.title': 'Mersif Vista',
+    'services.vista.description': 'Data visualization and analytics platform for better decision making.',
+    'services.creator.title': 'Mersif Creator',
+    'services.creator.description': 'Creative tools for developing engaging and interactive digital content.',
+
+    // Products Section
+    'products.title': 'Our Products',
+    'products.subtitle': 'Technology Innovation for the Future',
+    'products.book.title': 'AR-Based Book',
+    'products.book.description': 'Interactive book with Augmented Reality technology for more engaging learning.',
+    'products.gamification.title': 'Learning Gamification',
+    'products.gamification.description': 'Game-based learning platform to increase student engagement.',
+    'products.creator.title': 'Mersif Creator',
+    'products.creator.description': 'Creative tools for developing engaging digital content.',
+    'products.forum.title': 'Mersif Forum',
+    'products.forum.description': 'Discussion and collaboration platform for the technology community.',
+    'products.mobile.title': 'Mersif Mobile Apps',
+    'products.mobile.description': 'Mobile applications for accessing MersifLab services anywhere.',
+    'products.room.title': 'Mersif Room',
+    'products.room.description': 'Virtual room for online collaboration and learning.',
+
+    // Testimonials Section
+    'testimonials.title': 'Testimonials',
+    'testimonials.subtitle': 'What They Say About Us',
+
+    // Partners Section
+    'partners.title': 'Our Partners',
+    'partners.subtitle': 'Collaborating with Leading Institutions',
+
+    // Contact Section
+    'contact.title': 'Contact Us',
+    'contact.subtitle': 'Let\'s Discuss Your Project',
+    'contact.form.name': 'Full Name',
+    'contact.form.email': 'Email',
+    'contact.form.message': 'Message',
+    'contact.form.submit': 'Send Message',
+    'contact.info.address': 'Address',
+    'contact.info.phone': 'Phone',
+    'contact.info.email': 'Email',
+
+    // Footer
+    'footer.description': 'Digital innovation platform for Indonesia\'s technology future.',
+    'footer.quick.links': 'Quick Links',
+    'footer.services': 'Services',
+    'footer.contact': 'Contact',
+    'footer.copyright': '© 2024 MersifLab. All rights reserved.',
+    'footer.follow.us': 'Follow Us',
+    'footer.contact.us': 'Contact Us',
+    'footer.address': 'Address',
+    'footer.phone': 'Phone',
+    'footer.email': 'Email',
+    'footer.location': 'Our Location',
+    'footer.view.on.maps': 'View on Google Maps',
+    'footer.quick.links.services': 'Services',
+    'footer.quick.links.company': 'Company',
+    'footer.quick.links.support': 'Support',
+    'footer.quick.links.legal': 'Legal',
+    'footer.quick.links.vr.development': 'VR Development',
+    'footer.quick.links.ar': 'Augmented Reality',
+    'footer.quick.links.mobile.apps': 'Mobile Apps',
+    'footer.quick.links.about.us': 'About Us',
+    'footer.quick.links.careers': 'Careers',
+    'footer.quick.links.faq': 'FAQ',
+    'footer.quick.links.documentation': 'Documentation',
+    'footer.quick.links.privacy.policy': 'Privacy Policy',
+    'footer.quick.links.terms.service': 'Terms of Service',
+    'footer.quick.links.cookie.policy': 'Cookie Policy',
+    'footer.quick.links.contact': 'Contact',
+
+    // Partners
+    'partners.title': 'OUR TRUSTED',
+    'partners.title.highlight': 'PARTNERS',
+    'partners.subtitle': 'We collaborate with trusted partners to deliver the best solutions and create shared value.',
+
+    // Mersif Numbers
+    'mersif.numbers.title': 'OUR',
+    'mersif.numbers.title.highlight': 'IMPACT',
+    'mersif.numbers.title.suffix': 'IN NUMBERS',
+    'mersif.numbers.subtitle': 'Our real impact in advancing education in Indonesia and surrounding areas through training, collaboration, and digital innovation.',
+    'mersif.numbers.bottom.text': 'These achievements are the result of ongoing collaboration with various stakeholders in Indonesia\'s education ecosystem.',
+
+    // Common
+    'common.learn.more': 'Learn More',
+    'common.get.started': 'Get Started',
+    'common.view.more': 'View More',
+    'common.read.more': 'Read More',
+  }
+}
+
+export function LanguageProvider({ children }: { children: React.ReactNode }) {
+  const [language, setLanguageState] = useState<Language>('id')
+
   useEffect(() => {
-    const savedLanguage = localStorage.getItem("mersiflab-language")
-    if (savedLanguage && (savedLanguage === "en" || savedLanguage === "id")) {
-      setCurrentLanguage(savedLanguage as Language)
+    // Load language preference from localStorage
+    const savedLanguage = localStorage.getItem('language') as Language
+    if (savedLanguage && (savedLanguage === 'id' || savedLanguage === 'en')) {
+      setLanguageState(savedLanguage)
     }
-    setIsLoaded(true)
   }, [])
 
-  // Save language preference to localStorage whenever it changes
-  useEffect(() => {
-    if (isLoaded) {
-      localStorage.setItem("mersiflab-language", currentLanguage)
-    }
-  }, [currentLanguage, isLoaded])
-
-  const toggleLanguage = () => {
-    setCurrentLanguage((prev) => (prev === "en" ? "id" : "en"))
+  const setLanguage = (lang: Language) => {
+    setLanguageState(lang)
+    localStorage.setItem('language', lang)
   }
 
-  const value: LanguageContextType = {
-    currentLanguage,
-    setCurrentLanguage,
-    t: translations[currentLanguage],
-    toggleLanguage,
+  const t = (key: string): string => {
+    return translations[language][key] || key
   }
 
-  return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>
+  return (
+    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+      {children}
+    </LanguageContext.Provider>
+  )
 }
 
 export function useLanguage() {
   const context = useContext(LanguageContext)
   if (context === undefined) {
-    throw new Error("useLanguage must be used within a LanguageProvider")
+    throw new Error('useLanguage must be used within a LanguageProvider')
   }
   return context
 }

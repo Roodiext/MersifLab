@@ -7,7 +7,7 @@ import { motion } from "framer-motion"
 
 export function HeroVista() {
   return (
-    <section className="w-full py-10 bg-gradient-to-b from-white to-gray-50">
+    <section id="hero" className="w-full py-10 bg-gradient-to-b from-white to-gray-50">
       <div className="container mx-auto px-6 md:px-12 lg:px-24 max-w-[1100px]">
 
         {/* Mobile & Tablet */}

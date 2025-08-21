@@ -35,7 +35,7 @@ export function VistaDemo() {
   const [selectedItem, setSelectedItem] = useState(null)
 
   return (
-    <section className="w-full py-16 bg-gray-50">
+    <section id="berita" className="w-full py-16 bg-gray-50">
       <div className="container mx-auto px-6 md:px-12 lg:px-24 max-w-[1200px]">
         <motion.h2
           className="text-3xl md:text-4xl font-bold text-center mb-12"

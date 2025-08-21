@@ -6,7 +6,7 @@ export default function ProductPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold">Product Management</h1>
+        <h1 className="text-3xl font-bold">P  roduct Management</h1>
         <Button asChild>
           <Link href="/admin/product/new">Add New Product</Link>
         </Button>
