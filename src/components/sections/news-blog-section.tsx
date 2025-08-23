@@ -36,26 +36,20 @@ export function NewsBlogSection() {
       const response = await fetch('/api/content')
       const data = await response.json()
       
-      // Transform data dengan menerjemahkan judul berdasarkan bahasa
+      // Transform data untuk memastikan konten berita dalam bahasa Indonesia
       const transformedData = data.slice(0, 6).map((item: any) => {
-        // Jika judul dalam bahasa Inggris, ganti dengan judul Indonesia
-        const titleTranslations: { [key: string]: { en: string, id: string } } = {
-          "Visit of the Deputy Minister of Higher Education and Science and Technology at Universitas Sebelas Maret": {
-            en: "Visit of the Deputy Minister of Higher Education and Science and Technology at Universitas Sebelas Maret",
-            id: "Kunjungan Wakil Menteri Pendidikan Tinggi dan Ilmu Pengetahuan dan Teknologi di Universitas Sebelas Maret"
-          },
-          "MersifLab and App Media Inc. Sign MoU at Korea-Indonesia Business Meeting 2025": {
-            en: "MersifLab and App Media Inc. Sign MoU at Korea-Indonesia Business Meeting 2025",
-            id: "MersifLab dan App Media Inc. Menandatangani MoU pada Pertemuan Bisnis Korea-Indonesia 2025"
-          }
+        // Jika judul dalam bahasa Inggris, ganti dengan versi Indonesia
+        const indonesianTitles: { [key: string]: string } = {
+          "Visit of the Deputy Minister of Higher Education and Science and Technology at Universitas Sebelas Maret": 
+            "Kunjungan Wakil Menteri Pendidikan Tinggi dan Ilmu Pengetahuan dan Teknologi di Universitas Sebelas Maret",
+          "MersifLab and App Media Inc. Sign MoU at Korea-Indonesia Business Meeting 2025":
+            "MersifLab dan App Media Inc. Menandatangani MoU pada Pertemuan Bisnis Korea-Indonesia 2025"
         }
 
         return {
           ...item,
-          // Gunakan judul yang diterjemahkan jika ada, jika tidak gunakan judul asli
-          title: titleTranslations[item.title] 
-            ? titleTranslations[item.title][language] 
-            : item.title
+          title: indonesianTitles[item.title] || item.title,
+          content: item.content // Pastikan konten tetap dalam bahasa Indonesia
         }
       })
       
@@ -74,7 +68,7 @@ export function NewsBlogSection() {
       : textContent
   }
 
-  // Fungsi helper untuk terjemahan
+  // Fungsi helper untuk terjemahan hanya untuk judul section
   const getTranslation = (key: string) => {
     const translations: { [key: string]: { en: string, id: string } } = {
       pageTitle: {

@@ -1,46 +1,67 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { verifyRecaptcha } from '@/lib/recaptcha'
+// src/app/api/verify-recaptcha/route.ts
+
+import { NextRequest, NextResponse } from 'next/server';
+import { verifyRecaptcha, isRecaptchaValid, getRecaptchaErrorMessage } from '@/lib/recaptcha';
 
 export async function POST(request: NextRequest) {
   try {
-    const { token } = await request.json()
+    const body = await request.json();
+    const { token } = body;
 
+    // Validasi input
     if (!token) {
       return NextResponse.json(
-        { success: false, error: 'Token tidak ditemukan' },
+        { success: false, error: 'reCAPTCHA token is required' },
         { status: 400 }
-      )
+      );
     }
 
-    const verification = await verifyRecaptcha(token)
-
-    if (!verification.success) {
+    // Ambil secret key dari environment variable
+    const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+    if (!secretKey) {
+      console.error('RECAPTCHA_SECRET_KEY is not set in environment variables');
       return NextResponse.json(
-        { success: false, error: 'Verifikasi reCAPTCHA gagal', details: verification['error-codes'] },
-        { status: 400 }
-      )
+        { success: false, error: 'Server configuration error' },
+        { status: 500 }
+      );
     }
 
-    // reCAPTCHA v3 memberikan score 0.0 - 1.0
-    // Score tinggi = kemungkinan manusia, score rendah = kemungkinan bot
-    const minScore = 0.5
-    if (verification.score && verification.score < minScore) {
+    // Verifikasi reCAPTCHA dengan Google
+    const recaptchaResponse = await verifyRecaptcha(token, secretKey);
+
+    // Validasi hasil
+    const isValid = isRecaptchaValid(recaptchaResponse);
+
+    if (isValid) {
+      return NextResponse.json({
+        success: true,
+        message: 'reCAPTCHA verified successfully',
+        score: recaptchaResponse.score, // Untuk reCAPTCHA v3
+      });
+    } else {
+      const errorMessage = getRecaptchaErrorMessage(recaptchaResponse);
       return NextResponse.json(
-        { success: false, error: 'Score reCAPTCHA terlalu rendah', score: verification.score },
+        {
+          success: false,
+          error: 'reCAPTCHA verification failed',
+          details: errorMessage,
+        },
         { status: 400 }
-      )
+      );
     }
-
-    return NextResponse.json({
-      success: true,
-      score: verification.score,
-      message: 'Verifikasi reCAPTCHA berhasil'
-    })
   } catch (error) {
-    console.error('Error verifying reCAPTCHA:', error)
+    console.error('Error in reCAPTCHA verification:', error);
     return NextResponse.json(
-      { success: false, error: 'Terjadi kesalahan internal' },
+      { success: false, error: 'Internal server error' },
       { status: 500 }
-    )
+    );
   }
+}
+
+// Jika Anda ingin menambahkan method GET untuk testing
+export async function GET() {
+  return NextResponse.json({
+    message: 'reCAPTCHA verification endpoint',
+    methods: ['POST'],
+  });
 }

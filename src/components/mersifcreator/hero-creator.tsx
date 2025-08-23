@@ -13,9 +13,8 @@ export function HeroSectionCreator() {
   }, [])
 
   return (
-    <section className="w-full py-8 lg:py-12 bg-gradient-to-b from-white to-gray-50">
+    <section id="hero" className="w-full py-8 lg:py-12 bg-gradient-to-b from-white to-gray-50">
       <div className="container mx-auto px-4 max-w-[1600px]">
-
         {/* Mobile & Tablet */}
         <div className="flex flex-col items-center text-center lg:hidden space-y-6">
           <div className="relative w-full max-w-[500px]">
@@ -30,7 +29,7 @@ export function HeroSectionCreator() {
               }`}
             />
           </div>
-          
+
           <div className="flex flex-col justify-center space-y-4">
             <h1
               className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight"
@@ -42,8 +41,8 @@ export function HeroSectionCreator() {
               className="max-w-[600px] text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed px-3"
               style={{ fontFamily: "Inter, sans-serif" }}
             >
-              Buat game interaktif dalam hitungan menit! Semua game yang dibuat dengan 
-              Mersif Creator akan otomatis tersedia di Mersif Room untuk dimainkan bersama.
+              Buat game interaktif dalam hitungan menit! Semua game yang dibuat dengan Mersif Creator akan otomatis
+              tersedia di Mersif Room untuk dimainkan bersama.
             </p>
             <div className="flex justify-center pt-2">
               <Button className="rounded-full bg-[#007bff] px-6 text-white hover:bg-[#007bff]/90">
@@ -56,7 +55,6 @@ export function HeroSectionCreator() {
 
         {/* Desktop */}
         <div className="hidden lg:grid gap-8 items-center lg:grid-cols-[1fr_580px]">
-          
           {/* Text */}
           <div className="flex flex-col justify-center space-y-5 lg:pl-8">
             <h1
@@ -69,8 +67,8 @@ export function HeroSectionCreator() {
               className="text-lg xl:text-xl text-gray-600 leading-relaxed max-w-lg"
               style={{ fontFamily: "Inter, sans-serif" }}
             >
-              Lihat game dan aplikasi interaktif yang mengedukasi dan menghibur. 
-              Sampaikan materi pembelajaran dengan cara yang menyenangkan dan mudah dipahami.
+              Lihat game dan aplikasi interaktif yang mengedukasi dan menghibur. Sampaikan materi pembelajaran dengan
+              cara yang menyenangkan dan mudah dipahami.
             </p>
             <div>
               <Button className="rounded-full bg-[#007bff] px-6 text-white hover:bg-[#007bff]/90">

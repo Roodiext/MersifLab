@@ -115,7 +115,7 @@ export function HeaderVista() {
   
   const navItems: NavItem[] = [
     { href: "#home", label: "Beranda", icon: Home },
-    { href: "", label: "Pelatihan", icon: BookOpen },
+    { href: "/#pelatihan", label: "Pelatihan", icon: BookOpen },
     { href: "/berita", label: "Berita", icon: Newspaper },
     { href: "/galeri", label: "Galeri", icon: ImageIcon },
     { href: "/#contact", label: "Kontak", icon: Mail },

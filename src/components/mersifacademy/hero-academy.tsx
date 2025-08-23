@@ -1,256 +1,214 @@
 "use client"
 
-import type React from "react"
+import { useState } from "react"
 
-import Link from "next/link"
-import Image from "next/image"
-import { useEffect, useState } from "react"
-import { BookOpen, Award, Rocket, Users, ChevronRight, Star } from "lucide-react"
+export default function AboutPage() {
+  const [activeSkill, setActiveSkill] = useState("kritis")
 
-export default function HomePageAcademy() {
-  const [isVisible, setIsVisible] = useState(false)
-
-  useEffect(() => {
-    setIsVisible(true)
-  }, [])
-
-  const AnimatedIcon = ({
-    children,
-    className = "",
-    delay = 0,
-  }: {
-    children: React.ReactNode
-    className?: string
-    delay?: number
-  }) => (
-    <div
-      className={`absolute opacity-20 animate-float ${className}`}
-      style={{
-        animationDelay: `${delay}s`,
-        animationDuration: "6s",
-        animationIterationCount: "infinite",
-      }}
-    >
-      {children}
-    </div>
-  )
-
-  const collaborationLogos = [
-    { name: "Partner 1", src: "/generic-university-logo.png" },
-    { name: "Partner 2", src: "/abstract-tech-logo.png" },
-    { name: "Partner 3", src: "/research-institute-logo.png" },
-    { name: "Partner 4", src: "/placeholder-4cri3.png" },
-    { name: "Partner 5", src: "/generic-government-logo.png" },
-    { name: "Partner 6", src: "/placeholder-1rwgf.png" },
+  const skills = [
+    { id: "kritis", title: "Berpikir Kritis", number: "1" },
+    { id: "kreativitas", title: "Kreativitas & Inovasi", number: "2" },
+    { id: "kolaborasi", title: "Kolaborasi", number: "3" },
+    { id: "karakter", title: "Pengembangan Karakter", number: "4" },
   ]
 
+  const skillContent = {
+    kritis:
+      "Riset melatih siswa untuk menganalisis data secara mendalam, mempertanyakan asumsi yang ada, dan menarik kesimpulan logis yang dapat dipertanggungjawabkan.",
+    kreativitas:
+      "Siswa didorong untuk menemukan masalah-masalah baru dan merancang solusi orisinal yang belum pernah terpikirkan sebelumnya, mengubah ide menjadi inovasi nyata.",
+    kolaborasi:
+      "Proyek riset seringkali melibatkan kerja tim, mengajarkan cara berkomunikasi efektif, berbagi ide secara konstruktif, dan bekerja sama mencapai satu tujuan besar.",
+    karakter:
+      "Menghadapi tantangan dan kegagalan dalam riset akan membangun ketekunan, menumbuhkan rasa ingin tahu yang mendalam, serta menjunjung tinggi integritas akademik.",
+  }
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-blue-800 via-blue-900 to-slate-800 text-white">
-        {/* Animated Background Elements */}
-        <AnimatedIcon className="top-10 left-10" delay={0}>
-          <Award className="w-12 h-12 text-blue-200" />
-        </AnimatedIcon>
+    <div className="overflow-x-hidden">
+      <style jsx>{`
+        @keyframes mentul {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-10px); }
+        }
+        .mentul { animation: mentul 1s ease-in-out infinite; }
+        .mentul-delay-1 { animation-delay: 1s; }
+        .mentul-delay-2 { animation-delay: 2s; }
+        .mentul-delay-3 { animation-delay: 3s; }
+      `}</style>
 
-        <AnimatedIcon className="top-20 right-20" delay={1}>
-          <BookOpen className="w-16 h-16 text-sky-200" />
-        </AnimatedIcon>
-
-        <AnimatedIcon className="bottom-32 left-1/4" delay={2}>
-          <Rocket className="w-14 h-14 text-slate-200" />
-        </AnimatedIcon>
-
-        <AnimatedIcon className="top-1/3 right-1/4" delay={3}>
-          <Users className="w-10 h-10 text-blue-300" />
-        </AnimatedIcon>
-
-        <AnimatedIcon className="bottom-20 right-10" delay={4}>
-          <Star className="w-12 h-12 text-sky-300" />
-        </AnimatedIcon>
-
-        {/* Main Content */}
-        <div className="container mx-auto px-6 py-20">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
-            {/* Left Content */}
-            <div
-              className={`w-full lg:w-1/2 space-y-8 transform transition-all duration-1000 ${
-                isVisible ? "translate-x-0 opacity-100" : "-translate-x-10 opacity-0"
-              }`}
-            >
-              <div className="space-y-4">
-                <h1 className="text-5xl lg:text-6xl font-bold leading-tight">
-                  <span className="bg-gradient-to-r from-blue-400 to-sky-500 bg-clip-text text-transparent">
-                    Mersif
-                  </span>
-                  <span className="text-white block lg:inline lg:ml-3">Academy</span>
-                </h1>
-
-                <p className="text-xl text-blue-100 leading-relaxed max-w-lg">
-                  Platform pembelajaran riset, sains, dan teknologi berbasis open innovation untuk mencetak inovator
-                  muda Indonesia.
-                </p>
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link
-                  href="/about"
-                  className="group bg-white text-blue-800 px-8 py-4 rounded-xl font-semibold 
-                           hover:bg-slate-50 transition-all duration-300 transform hover:scale-105 
-                           shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
-                >
-                  Selengkapnya
-                  <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </Link>
-
-                <Link
-                  href="/daftar"
-                  className="group border-2 border-white text-white px-8 py-4 rounded-xl font-semibold 
-                           hover:bg-white hover:text-blue-800 transition-all duration-300 
-                           flex items-center justify-center gap-2"
-                >
-                  Daftar Sekarang
-                  <Rocket className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                </Link>
+      <section className="hero-gradient relative overflow-x-hidden">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex flex-col lg:flex-row items-center gap-12">
+            <div className="flex-1 animate__animated animate__fadeInLeft">
+              <div className="relative">
+                <div className="absolute top-[-1rem] left-[-1rem] w-8 h-8 bg-blue-100 rounded-full"></div>
+                <div className="absolute bottom-[-0.5rem] left-[2rem] w-4 h-4 bg-yellow-300 rounded-full"></div>
+                <div className="absolute top-[3rem] left-[0rem] text-blue-200 text-3xl mentul mentul-delay-1">📚</div>
+                <div className="absolute top-[-4rem] left-[16rem] text-blue-200 text-4xl mentul mentul-delay-2">🎓</div>
+                <div className="absolute bottom-[-4rem] right-[2rem] text-blue-200 text-2xl mentul mentul-delay-3">
+                  🧪
+                </div>
+                <div className="relative w-full max-w-md mx-auto" data-aos="fade-right" data-aos-duration="1000">
+                  <div className="bg-gradient-to-b from-blue-900 to-blue-600 rounded-3xl p-2 shadow-2xl">
+                    <div className="bg-gradient-to-b from-blue-400 to-blue-600 rounded-2xl overflow-hidden">
+                      <img src="/2.jpg" alt="About Us" className="w-full h-80 object-cover" />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* Right Content - Hero Image */}
-            <div
-              className={`w-full lg:w-1/2 flex justify-center transform transition-all duration-1000 delay-300 ${
-                isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
-              }`}
-            >
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-slate-600 rounded-3xl blur-3xl opacity-30 scale-110"></div>
-                <Image
-                  src="/students-tech-innovation.png"
-                  alt="Mersif Academy - Inovator Muda Indonesia"
-                  width={400}
-                  height={500}
-                  className="relative z-10 rounded-3xl shadow-2xl"
-                  priority
-                />
+            <div className="flex-1">
+              <h2 className="text-4xl font-bold text-blue-900 mb-4" data-aos="fade-down" data-aos-duration="1000">
+                About Us
+              </h2>
+              <h3 className="text-xl font-semibold text-gray-800 mb-6" data-aos="fade-up" data-aos-duration="1000">
+                We Bring Idea From Sketch To Life
+              </h3>
+              <p className="text-gray-600 text-lg leading-relaxed mb-8" data-aos="fade-left" data-aos-duration="1000">
+                Platform pembelajaran yang fokus pada riset, sains, dan teknologi, dirancang untuk mendorong inovasi
+                terbuka. Kami berkomitmen untuk mencetak generasi inovator muda Indonesia yang siap bersaing di tingkat
+                nasional dan internasional.
+              </p>
+              <div className="flex items-center gap-4" data-aos="fade-up-left" data-aos-duration="1000">
+                <div className="bg-red-500 text-white p-4 rounded-xl flex items-center justify-center">
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <div className="text-sm text-gray-500">Lets Join with</div>
+                  <div className="text-lg font-semibold text-gray-800">
+                    <span className="text-blue-600">mersif</span>
+                    <span>academy</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
+      </section>
 
-        {/* Wave Separator */}
-        <div className="absolute bottom-0 left-0 right-0">
-          <svg viewBox="0 0 1200 120" className="w-full h-12 fill-white">
-            <path d="M0,60 C300,120 900,0 1200,60 L1200,120 L0,120 Z"></path>
-          </svg>
+      <section className="py-16 bg-gradient-to-br from-blue-50 to-gray-50">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex flex-col lg:flex-row items-center gap-12">
+            <div className="flex-1">
+              <h2
+                className="text-4xl font-bold text-blue-900 mb-6 leading-tight"
+                data-aos="fade-down-right"
+                data-aos-duration="1000"
+              >
+                Kenapa Pengalaman
+                <br />
+                Riset Penting?
+              </h2>
+              <p className="text-gray-600 mb-8 text-lg leading-relaxed" data-aos="fade-up" data-aos-duration="1000">
+                Dengan menyediakan kesempatan untuk terlibat dalam riset, Mersif Academy membantu siswa mengembangkan
+                berbagai keterampilan penting dan mempersiapkan mereka untuk sukses dalam pendidikan tinggi dan karir
+                masa depan.
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {skills.map((skill, index) => (
+                  <div
+                    key={skill.id}
+                    className={`skill-item ${activeSkill === skill.id ? "active" : ""}`}
+                    data-aos={index % 2 === 0 ? "fade-down-right" : "fade-down-left"}
+                    data-aos-duration="1000"
+                    onClick={() => setActiveSkill(skill.id)}
+                  >
+                    <div className="bg-white text-blue-900 rounded-full w-8 h-8 flex-shrink-0 flex items-center justify-center font-bold">
+                      {skill.number}
+                    </div>
+                    <span className="font-semibold">{skill.title}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-6 relative" data-aos="fade-up" data-aos-duration="1000">
+                <div className={`bubble-content ${activeSkill ? "active" : ""}`}>
+                  {skillContent[activeSkill as keyof typeof skillContent]}
+                </div>
+              </div>
+            </div>
+
+            <div className="flex-1 flex justify-center lg:justify-end" data-aos="fade-up" data-aos-duration="1000">
+              <div className="relative">
+                <div className="relative">
+                  <div className="w-80 h-96 bg-gradient-to-b from-blue-100 to-blue-200 rounded-3xl overflow-hidden p-4">
+                    <div className="w-full h-full bg-white rounded-3xl overflow-hidden shadow-inner">
+                      <img
+                        src="/orang.jpg"
+                        alt="Student"
+                        className="w-full h-full object-cover object-center slowbounce"
+                      />
+                    </div>
+                  </div>
+                  <div className="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center shadow-lg">
+                    <div className="w-12 h-12 bg-gradient-to-br from-yellow-300 to-orange-400 rounded-full flex items-center justify-center">
+                      <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div className="absolute -top-8 -left-8 w-16 h-16 bg-red-500 rounded-full opacity-20"></div>
+                <div className="absolute -bottom-4 -left-12 w-12 h-12 bg-yellow-400 rounded-full opacity-30"></div>
+                <div className="absolute top-20 -right-8 w-8 h-8 bg-blue-400 rounded-full opacity-40"></div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Collaboration Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-slate-900 mb-4">Berkolaborasi Dengan</h2>
-            <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-              Bekerja sama dengan berbagai institusi pendidikan dan organisasi terkemuka untuk memberikan pengalaman
-              pembelajaran terbaik
+      <section className="hero-gradient relative overflow-x-hidden">
+        <div className="max-w-7xl mx-auto px-4">
+          <div
+            className="mb-12 border border-gray-300 rounded-lg p-8 animate__animated animate__fadeIn"
+            data-aos="zoom-in"
+            data-aos-duration="1000"
+          >
+            <h2 className="text-5xl font-bold text-black mb-6 text-center">VISI</h2>
+            <p className="text-gray-700 text-lg leading-relaxed max-w-4xl text-center mx-auto">
+              Menjadi platform dalam pembelajaran riset, sains, dan teknologi, melalui percepatan adopsi teknologi dan
+              integrasi pendidikan, serta mencetak inovator muda berdaya saing global melalui open innovation, menuju
+              Indonesia Emas 2045.
             </p>
           </div>
 
-          {/* Logo Marquee */}
-          <div className="relative overflow-hidden">
-            <div className="flex animate-marquee space-x-12">
-              {[...collaborationLogos, ...collaborationLogos].map((logo, index) => (
-                <div key={index} className="flex-shrink-0">
-                  <Image
-                    src={logo.src || "/placeholder.svg"}
-                    alt={logo.name}
-                    width={120}
-                    height={60}
-                    className="h-12 w-auto object-contain opacity-60 hover:opacity-100 
-                             transition-opacity duration-300 grayscale hover:grayscale-0"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      
-
-      {/* Features Section */}
-      <section className="py-20 bg-gradient-to-br from-slate-50 to-blue-50">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <div
-              className="inline-block bg-white/80 backdrop-blur-sm border border-white/50 
-                          rounded-2xl p-8 shadow-xl"
-            >
-              <h2 className="text-4xl font-bold text-slate-900 mb-4">Layanan Unggulan</h2>
-              <p className="text-xl text-slate-600 max-w-2xl">
-                Program pembelajaran yang dirancang khusus untuk mengembangkan potensi inovator muda Indonesia
-              </p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Research Card */}
-            <div
-              className="group bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl 
-                          transition-all duration-300 transform hover:-translate-y-2 
-                          border border-gray-100"
-            >
-              <div
-                className="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-700 
-                            rounded-2xl flex items-center justify-center mb-6 
-                            group-hover:scale-110 transition-transform duration-300"
-              >
-                <BookOpen className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold text-slate-900 mb-4">Riset & Penelitian</h3>
-              <p className="text-slate-600 leading-relaxed">
-                Bimbingan penelitian dengan metodologi ilmiah untuk menghasilkan karya inovatif yang berdampak nyata
-                bagi masyarakat.
-              </p>
-            </div>
-
-            {/* Technology Card */}
-            <div
-              className="group bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl 
-                          transition-all duration-300 transform hover:-translate-y-2 
-                          border border-gray-100"
-            >
-              <div
-                className="w-16 h-16 bg-gradient-to-br from-sky-600 to-cyan-600 
-                            rounded-2xl flex items-center justify-center mb-6 
-                            group-hover:scale-110 transition-transform duration-300"
-              >
-                <Rocket className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold text-slate-900 mb-4">Teknologi Digital</h3>
-              <p className="text-slate-600 leading-relaxed">
-                Pembelajaran teknologi terkini dengan pendekatan praktis dan project-based learning untuk skill yang
-                relevan.
-              </p>
-            </div>
-
-            {/* Startup Card */}
-            <div
-              className="group bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl 
-                          transition-all duration-300 transform hover:-translate-y-2 
-                          border border-gray-100"
-            >
-              <div
-                className="w-16 h-16 bg-gradient-to-br from-indigo-600 to-slate-700 
-                            rounded-2xl flex items-center justify-center mb-6 
-                            group-hover:scale-110 transition-transform duration-300"
-              >
-                <Users className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold text-slate-900 mb-4">Inkubasi Startup</h3>
-              <p className="text-slate-600 leading-relaxed">
-                Pembinaan ide bisnis teknologi dari konsep hingga implementasi di pasar dengan mentoring dari praktisi
-                berpengalaman.
-              </p>
+          <div
+            className="border border-gray-300 rounded-lg p-8 animate__animated animate__fadeIn mb-16"
+            data-aos="zoom-out-up"
+            data-aos-duration="1000"
+          >
+            <h2 className="text-5xl font-bold text-black mb-6 text-center">MISI</h2>
+            <div className="flex justify-center">
+              <ul className="space-y-3 text-gray-700 text-lg">
+                <li className="flex items-start gap-3">
+                  <span className="text-blue-600 mt-1">•</span>
+                  <span>Mengembangkan pelatihan riset dan sains yang inovatif dan global.</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-blue-600 mt-1">•</span>
+                  <span>Menerapkan teknologi canggih dalam pembelajaran dan pelayanan.</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-blue-600 mt-1">•</span>
+                  <span>Menyediakan program kolaborasi riset antara siswa SMA dan peneliti.</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-blue-600 mt-1">•</span>
+                  <span>Memfasilitasi pertukaran ide antara siswa, guru, mahasiswa, dan peneliti.</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-blue-600 mt-1">•</span>
+                  <span>Mendukung partisipasi dalam kompetisi riset dan sains global.</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-blue-600 mt-1">•</span>
+                  <span>Menyediakan program pengembangan karakter, kepemimpinan, dan soft skills.</span>
+                </li>
+              </ul>
             </div>
           </div>
         </div>

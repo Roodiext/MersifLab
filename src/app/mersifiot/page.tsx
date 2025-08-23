@@ -3,20 +3,19 @@ import { ProductIoT } from "@/components/mersifiot/product-iot"
 import { CustomIoTRequest } from "@/components/mersifiot/custom-iot-request"
 import { TestimonialFAQ } from "@/components/mersifiot/testimonial-iot"
 import { ContactForm } from "@/components/mersifiot/contact-cta"
-import { Header } from "@/components/layout/header"
+import { HeaderIOT } from "@/components/layout/header-iot"
 import { Footer } from "@/components/layout/footer"
 
 export default function HomePageIoT() {
   return (
     <>
-     <Header />
+     <HeaderIOT />
       <HeroSectionDummy />
       <ProductIoT />
       <CustomIoTRequest />
       <TestimonialFAQ />
       <ContactForm />
       <Footer />
-     
     </>   
   )
 }
