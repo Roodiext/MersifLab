@@ -1,3 +1,5 @@
+"use client"
+
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
@@ -7,68 +9,28 @@ export function ContactCtaSection() {
   const { t } = useLanguage()
   
   return (
-    <section id="contact" className="w-full py-20 md:py-28 lg:py-36 relative overflow-hidden bg-gray-50">
-      <style dangerouslySetInnerHTML={{ __html: `
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-20px); }
-        }
-        @keyframes float-slow {
-          0%, 100% { transform: translateY(0px) translateX(0px); }
-          33% { transform: translateY(-15px) translateX(5px); }
-          66% { transform: translateY(-10px) translateX(-5px); }
-        }
-        .animate-float { animation: float 3s ease-in-out infinite; }
-        .animate-float-slow { animation: float-slow 4s ease-in-out infinite; }
+    <section id="contact" className="w-full py-20 md:py-28 lg:py-36 ">
+      <div className="container px-4 md:px-6 max-w-6xl mx-auto">
+        {/* Title and Subtitle - Centered above everything */}
+        <div className="text-center mb-16">
+          <h2 style={{ fontFamily: "Poppins, sans-serif" }} className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-4">
+            {t('contact.title')}
+          </h2>
+          <p style={{ fontFamily: "Inter, sans-serif" }} className="text-lg text-gray-600 leading-relaxed">
+            {t('contact.subtitle')}
+          </p>
+        </div>
 
-        /* Wave styles - Adjusted for brighter waves */
-        .wave {
-          /* Base color #1a365d is rgb(26, 54, 93) */
-          background: rgba(26, 54, 93, 0.8); /* Most prominent wave is brighter */
-          border-radius: 1000% 1000% 0 0;
-          position: absolute;
-          width: 200%;
-          height: 12em;
-          animation: wave 10s -3s linear infinite;
-          transform: translate3d(0, 0, 0);
-          bottom: 0;
-          left: 0;
-          z-index: 0; /* Ensure waves are behind content */
-        }
-        .wave:nth-of-type(2) {
-          background: rgba(26, 54, 93, 0.6); /* Slightly less bright */
-          bottom: -1.25em;
-          animation: wave 18s linear reverse infinite;
-        }
-        .wave:nth-of-type(3) {
-          background: rgba(26, 54, 93, 0.4); /* Darkest wave */
-          bottom: -2.5em;
-          animation: wave 20s -1s reverse infinite;
-        }
-        @keyframes wave {
-          0% { transform: translateX(0); }
-          25% { transform: translateX(-25%); }
-          50% { transform: translateX(-50%); }
-          75% { transform: translateX(-25%); }
-          100% { transform: translateX(0); }
-        }
-      ` }} />
-      {/* Wave elements - positioned at the bottom */}
-      <div className="wave" />
-      <div className="wave" />
-      <div className="wave" />
-
-      <div className="container px-4 md:px-6 max-w-6xl mx-auto relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left Column - Text Content */}
-          <div className="lg:order-1 space-y-6">
-            <div className="space-y-4">
-              <h2 style={{ fontFamily: "Poppins, sans-serif" }} className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
-                {t('contact.title')}
-              </h2>
-              <p style={{ fontFamily: "Inter, sans-serif" }} className="text-lg text-gray-600 leading-relaxed">
-                {t('contact.subtitle')}
-              </p>
+          {/* Left Column - Image */}
+          <div className="lg:order-1 flex justify-center lg:justify-start">
+            <div className="image-container relative w-[400px] h-[350px] sm:w-[450px] sm:h-[400px] md:w-[550px] md:h-[480px] lg:w-[600px] lg:h-[520px]">
+              <img
+                src="/img/contact-person.svg"
+                alt="Person wearing VR headset"
+                className="w-full h-full object-contain transform -translate-y-20 transition-transform duration-500 hover:scale-105"
+              />
+              <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white via-white/90 to-transparent rounded-b-xl pointer-events-none z-10" />
             </div>
           </div>
           {/* Right Column - Contact Form */}

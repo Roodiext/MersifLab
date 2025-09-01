@@ -22,7 +22,7 @@ export function Footer() {
           {/* Kiri: Logo dan Deskripsi */}
           <div className="lg:col-span-2 space-y-6">
             <div className="flex items-center space-x-4">
-              <Image
+              <Image  
                 src="/img/logomersiflab.png"
                 alt="MersifLab Logo"
                 width={120}

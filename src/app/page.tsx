@@ -53,42 +53,6 @@ export default function HomePage() {
   return (
     <>
       <Header />
-
-      {/* Language Switcher Button */}
-      <div className="fixed bottom-4 right-4 z-50 flex flex-col items-center">
-        <div
-          className="relative group"
-          onMouseEnter={() => setShowTooltip(true)}
-          onMouseLeave={() => setShowTooltip(false)}
-        >
-          <button
-            onClick={toggleLanguage}
-            className="w-12 h-12 rounded-full shadow-lg flex items-center justify-center bg-gray-200 hover:scale-110 transition-transform"
-          >
-            {isEnglish ? (
-              <svg width="24" height="16" viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg">
-                <rect width="60" height="30" fill="#012169" />
-                <rect x="25" width="10" height="30" fill="#C8102E" />
-                <rect y="10" width="60" height="10" fill="#C8102E" />
-                <polygon points="0,0 6,0 60,24 60,30 54,30 0,6" fill="#fff" />
-                <polygon points="60,0 60,6 6,30 0,30 0,24 54,0" fill="#fff" />
-              </svg>
-            ) : (
-              <svg width="24" height="16" viewBox="0 0 3 2" xmlns="http://www.w3.org/2000/svg" className="rounded-sm">
-                <rect width="3" height="1" y="0" fill="#dc143c" />
-                <rect width="3" height="1" y="1" fill="#ffffff" />
-              </svg>
-            )}
-          </button>
-
-          {showTooltip && (
-            <span className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded whitespace-nowrap opacity-100 transition-opacity duration-300">
-              {isEnglish ? "Hi! You are using English" : "Hai! Kamu menggunakan bahasa Indonesia"}
-            </span>
-          )}
-        </div>
-      </div>
-
       <HeroSection />
       <PartnersSection />
       <MersifNumbersSection />

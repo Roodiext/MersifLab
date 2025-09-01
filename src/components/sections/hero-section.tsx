@@ -3,13 +3,17 @@
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { ArrowRight } from "lucide-react"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useLanguage } from "@/contexts/language-context"
 
 export function HeroSection() {
   const [showGlitch, setShowGlitch] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
   const { t } = useLanguage()
+  const iframeRef = useRef<HTMLIFrameElement>(null)
+  const [isInteracting, setIsInteracting] = useState(false)
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+  const [rotation, setRotation] = useState({ x: 0, y: 0 })
 
   useEffect(() => {
     // Trigger animations with slight delay for natural feel
@@ -21,39 +25,88 @@ export function HeroSection() {
     return () => clearTimeout(timer)
   }, [])
 
+  // Enhanced iframe URL with better controls and auto-rotation
+  const enhancedIframeUrl = `https://sketchfab.com/models/55a9b75a90ad4b65891668d850a8dd36/embed?autospin=1&autostart=1&preload=1&transparent=1&ui_watermark_link=0&ui_watermark=0&ui_controls=1&ui_infos=0&ui_stop=0&ui_inspector=0&ui_settings=0&ui_vr=0&ui_fullscreen=0&ui_annotations=0&ui_hint=0&ui_ar=0&camera=0&background=c4c4c4&orbit_constraint_pan=0&orbit_constraint_zoom_in=0.1&orbit_constraint_zoom_out=10&scrollwheel=1`
+
+  // Mouse interaction handlers for VR control
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isInteracting) return
+    
+    const rect = e.currentTarget.getBoundingClientRect()
+    const centerX = rect.width / 2
+    const centerY = rect.height / 2
+    const x = (e.clientX - rect.left - centerX) / centerX
+    const y = (e.clientY - rect.top - centerY) / centerY
+    
+    setMousePos({ x, y })
+
+    // Send rotation data to iframe VR model
+    if (iframeRef.current && iframeRef.current.contentWindow) {
+      try {
+        // Send mouse position to control VR rotation
+        iframeRef.current.contentWindow.postMessage({
+          type: 'viewer_rotation',
+          x: x * 0.5,  // Smooth rotation multiplier
+          y: y * 0.5
+        }, '*')
+      } catch (e) {
+        // Handle cross-origin restrictions silently
+      }
+    }
+  }
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsInteracting(true)
+    e.currentTarget.style.cursor = 'grabbing'
+  }
+
+  const handleMouseUp = (e: React.MouseEvent) => {
+    setIsInteracting(false)
+    e.currentTarget.style.cursor = 'grab'
+  }
+
+  const handleMouseLeave = (e: React.MouseEvent) => {
+    setIsInteracting(false)
+    e.currentTarget.style.cursor = 'grab'
+  }
+
   return (
-    <section id="hero" className="w-full h-screen flex flex-col justify-center items-center lg:py-8 xl:py-10 2xl:py-12 from-white to-gray-50">
-      <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-12 max-w-[1600px] flex-1 flex flex-col justify-center">
+    <section id="hero" className="w-full h-screen flex flex-col justify-center items-center lg:py-8 xl:py-10 2xl:py-12 relative overflow-hidden">
+      {/* Background VR - Full Screen */}
+      <div className="absolute inset-0 w-full h-full">
+        <iframe 
+          ref={iframeRef}
+          title="Samsung Gear VR Background" 
+          frameBorder="0" 
+          allowFullScreen 
+          mozallowfullscreen="true" 
+          webkitallowfullscreen="true" 
+          allow="autoplay; fullscreen; xr-spatial-tracking" 
+          xr-spatial-tracking="true"
+          execution-while-out-of-viewport="true"
+          execution-while-not-rendered="true" 
+          web-share="true"
+          src={enhancedIframeUrl}
+          className="w-full h-full object-cover"
+          style={{ backgroundColor: '#c4c4c4' }}
+        />
+      </div>
+      
+      <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-12 max-w-[1600px] flex-1 flex flex-col justify-center relative z-10">
         
         {/* Mobile and Tablet layout (up to lg) - 50:50 ratio */}
         <div className="flex flex-col items-center text-center lg:hidden h-full justify-center">
-          {/* Image Section - 45% of available space */}
-          <div className="flex-[0.45] flex items-end justify-center w-full min-h-0 pb-4">
-            <div className="relative w-full max-w-[280px] xs:max-w-[320px] sm:max-w-[360px] md:max-w-[400px] h-full max-h-[250px] xs:max-h-[280px] sm:max-h-[320px] md:max-h-[360px]">
-              <Image
-                src="/img/home.svg"
-                width="2100"
-                height="1950"
-                alt="Mersif Lab Illustration"
-                className={`mx-auto aspect-[1.2/1] overflow-hidden rounded-xl object-cover object-center w-full h-full transition-all duration-700 ease-out ${showGlitch ? "glitch-image opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
-                priority
-              />
-              {/* Bottom white fade overlay */}
-              <div className="absolute bottom-0 left-0 right-0 h-6 sm:h-8 md:h-10 bg-gradient-to-t from-white via-white/90 to-transparent rounded-b-xl pointer-events-none z-10"></div>
-            </div>
-          </div>
-          
-          {/* Text Section - 55% of available space */}
-          <div className={`flex-[0.55] flex flex-col justify-start pt-2 space-y-3 sm:space-y-4 md:space-y-5 px-4 sm:px-6 md:px-8 transition-all duration-700 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`} style={{ transitionDelay: "200ms" }}>
+          {/* Text Section - Full content with semi-transparent background */}
+          <div className={`flex flex-col justify-center items-center space-y-3 sm:space-y-4 md:space-y-5 px-4 sm:px-6 md:px-8 py-8 rounded-2xl backdrop-blur-sm bg-white/20 transition-all duration-700 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`} style={{ transitionDelay: "200ms" }}>
             <div className="space-y-2 sm:space-y-3">
               <h1
-                className={`text-4xl xs:text-5xl sm:text-6xl md:text-7xl font-bold tracking-tighter leading-tight transition-all duration-700 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+                className={`text-4xl xs:text-5xl sm:text-6xl md:text-7xl font-bold tracking-tighter leading-tight transition-all duration-700 ease-out text-white ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
                 style={{ fontFamily: "Poppins, sans-serif", transitionDelay: "300ms" }}
               >
                 {t('hero.mobile.title')}
               </h1>
               <p
-                className={`max-w-[320px] xs:max-w-[380px] sm:max-w-[480px] md:max-w-[600px] text-sm xs:text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed mx-auto transition-all duration-700 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+                className={`max-w-[320px] xs:max-w-[380px] sm:max-w-[480px] md:max-w-[600px] text-sm xs:text-base sm:text-lg md:text-xl text-gray-100 leading-relaxed mx-auto transition-all duration-700 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
                 style={{ fontFamily: "Inter, sans-serif", transitionDelay: "400ms" }}
               >
                 {t('hero.mobile.subtitle')}
@@ -70,7 +123,7 @@ export function HeroSection() {
                 }}
               >
                 <Button 
-                  className="inline-flex h-9 sm:h-10 md:h-10 items-center justify-center rounded-full bg-[#007bff] px-4 sm:px-5 md:px-6 text-sm sm:text-sm md:text-base font-medium text-white shadow transition-all duration-300 hover:bg-[#007bff]/90 hover:shadow-lg hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+                  className="inline-flex h-9 sm:h-10 md:h-10 items-center justify-center rounded-full bg-[#007bff] px-4 sm:px-5 md:px-6 text-sm sm:text-sm md:text-base font-medium text-white shadow-lg transition-all duration-300 hover:bg-[#007bff]/90 hover:shadow-xl hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
                   style={{ fontFamily: "Poppins, sans-serif" }}
                 >
                   {t('hero.button')}
@@ -81,68 +134,90 @@ export function HeroSection() {
           </div>
         </div>
 
-        {/* Desktop layout (lg and above) - side by side with LARGER IMAGE */}
-        <div className="hidden lg:grid gap-4 lg:gap-6 xl:gap-8 2xl:gap-10 items-center lg:grid-cols-[1fr_700px] xl:grid-cols-[1fr_800px] 2xl:grid-cols-[1fr_900px] 3xl:grid-cols-[1fr_1000px] flex-1">
+        {/* Desktop layout (lg and above) - Text with enhanced background overlay */}
+        <div className="hidden lg:grid gap-4 lg:gap-6 xl:gap-8 2xl:gap-10 items-center lg:grid-cols-[1fr_1fr] flex-1">
           
-          {/* Text Content */}
+          {/* Text Content with semi-transparent background */}
           <div className={`flex flex-col justify-center space-y-3 lg:space-y-4 xl:space-y-5 2xl:space-y-6 lg:pl-6 xl:pl-8 2xl:pl-10 transition-all duration-800 ease-out ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"}`} style={{ transitionDelay: "200ms" }}>
-            <div className="space-y-2 lg:space-y-2 xl:space-y-3">
-              <h1
-                className={`text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-gray-900 transition-all duration-800 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
-                style={{ 
-                  fontFamily: "Poppins, sans-serif",
-                  transitionDelay: "300ms"
-                }}
-              >
-                {t('hero.title')}{" "}
-                <span className="text-[#007bff]">{t('hero.title.highlight')}</span>
-              </h1>
-              <p
-                className={`max-w-[450px] xl:max-w-[500px] 2xl:max-w-[550px] lg:text-base xl:text-lg 2xl:text-xl text-gray-600 leading-relaxed transition-all duration-800 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
-                style={{ 
-                  fontFamily: "Inter, sans-serif",
-                  transitionDelay: "400ms"
-                }}
-              >
-                {t('hero.subtitle')}
-              </p>
-            </div>
-            <div className={`flex pt-1 lg:pt-2 xl:pt-3 transition-all duration-800 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`} style={{ transitionDelay: "500ms" }}>
-              <a
-                style={{ fontFamily: "Poppins, sans-serif" }}
-                href="#services"
-                onClick={(e) => {
-                  e.preventDefault();
-                  document.querySelector('#services')?.scrollIntoView({
-                    behavior: 'smooth'
-                  });
-                }}
-                className="inline-flex lg:h-10 xl:h-11 2xl:h-12 items-center justify-center rounded-full bg-[#007bff] lg:px-4 xl:px-5 2xl:px-6 lg:text-sm xl:text-base 2xl:text-lg font-medium text-white shadow transition-all duration-300 hover:bg-[#007bff]/90 hover:shadow-lg hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-              >
-                {t('hero.button')}
-                <ArrowRight className="ml-2 lg:w-4 lg:h-4 xl:w-5 xl:h-5 2xl:w-6 2xl:h-6" />
-              </a>
+            <div className="backdrop-blur-md bg-white/30 p-6 lg:p-8 xl:p-10 rounded-2xl">
+              <div className="space-y-2 lg:space-y-2 xl:space-y-3">
+                <h1
+                  className={`text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white transition-all duration-800 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+                  style={{ 
+                    fontFamily: "Poppins, sans-serif",
+                    transitionDelay: "300ms"
+                  }}
+                >
+                  {t('hero.title')}{" "}
+                  <span className="text-[#007bff]">{t('hero.title.highlight')}</span>
+                </h1>
+                <p
+                  className={`max-w-[450px] xl:max-w-[500px] 2xl:max-w-[550px] lg:text-base xl:text-lg 2xl:text-xl text-gray-100 leading-relaxed transition-all duration-800 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+                  style={{ 
+                    fontFamily: "Inter, sans-serif",
+                    transitionDelay: "400ms"
+                  }}
+                >
+                  {t('hero.subtitle')}
+                </p>
+              </div>
+              <div className={`flex pt-4 lg:pt-5 xl:pt-6 transition-all duration-800 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`} style={{ transitionDelay: "500ms" }}>
+                <a
+                  style={{ fontFamily: "Poppins, sans-serif" }}
+                  href="#services"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.querySelector('#services')?.scrollIntoView({
+                      behavior: 'smooth'
+                    });
+                  }}
+                  className="inline-flex lg:h-10 xl:h-11 2xl:h-12 items-center justify-center rounded-full bg-[#007bff] lg:px-4 xl:px-5 2xl:px-6 lg:text-sm xl:text-base 2xl:text-lg font-medium text-white shadow-xl transition-all duration-300 hover:bg-[#007bff]/90 hover:shadow-2xl hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                >
+                  {t('hero.button')}
+                  <ArrowRight className="ml-2 lg:w-4 lg:h-4 xl:w-5 xl:h-5 2xl:w-6 2xl:h-6" />
+                </a>
+              </div>
             </div>
           </div>
 
-          {/* Image - SIGNIFICANTLY LARGER */}
-          <div className={`relative lg:order-last transition-all duration-800 ease-out ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`} style={{ transitionDelay: "100ms" }}>
-            <Image
-              src="/img/home.svg"
-              width="2100"
-              height="1950"
-              alt="Mersif Lab Illustration"
-              className={`mx-auto aspect-[1.2/1] overflow-hidden rounded-xl object-cover object-center w-full ${showGlitch ? "glitch-image" : ""}`}
-              priority
-            />
-            {/* Bottom white fade overlay */}
-            <div className="absolute bottom-0 left-0 right-0 lg:h-16 xl:h-18 2xl:h-20 3xl:h-24 bg-gradient-to-t from-white via-white/90 to-transparent rounded-b-xl pointer-events-none z-10"></div>
+          {/* Interactive VR Control Zone - Area kosong untuk kontrol mouse */}
+          <div 
+            className="flex justify-center items-center relative cursor-grab active:cursor-grabbing"
+            onMouseMove={handleMouseMove}
+            onMouseDown={handleMouseDown}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseLeave}
+          >
+            {/* Invisible interaction zone */}
+            <div className="w-full h-full min-h-[400px] lg:min-h-[500px] xl:min-h-[600px] relative">
+              {/* Subtle visual hint for interaction */}
+              <div className={`absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-300 ${isInteracting ? 'opacity-20' : 'opacity-10'}`}>
+                <div className="text-center text-white/50">
+                  <div className="text-2xl mb-2">🖱️</div>
+                  <p className="text-xs font-medium">Drag to explore VR</p>
+                </div>
+              </div>
+              
+              {/* Interactive feedback overlay */}
+              <div 
+                className={`absolute inset-0 rounded-lg transition-all duration-300 ${
+                  isInteracting 
+                    ? 'bg-white/5 border border-white/10 shadow-lg' 
+                    : 'border border-transparent'
+                }`}
+              />
+            </div>
           </div>
         </div>
 
         {/* Enhanced responsive optimizations with LARGER IMAGES */}
         <div className="hidden lg:block">
           <style jsx>{`
+            /* Enhanced gradient for radial effect */
+            .bg-gradient-radial {
+              background: radial-gradient(circle at center, var(--tw-gradient-stops));
+            }
+            
             /* KHUSUS untuk resolusi 1366x768 - GAMBAR LEBIH BESAR */
             @media (min-width: 1366px) and (max-width: 1366px) and (min-height: 768px) and (max-height: 768px) {
               .container {
