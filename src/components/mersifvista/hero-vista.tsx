@@ -8,7 +8,7 @@ import { ArrowRight } from "lucide-react"
 export function HeroVista() {
   return (
     <section className="relative w-full bg-white overflow-hidden">
-      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-16 lg:py-24 flex flex-col lg:flex-row items-center gap-10">
+      <div className="max-w-screen-xl mx-auto px-6 md:px-12 lg:px-20 py-12 lg:py-20 flex flex-col lg:flex-row items-center gap-12">
         
         {/* Text Section */}
         <motion.div
@@ -21,16 +21,16 @@ export function HeroVista() {
             Empowering Learning <br />
             <span className="text-black">Inspiring Futures</span>
           </h1>
-          <p className="text-gray-600 text-base sm:text-lg lg:text-xl leading-relaxed font-[Inter]">
+          <p className="text-gray-600 text-base sm:text-lg lg:text-xl leading-relaxed font-[Inter] max-w-lg mx-auto lg:mx-0">
             <span className="text-[#007bff] font-semibold">MersifVista</span> adalah program pelatihan digital gratis untuk guru, siswa, 
             dan mahasiswa yang dirancang untuk membekali keterampilan teknologi 
             sesuai kebutuhan dunia saat ini.
           </p>
 
           {/* Tombol */}
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start pt-2 sm:pt-4 w-full">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start pt-4">
             <Button
-              className="w-full sm:w-auto bg-[#007bff] text-white rounded-full px-6 sm:px-8 py-4 text-base sm:text-lg font-semibold
+              className="w-full sm:w-auto bg-[#007bff] text-white rounded-full px-6 sm:px-8 py-3 text-base sm:text-lg font-semibold
                          hover:bg-[#007bff]/90 transition-all duration-300 transform hover:scale-105 flex items-center justify-center"
             >
               Explore Programs
@@ -38,7 +38,7 @@ export function HeroVista() {
             </Button>
 
             <Button
-              className="w-full sm:w-auto group bg-transparent border-2 border-[#007bff] text-[#007bff] rounded-full px-6 sm:px-8 py-4 text-base sm:text-lg font-semibold
+              className="w-full sm:w-auto group bg-transparent border-2 border-[#007bff] text-[#007bff] rounded-full px-6 sm:px-8 py-3 text-base sm:text-lg font-semibold
                          hover:bg-[#007bff] hover:text-white transition-all duration-300 transform hover:scale-105 flex items-center justify-center"
             >
               Join Training
@@ -47,7 +47,7 @@ export function HeroVista() {
           </div>
         </motion.div>
 
-        {/* Image Section */}
+        {/* Image Section */} 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -55,11 +55,11 @@ export function HeroVista() {
           className="flex-1 flex justify-center lg:justify-end"
         >
           <Image
-            src="/img/herovista.svg" // sudah ada background biru
+            src="/img/herovista.svg" // gambar orang + background biru
             alt="Mersif Vista People"
-            width={420}
-            height={420}
-            className="w-full max-w-[420px] h-auto object-contain"
+            width={480}
+            height={480}
+            className="w-full max-w-[480px] h-auto object-contain"
             priority
           />
         </motion.div>
