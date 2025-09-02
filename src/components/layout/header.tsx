@@ -36,20 +36,18 @@ function NavLink({ href, children, icon: Icon, isMobile = false, onClick }: NavL
   const findElementByIds = (ids: string[]) => {
     for (const id of ids) {
       const element = document.getElementById(id)
-      if (element) {
-        return element
-      }
+      if (element) return element
     }
     return null
   }
 
   const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
-    
+
     if (href.includes("#")) {
       const [path, hash] = href.split("#")
       const targetPath = path || "/"
-      
+
       const possibleIds: { [key: string]: string[] } = {
         'product': ['product', 'products', 'our-products', 'produk'],
         'about': ['about', 'about-us', 'tentang', 'tentang-kami'],
@@ -57,7 +55,7 @@ function NavLink({ href, children, icon: Icon, isMobile = false, onClick }: NavL
         'testimonials': ['testimonials', 'testimonial', 'testimoni'],
         'contact': ['contact', 'contact-us', 'kontak']
       }
-      
+
       if (pathname !== targetPath) {
         router.push(targetPath)
         setTimeout(() => {
@@ -65,10 +63,8 @@ function NavLink({ href, children, icon: Icon, isMobile = false, onClick }: NavL
           const target = findElementByIds(ids)
           if (target) {
             const headerOffset = 80
-            const elementPosition = target.offsetTop
-            const offsetPosition = elementPosition - headerOffset
             window.scrollTo({
-              top: offsetPosition,
+              top: target.offsetTop - headerOffset,
               behavior: "smooth"
             })
           }
@@ -78,10 +74,8 @@ function NavLink({ href, children, icon: Icon, isMobile = false, onClick }: NavL
         const target = findElementByIds(ids)
         if (target) {
           const headerOffset = 80
-          const elementPosition = target.offsetTop
-          const offsetPosition = elementPosition - headerOffset
           window.scrollTo({
-            top: offsetPosition,
+            top: target.offsetTop - headerOffset,
             behavior: "smooth"
           })
         }
@@ -89,21 +83,21 @@ function NavLink({ href, children, icon: Icon, isMobile = false, onClick }: NavL
     } else {
       router.push(href)
     }
-    
+
     if (onClick) onClick()
   }
 
   const base = "relative group transition-colors duration-300 flex items-center hover:text-blue-600"
   const size = isMobile ? "text-base font-medium" : "text-sm font-medium"
   const gap = Icon ? (isMobile ? "gap-3" : "gap-1.5") : ""
-  
+
   return (
     <Link
       href={href}
       onClick={handleNavigation}
       className={`${base} ${size} ${gap} ${isMobile ? "px-4 py-3 hover:bg-gray-50 rounded-md" : "px-3 py-2 rounded-md hover:bg-gray-50/80"}`}
     >
-      {Icon && <Icon className={isMobile ? "h-5 w-5" : "h-4 w-4"} />} 
+      {Icon && <Icon className={isMobile ? "h-5 w-5" : "h-4 w-4"} />}
       {children}
       <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-current transition-all duration-300 ease-out group-hover:w-full" />
     </Link>
@@ -116,7 +110,7 @@ export function Header() {
   const router = useRouter()
   const { data: session, status } = useSession()
   const { t } = useLanguage()
-  
+
   const navItems: NavItem[] = [
     { href: "/#hero", label: t('nav.home'), icon: Home },
     { href: "/#about", label: t('nav.about'), icon: Info },
@@ -126,21 +120,10 @@ export function Header() {
       icon: Package,
       isDropdown: true,
       subLinks: [
-        { href: "/mersif-academy/index.html", label: t('nav.services.academy') },
+        { href: "/mersifacademy", label: t('nav.services.academy') },
         { href: "/mersifiot", label: t('nav.services.iot') },
         { href: "/mersifvista", label: t('nav.services.vista') },
         { href: "/mersifcreator", label: t('nav.services.creator') },
-      ],
-    },
-    {
-      label: t('nav.news'),
-      icon: Package,
-      isDropdown: true,
-      subLinks: [
-        { href: "/news", label: t('nav.news.page') },
-        { href: "/news", label: t('nav.news.latest') },
-        { href: "/news", label: t('nav.news.archive') },
-        { href: "/news", label: t('nav.news.categories') },
       ],
     },
     { href: "/#contact", label: t('nav.contact'), icon: Mail },
@@ -149,6 +132,11 @@ export function Header() {
   const closeSheet = () => {
     setIsMobileServiceOpen(false)
     setIsMobileNewsOpen(false)
+  }
+
+  const getUserAvatar = () => {
+    if (!session?.user) return '/img/default-avatar.png'
+    return session.user.image || '/img/default-avatar.png'
   }
 
   return (
@@ -160,11 +148,7 @@ export function Header() {
             {/* Mobile Menu Button */}
             <Sheet>
               <SheetTrigger asChild>
-                <Button 
-                  variant="ghost" 
-                  size="icon"
-                  className="md:hidden hover:bg-gray-100"
-                >
+                <Button variant="ghost" size="icon" className="md:hidden hover:bg-gray-100">
                   <Menu className="h-5 w-5" />
                   <span className="sr-only">Toggle Menu</span>
                 </Button>
@@ -284,26 +268,23 @@ export function Header() {
 
           {/* Right Section - Language Switcher & User Menu */}
           <div className="flex items-center gap-3">
-            {/* Language Switcher */}
             <div className="hidden sm:block">
               <LanguageSwitcher />
             </div>
             
             {status === "authenticated" && session?.user ? (
               <div className="flex items-center gap-3">
-                {/* Username Display - Hidden on small screens */}
                 <div className="hidden lg:block">
                   <span className="text-sm font-medium text-gray-900">
                     {session.user.name || 'User'}
                   </span>
                 </div>
                 
-                {/* User Avatar Dropdown */}
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" size="icon" className="relative h-9 w-9 rounded-full hover:bg-gray-100">
                       <Avatar className="h-8 w-8">
-                        <AvatarImage src={session.user.image || ''} alt={session.user.name || ''} />
+                        <AvatarImage src={getUserAvatar()} alt={session.user.name || 'User'} />
                         <AvatarFallback className="bg-blue-100 text-blue-600 font-medium">
                           {session.user.name?.charAt(0).toUpperCase() || 'U'}
                         </AvatarFallback>
@@ -350,7 +331,6 @@ export function Header() {
               </div>
             )}
 
-            {/* Mobile Language Switcher */}
             <div className="sm:hidden">
               <LanguageSwitcher />
             </div>

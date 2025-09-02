@@ -30,10 +30,10 @@ export default function AboutVista() {
           transition={{ duration: 0.6 }}
           className="w-full md:w-1/2 text-center md:text-left"
         >
-          <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6">
+          <h2 style={{ fontFamily: "Poppins, sans-serif" }} className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6">
             Tentang MersifVista 
           </h2>
-          <p className="text-gray-600 mb-8 leading-relaxed text-lg">
+          <p style={{ fontFamily: "Inter, sans-serif" }} className="text-gray-600 mb-8 leading-relaxed text-lg">
             <span className="font-semibold">MersifVista </span> hadir sebagai inisiatif 
             digital training untuk menjawab tantangan dunia pendidikan di era teknologi. 
             Kami percaya bahwa <span className="font-semibold">inovasi, kolaborasi, dan keberlanjutan </span> 
@@ -42,6 +42,7 @@ export default function AboutVista() {
 
           {/* Button */}
           <a 
+          style={{ fontFamily: "Inter, sans-serif" }}
             href="#"
             className="inline-block px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-full shadow-lg transition-transform transform hover:-translate-y-1 hover:shadow-xl"
           >

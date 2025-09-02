@@ -2,7 +2,7 @@ import React from "react";
 
 export default function NewsHomepage() {
   return (
-    <div style={{ fontFamily: "Inter, sans-serif" }} className="min-h-screen bg-gray-50">
+    <div style={{ fontFamily: "Inter, sans-serif" }} className="min-h-screen">
       {/* Hero Section - Lebih Compact */}
       <section className="relative bg-slate-800 text-white py-12">
         <div className="container mx-auto px-4 text-center relative z-10">
