@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tentang Kami - Mersif Academy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+<style>
+  @keyframes mentul {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  .mentul {
+    animation: mentul 1s ease-in-out infinite;
+  }
+
+  .mentul-delay-1 {
+    animation-delay: 1s;
+  }
+
+  .mentul-delay-2 {
+    animation-delay: 2s;
+  }
+
+  .mentul-delay-3 {
+    animation-delay: 3s;
+  }
+</style>
+
+</head>
+<body class="overflow-x-hidden">
+
+     <!-- Navbar -->
+<nav class="fixed top-2 left-1/2 transform -translate-x-1/2 z-50 bg-white/90 backdrop-blur-md shadow-lg rounded-full border border-white/20 max-w-5xl w-11/12">
+  <div class="px-8 py-2.5 flex justify-between items-center w-full">
+    <!-- Logo -->
+    <a href="index.html" class="flex items-center space-x-2">
+      <img src="logo.png" alt="Logo Mersif" class="h-8 sm:h-10" />
+      <span class="sr-only">Mersif Academy</span>
+    </a>
+
+    <!-- Hamburger Button (Mobile) -->
+    <button id="menu-toggle" class="sm:hidden text-gray-700 focus:outline-none w-10 h-10 flex items-center justify-center rounded-md hover:bg-gray-100 transition-colors">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+
+    <!-- Ganti class menu -->
+    <ul id="menu" class="hidden sm:flex flex-col sm:flex-row sm:space-x-8 text-sm font-medium sm:items-center bg-white sm:bg-transparent absolute sm:static left-4 right-4 sm:left-auto sm:right-auto w-auto sm:w-auto top-full sm:top-auto shadow-md sm:shadow-none z-40 sm:z-auto rounded-xl sm:rounded-none mt-2 sm:mt-0">
+      <li><a href="about.html" class="block px-4 py-2 hover:text-blue-700">Tentang Kami</a></li>
+      <li><a href="layanan.html" class="block px-4 py-2 hover:text-blue-700">Layanan</a></li>
+      <li><a href="porto.html" class="block px-4 py-2 hover:text-blue-700">Portofolio</a></li>
+      <li><a href="mentor.html" class="block px-4 py-2 hover:text-blue-700">Mentor</a></li>
+      <li><a href="paket.html" class="block px-4 py-2 hover:text-blue-700">Paket</a></li>
+      <li><a href="daftar.html" class="block bg-blue-900 text-white px-4 py-2 rounded hover:bg-blue-800 mx-4 my-2 sm:my-0">Daftar Sekarang</a></li>
+    </ul>
+  </div>
+</nav>
+
+    <section class="hero-gradient relative overflow-x-hidden">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <div class="flex-1 animate__animated animate__fadeInLeft">
+                    <div class="relative">
+                                  <div class="absolute top-[-1rem] left-[-1rem] w-8 h-8 bg-blue-100 rounded-full"></div>
+                                  <div class="absolute bottom-[-0.5rem] left-[2rem] w-4 h-4 bg-yellow-300 rounded-full"></div>
+                                  <div class="absolute top-[3rem] left-[0rem] text-blue-200 text-3xl  mentul mentul-delay-1">📚</div>
+                                  <div class="absolute top-[-4rem] left-[16rem] text-blue-200 text-4xl mentul mentul-delay-2" delay: 3s;>🎓</div>
+                                  <div class="absolute bottom-[-4rem] right-[2rem] text-blue-200 text-2xl mentul mentul-delay-3">🧪</div>
+                        <div class="relative w-full max-w-md mx-auto" data-aos="fade-right" data-aos-duration="1000">
+                            <div class="bg-gradient-to-b from-blue-900 to-blue-600 rounded-3xl p-2 shadow-2xl">
+                                <div class="bg-gradient-to-b from-blue-400 to-blue-600 rounded-2xl overflow-hidden">
+                                    <img src="2.jpg" alt="About Us" class="w-full h-80 object-cover">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-1">
+                    <h2 class="text-4xl font-bold text-blue-900 mb-4" data-aos="fade-down" data-aos-duration="1000">About Us</h2>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-6" data-aos="fade-up" data-aos-duration="1000">We Bring Idea From Sketch To Life</h3>
+                    <p class="text-gray-600 text-lg leading-relaxed mb-8" data-aos="fade-left" data-aos-duration="1000">
+                        Platform pembelajaran yang fokus pada riset, sains, dan teknologi, dirancang untuk mendorong inovasi terbuka. Kami berkomitmen untuk mencetak generasi inovator muda Indonesia yang siap bersaing di tingkat nasional dan internasional.
+                    </p>
+                    <div class="flex items-center gap-4" data-aos="fade-up-left" data-aos-duration="1000">
+                        <div class="bg-red-500 text-white p-4 rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="text-sm text-gray-500">Lets Join with</div>
+                            <div class="text-lg font-semibold text-gray-800">
+                                <span class="text-blue-600">mersif</span><span>academy</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-gradient-to-br from-blue-50 to-gray-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <div class="flex-1">
+                    <h2 class="text-4xl font-bold text-blue-900 mb-6 leading-tight" data-aos="fade-down-right" data-aos-duration="1000">
+                        Kenapa Pengalaman<br>
+                        Riset Penting?
+                    </h2>
+                    <p class="text-gray-600 mb-8 text-lg leading-relaxed" data-aos="fade-up" data-aos-duration="1000">
+                        Dengan menyediakan kesempatan untuk terlibat dalam riset, Mersif Academy membantu siswa mengembangkan berbagai keterampilan penting dan mempersiapkan mereka untuk sukses dalam pendidikan tinggi dan karir masa depan.
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="skill-item active" data-aos="fade-down-right" data-aos-duration="1000" data-skill="kritis">
+                            <div class="bg-white text-blue-900 rounded-full w-8 h-8 flex-shrink-0 flex items-center justify-center font-bold">1</div>
+                            <span class="font-semibold">Berpikir Kritis</span>
+                        </div>
+                        <div class="skill-item" data-aos="fade-down-left" data-aos-duration="1000" data-skill="kreativitas">
+                            <div class="bg-white text-blue-900 rounded-full w-8 h-8 flex-shrink-0 flex items-center justify-center font-bold">2</div>
+                            <span class="font-semibold">Kreativitas & Inovasi</span>
+                        </div>
+                        <div class="skill-item" data-aos="fade-up-right" data-aos-duration="1000" data-skill="kolaborasi">
+                            <div class="bg-white text-blue-900 rounded-full w-8 h-8 flex-shrink-0 flex items-center justify-center font-bold">3</div>
+                            <span class="font-semibold">Kolaborasi</span>
+                        </div>
+                        <div class="skill-item" data-aos="fade-up-left" data-aos-duration="1000" data-skill="karakter">
+                            <div class="bg-white text-blue-900 rounded-full w-8 h-8 flex-shrink-0 flex items-center justify-center font-bold">4</div>
+                            <span class="font-semibold">Pengembangan Karakter</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 relative" data-aos="fade-up" data-aos-duration="1000">
+                        <div class="bubble-content active" data-content="kritis">
+                            Riset melatih siswa untuk menganalisis data secara mendalam, mempertanyakan asumsi yang ada, dan menarik kesimpulan logis yang dapat dipertanggungjawabkan.
+                        </div>
+                        <div class="bubble-content" data-content="kreativitas">
+                            Siswa didorong untuk menemukan masalah-masalah baru dan merancang solusi orisinal yang belum pernah terpikirkan sebelumnya, mengubah ide menjadi inovasi nyata.
+                        </div>
+                        <div class="bubble-content" data-content="kolaborasi">
+                            Proyek riset seringkali melibatkan kerja tim, mengajarkan cara berkomunikasi efektif, berbagi ide secara konstruktif, dan bekerja sama mencapai satu tujuan besar.
+                        </div>
+                        <div class="bubble-content" data-content="karakter">
+                            Menghadapi tantangan dan kegagalan dalam riset akan membangun ketekunan, menumbuhkan rasa ingin tahu yang mendalam, serta menjunjung tinggi integritas akademik.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-1 flex justify-center lg:justify-end" data-aos="fade-up" data-aos-duration="1000">
+                    <div class="relative">
+                        <div class="relative">
+                            <div class="w-80 h-96 bg-gradient-to-b from-blue-100 to-blue-200 rounded-3xl overflow-hidden p-4">
+                                <div class="w-full h-full bg-white rounded-3xl overflow-hidden shadow-inner">
+                                    <img src="orang.jpg" alt="Student" class="w-full h-full object-cover object-center slowbounce">
+                                </div>
+                            </div>
+                            <div class="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center shadow-lg">
+                                <div class="w-12 h-12 bg-gradient-to-br from-yellow-300 to-orange-400 rounded-full flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="absolute -top-8 -left-8 w-16 h-16 bg-red-500 rounded-full opacity-20"></div>
+                        <div class="absolute -bottom-4 -left-12 w-12 h-12 bg-yellow-400 rounded-full opacity-30"></div>
+                        <div class="absolute top-20 -right-8 w-8 h-8 bg-blue-400 rounded-full opacity-40"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<section class="hero-gradient relative overflow-x-hidden">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="mb-12 border border-gray-300 rounded-lg p-8 animate__animated animate__fadeIn" data-aos="zoom-in" data-aos-duration="1000">
+            <h2 class="text-5xl font-bold text-black mb-6 text-center">VISI</h2>
+            <p class="text-gray-700 text-lg leading-relaxed max-w-4xl text-center mx-auto">
+                Menjadi platform dalam pembelajaran riset, sains, dan teknologi, melalui percepatan adopsi teknologi dan integrasi pendidikan, serta mencetak inovator muda berdaya saing global melalui open innovation, menuju Indonesia Emas 2045.
+            </p>
+        </div>
+
+        <div class="border border-gray-300 rounded-lg p-8 animate__animated animate__fadeIn mb-16" data-aos="zoom-out-up" data-aos-duration="1000">
+            <h2 class="text-5xl font-bold text-black mb-6 text-center">MISI</h2>
+            <div class="flex justify-center">
+                <ul class="space-y-3 text-gray-700 text-lg">
+                    <li class="flex items-start gap-3">
+                        <span class="text-blue-600 mt-1">•</span>
+                        <span>Mengembangkan pelatihan riset dan sains yang inovatif dan global.</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="text-blue-600 mt-1">•</span>
+                        <span>Menerapkan teknologi canggih dalam pembelajaran dan pelayanan.</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="text-blue-600 mt-1">•</span>
+                        <span>Menyediakan program kolaborasi riset antara siswa SMA dan peneliti.</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="text-blue-600 mt-1">•</span>
+                        <span>Memfasilitasi pertukaran ide antara siswa, guru, mahasiswa, dan peneliti.</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="text-blue-600 mt-1">•</span>
+                        <span>Mendukung partisipasi dalam kompetisi riset dan sains global.</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="text-blue-600 mt-1">•</span>
+                        <span>Menyediakan program pengembangan karakter, kepemimpinan, dan soft skills.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-blue-900 text-white py-8">
+  <div class="max-w-7xl mx-auto px-4 text-center">
+    <div class="mb-4">
+      <p class="mb-2">📞 +62 822 2684 1762</p>
+      <p class="mb-2">📧 official@mersifacademy.com</p>
+      <p class="mb-2">📍 Daratan, RT.02/RW.06, Senden, Tohudan, Kec. Colomadu, Kabupaten Karanganyar, Jawa Tengah 57173</p>
+    </div>
+    <div class="border-t border-blue-800 pt-4">
+      <p>&copy; 2025 Mersif Academy. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+    <script>
+        const skillItems = document.querySelectorAll('.skill-item');
+        const bubbleContents = document.querySelectorAll('.bubble-content');
+
+        skillItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const targetSkill = item.getAttribute('data-skill');
+                
+                skillItems.forEach(skill => skill.classList.remove('active'));
+                item.classList.add('active');
+
+                bubbleContents.forEach(content => content.classList.remove('active'));
+                
+                const targetContent = document.querySelector(`.bubble-content[data-content="${targetSkill}"]`);
+                if (targetContent) {
+                    targetContent.classList.add('active');
+                }
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+        const currentPage = window.location.pathname;
+        const navLinks = document.querySelectorAll('nav ul li a:not(.bg-blue-900)');
+
+        navLinks.forEach(link => {
+            if (!link.href.includes('#')) {
+                const linkHref = link.getAttribute('href');
+                if (currentPage.endsWith(linkHref)) {
+                    link.classList.add('active-nav-link');
+                }
+            }
+        });
+    });
+
+        const toggleButton = document.getElementById('menu-toggle');
+        const menu = document.getElementById('menu');
+
+        toggleButton.addEventListener('click', () => {
+          menu.classList.toggle('hidden');
+    });
+
+    AOS.init({
+    });
+    </script>
+</body>
+</html>

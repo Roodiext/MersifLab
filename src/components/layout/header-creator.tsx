@@ -4,11 +4,19 @@ import type React from "react"
 import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Menu, ChevronDown, Home, Package, Mail, Gamepad2, CuboidIcon as Cube } from "lucide-react"
+import { Menu, ChevronDown, Home, Package, Mail, Cable as Cube, User, Settings, LogOut, Shield } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useRouter } from "next/navigation"
+import { useSession, signOut } from "next-auth/react"
 import { LanguageSwitcher } from "@/components/language-switcher"
 import { useLanguage } from "@/contexts/language-context"
 
@@ -103,28 +111,46 @@ function NavLink({
 export function HeaderCreator() {
   const [isMobileServiceOpen, setIsMobileServiceOpen] = useState(false)
   const router = useRouter()
+  const { data: session, status } = useSession()
   const { t } = useLanguage()
 
   const navItems: NavItem[] = [
-    { href: "/#hero", label: "Beranda", icon: Home, isHashLink: true, targetId: "hero" },
-    { href: "/#hero", label: "Creator Room", icon: Gamepad2, isHashLink: true, targetId: "hero" },
+    { href: "/#hero", label: t("nav.home"), icon: Home, isHashLink: true, targetId: "hero" },
+    { href: "/#about", label: t("nav.about"), icon: User, isHashLink: true, targetId: "about" },
+    { href: "/#features", label: t("nav.features"), icon: Package, isHashLink: true, targetId: "features" },
     { href: "/#the-rooms", label: "The Rooms", icon: Cube, isHashLink: true, targetId: "the-rooms" },
-    {
-      label: "Layanan",
-      icon: Package,
-      isDropdown: true,
-      subLinks: [
-        { href: "/mersif-academy/index.html", label: "Mersif Academy" },
-        { href: "/mersifiot", label: "Mersif IoT" },
-        { href: "/mersifvista", label: "Mersif Vista" },
-        { href: "/mersifcreator", label: "Mersif Creator" },
-      ],
-    },
-    { href: "/#contact", label: "Kontak", icon: Mail, isHashLink: true, targetId: "contact" },
+    { href: "/#contact", label: t("nav.contact"), icon: Mail, isHashLink: true, targetId: "contact" },
   ]
 
   const closeSheet = () => {
     setIsMobileServiceOpen(false)
+  }
+
+  // Function to get user avatar with better fallback logic
+  const getUserAvatar = () => {
+    if (!session?.user) return null
+
+    // Check multiple possible avatar sources from session
+    const possibleAvatars = [
+      session.user.avatar,
+      session.user.image,
+      (session.user as any)?.picture, // Sometimes OAuth providers use 'picture'
+    ].filter(Boolean)
+
+    return possibleAvatars[0] || null
+  }
+
+  // Function to get user initials
+  const getUserInitials = () => {
+    if (!session?.user) return "U"
+
+    const name = session.user.name || session.user.email || "User"
+    return name
+      .split(" ")
+      .map((word) => word.charAt(0))
+      .slice(0, 2)
+      .join("")
+      .toUpperCase()
   }
 
   return (
@@ -231,7 +257,7 @@ export function HeaderCreator() {
               <div className="flex items-center space-x-1">
                 {/* Small Logo in Navbar */}
                 <div className="flex items-center mr-3">
-                  <Link href="/" className="flex items-center">
+                  <Link href="/mersifcreator" className="flex items-center">
                     <Image
                       src="/img/navbar-logo/logoCreator.svg"
                       alt="MersifLab"
@@ -282,41 +308,125 @@ export function HeaderCreator() {
                   )
                 })}
 
-                {/* Language Switcher integrated in navbar */}
-                <div className="flex items-center">
-                  <div className="w-px h-6 bg-gray-300 mx-3"></div>
-                  <div className="px-2">
-                    <LanguageSwitcher />
-                  </div>
-                </div>
+                
               </div>
             </div>
           </nav>
 
-          {/* Right Section - Login/Register Buttons */}
-          <div className="flex items-center">
-            <div className="bg-white/90 backdrop-blur-sm border border-gray-200/50 rounded-2xl shadow-lg shadow-gray-200/20 px-4 py-2">
+          {/* Right Section - Language Switcher & User Menu */}
+          <div className="flex items-center gap-2">
+            <div className="block">
+              <LanguageSwitcher />
+            </div>
+
+            {status === "authenticated" && session?.user ? (
               <div className="flex items-center gap-2">
+                <div className="hidden xl:block">
+                  <span className="text-sm font-medium text-gray-900">{session.user.name || "User"}</span>
+                </div>
+
+                {/* Mobile Profile Button - Direct Navigation */}
+                <div className="block md:hidden">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => router.push("/profile")}
+                    className="relative h-8 w-8 rounded-full hover:bg-gray-100"
+                  >
+                    <Avatar className="h-7 w-7">
+                      <AvatarImage
+                        src={getUserAvatar() || undefined}
+                        alt={session.user.name || "User"}
+                        className="object-cover"
+                        onError={(e) => {
+                          console.log("Avatar image failed to load:", getUserAvatar())
+                          e.currentTarget.style.display = "none"
+                        }}
+                      />
+                      <AvatarFallback className="bg-blue-100 text-blue-600 font-medium text-xs">
+                        {getUserInitials()}
+                      </AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </div>
+
+                {/* Desktop Profile Dropdown */}
+                <div className="hidden md:block">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" size="icon" className="relative h-9 w-9 rounded-full hover:bg-gray-100">
+                        <Avatar className="h-8 w-8">
+                          <AvatarImage
+                            src={getUserAvatar() || undefined}
+                            alt={session.user.name || "User"}
+                            className="object-cover"
+                            onError={(e) => {
+                              console.log("Avatar image failed to load:", getUserAvatar())
+                              e.currentTarget.style.display = "none"
+                            }}
+                          />
+                          <AvatarFallback className="bg-blue-100 text-blue-600 font-medium text-sm">
+                            {getUserInitials()}
+                          </AvatarFallback>
+                        </Avatar>
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent
+                      className="w-56 md:w-64"
+                      align="end"
+                      side="bottom"
+                      sideOffset={12}
+                      alignOffset={-8}
+                      avoidCollisions={true}
+                      sticky="always"
+                      collisionPadding={16}
+                    >
+                      <div className="flex flex-col gap-1 p-3 border-b">
+                        <p className="text-sm font-medium leading-tight">{session.user.name}</p>
+                        <p className="text-xs text-muted-foreground leading-tight">{session.user.email}</p>
+                      </div>
+                      <div className="py-1">
+                        <DropdownMenuItem onClick={() => router.push("/profile")} className="cursor-pointer">
+                          <User className="mr-2 h-4 w-4" />
+                          <span>{t("nav.profile")}</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="cursor-pointer">
+                          <Settings className="mr-2 h-4 w-4" />
+                          <span>{t("nav.settings")}</span>
+                        </DropdownMenuItem>
+                        {session.user.role === "admin" && (
+                          <DropdownMenuItem onClick={() => router.push("/admin")} className="cursor-pointer">
+                            <Shield className="mr-2 h-4 w-4" />
+                            <span>{t("nav.admin")}</span>
+                          </DropdownMenuItem>
+                        )}
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem
+                          onClick={() => signOut()}
+                          className="cursor-pointer text-red-600 focus:text-red-600"
+                        >
+                          <LogOut className="mr-2 h-4 w-4" />
+                          <span>{t("nav.logout")}</span>
+                        </DropdownMenuItem>
+                      </div>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+              </div>
+            ) : (
+              <div className="flex items-center gap-1 md:gap-2">
                 <Button
                   variant="ghost"
                   onClick={() => router.push("/login")}
-                  className="text-sm rounded-full hover:bg-gray-100 transition-all duration-200"
+                  className="text-xs md:text-sm px-2 md:px-4"
                 >
-                  Masuk
+                  {t("nav.login")}
                 </Button>
-                <Button
-                  onClick={() => router.push("/register")}
-                  className="text-sm rounded-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-sm hover:shadow-md"
-                >
-                  Daftar
+                <Button onClick={() => router.push("/register")} className="text-xs md:text-sm px-2 md:px-4">
+                  {t("nav.register")}
                 </Button>
               </div>
-            </div>
-
-            {/* Mobile Language Switcher */}
-            <div className="sm:hidden ml-3 bg-white/90 backdrop-blur-sm border border-gray-200/50 rounded-2xl shadow-lg shadow-gray-200/20 px-3 py-2">
-              <LanguageSwitcher />
-            </div>
+            )}
           </div>
         </div>
       </div>

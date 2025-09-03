@@ -1,17 +1,20 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { useLanguage } from "@/contexts/language-context"
 
 export function TestimonialFAQ() {
+  const { t } = useLanguage()
+
   const testimonials = [
-    { id: 1, name: "Andi", text: "Mersif IoT membantu bisnis saya jadi lebih efisien!" },
-    { id: 2, name: "Siti", text: "Produk berkualitas dan support yang responsif." }
+    { id: 1, name: "Andi", text: t("iot.testimonials.andi") },
+    { id: 2, name: "Siti", text: t("iot.testimonials.siti") },
   ]
 
   const faqs = [
-    { q: "Apakah Mersif IoT bisa diintegrasikan dengan sistem saya?", a: "Ya, bisa disesuaikan sesuai kebutuhan." },
-    { q: "Apakah tersedia garansi?", a: "Ya, garansi produk 1 tahun." },
-    { q: "Berapa lama proses instalasi?", a: "Rata-rata 2–3 hari kerja tergantung kompleksitas." }
+    { q: t("iot.faq.integration.q"), a: t("iot.faq.integration.a") },
+    { q: t("iot.faq.warranty.q"), a: t("iot.faq.warranty.a") },
+    { q: t("iot.faq.installation.q"), a: t("iot.faq.installation.a") },
   ]
 
   const [openFaq, setOpenFaq] = useState<number | null>(null)
@@ -23,9 +26,11 @@ export function TestimonialFAQ() {
   }, [])
 
   return (
-    <section className="w-full py-16">
+    <section id="testimonials" className="w-full py-16">
       <div className="container mx-auto px-6 sm:px-10 lg:px-20">
-        <h2 className="text-3xl font-bold text-center mb-10">Testimoni & FAQ</h2>
+        <h2 style={{ fontFamily: "Poppins, sans-serif" }} className="text-3xl font-bold text-center mb-10">
+          {t("iot.testimonials.title")}
+        </h2>
 
         {/* Testimoni */}
         <div className="grid gap-8 sm:grid-cols-2 mb-12">
@@ -33,20 +38,27 @@ export function TestimonialFAQ() {
             <div
               key={t.id}
               className={`p-6 border rounded-lg bg-white shadow transition-all duration-700 ease-out
-                ${visible ? "opacity-100 translate-x-0" 
-                          : index % 2 === 0 
-                          ? "-translate-x-8 opacity-0" 
-                          : "translate-x-8 opacity-0"}`}
+                ${
+                  visible
+                    ? "opacity-100 translate-x-0"
+                    : index % 2 === 0
+                      ? "-translate-x-8 opacity-0"
+                      : "translate-x-8 opacity-0"
+                }`}
               style={{ transitionDelay: `${index * 250}ms` }}
             >
-              <p className="text-gray-600 italic">"{t.text}"</p>
-              <p className="mt-3 font-semibold">- {t.name}</p>
+              <p style={{ fontFamily: "Inter, sans-serif" }} className="text-gray-600 italic">
+                "{t.text}"
+              </p>
+              <p style={{ fontFamily: "Inter, sans-serif" }} className="mt-3 font-semibold">
+                - {t.name}
+              </p>
             </div>
           ))}
         </div>
 
         {/* FAQ */}
-        <div className="space-y-4">
+        <div style={{ fontFamily: "Inter, sans-serif" }} className="space-y-4">
           {faqs.map((f, i) => (
             <div
               key={i}
@@ -61,9 +73,7 @@ export function TestimonialFAQ() {
                 {f.q}
                 <span className="text-xl">{openFaq === i ? "−" : "+"}</span>
               </button>
-              {openFaq === i && (
-                <div className="px-5 pb-4 text-gray-600">{f.a}</div>
-              )}
+              {openFaq === i && <div className="px-5 pb-4 text-gray-600">{f.a}</div>}
             </div>
           ))}
         </div>

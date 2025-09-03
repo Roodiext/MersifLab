@@ -2,9 +2,11 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
+import { useLanguage } from "@/contexts/language-context"
 
 export function ContactForm() {
   const [form, setForm] = useState({ name: "", email: "", message: "" })
+  const { t } = useLanguage()
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value })
@@ -14,62 +16,75 @@ export function ContactForm() {
     e.preventDefault()
 
     if (!form.name || !form.email || !form.message) {
-      alert("Harap isi semua field.")
+      alert(t("iot.contact.form.validation.all"))
       return
     }
 
     console.log("Pesan kontak:", form)
-    alert("Pesan Anda telah terkirim! Kami akan menghubungi Anda.")
+    alert(t("iot.contact.form.success"))
   }
 
   return (
-    <section className="w-full py-12 bg-white">
+    <section id="contact" className="w-full py-12 bg-white">
       <div className="container mx-auto px-4 max-w-5xl grid md:grid-cols-2 gap-8 items-start">
         {/* Bagian Kiri */}
         <div>
-          <h2 className="text-3xl font-bold mb-4">Hubungi Kami</h2>
-          <p className="text-gray-600 mb-6">
-            Punya pertanyaan, masukan, atau ingin berdiskusi?  
-            Kami selalu siap membantu. Silakan isi formulir di sebelah kanan,  
-            dan tim kami akan segera menghubungi Anda.
+          <h2 style={{ fontFamily: "Poppins, sans-serif" }} className="text-3xl font-bold mb-4">
+            {t("iot.contact.title")}
+          </h2>
+          <p style={{ fontFamily: "Inter, sans-serif" }} className="text-gray-600 mb-6">
+            {t("iot.contact.description")}
           </p>
-          <div className="space-y-2 text-gray-700">
-            <p><strong>📍 Alamat:</strong> Jl. Contoh No. 123, Jakarta</p>
-            <p><strong>📞 Telepon:</strong> +62 812-3456-7890</p>
-            <p><strong>✉️ Email:</strong> support@contoh.com</p>
+          <div style={{ fontFamily: "Inter, sans-serif" }} className="space-y-2 text-gray-700">
+            <p>
+              <strong>{t("iot.contact.address")}:</strong> Kentingan, Jl. Ir. Sutami, Surakarta, Indonesia
+            </p>
+            <p>
+              <strong>{t("iot.contact.phone")}:</strong> +62 822-2684-1762{" "}
+            </p>
+            <p>
+              <strong>{t("iot.contact.email")}:</strong> mersiflab@gmail.com
+            </p>
           </div>
         </div>
 
         {/* Bagian Kanan */}
         <form onSubmit={handleSubmit} className="space-y-4 bg-gray-50 p-6 rounded-lg shadow">
           <input
+            style={{ fontFamily: "Inter, sans-serif" }}
             name="name"
             value={form.name}
             onChange={handleChange}
-            placeholder="Nama"
+            placeholder={t("iot.contact.form.name")}
             className="w-full border rounded-lg px-3 py-2"
             required
           />
           <input
+            style={{ fontFamily: "Inter, sans-serif" }}
             type="email"
             name="email"
             value={form.email}
             onChange={handleChange}
-            placeholder="Email"
+            placeholder={t("iot.contact.form.email")}
             className="w-full border rounded-lg px-3 py-2"
             required
           />
           <textarea
+            style={{ fontFamily: "Inter, sans-serif" }}
             name="message"
             value={form.message}
             onChange={handleChange}
-            placeholder="Pesan"
+            placeholder={t("iot.contact.form.message")}
             rows={5}
             className="w-full border rounded-lg px-3 py-2"
             required
           />
-          <Button type="submit" className="w-full bg-[#007bff] text-white">
-            Kirim Pesan
+          <Button
+            style={{ fontFamily: "Poppins, sans-serif" }}
+            type="submit"
+            className="w-full bg-[#007bff] text-white font-semibold"
+          >
+            {t("iot.contact.form.submit")}
           </Button>
         </form>
       </div>

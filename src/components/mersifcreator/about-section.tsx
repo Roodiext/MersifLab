@@ -1,30 +1,31 @@
-import { Gamepad2, CuboidIcon as Cube, Lightbulb, Users } from "lucide-react"
+"use client"
+
+import { Gamepad2, Cable as Cube, Lightbulb, Users } from "lucide-react"
+import { useLanguage } from "@/contexts/language-context"
 
 export function AboutSection() {
+  const { t } = useLanguage()
+
   const features = [
     {
       icon: Gamepad2,
-      title: "Teknologi Immersive",
-      description:
-        "Menghadirkan pengalaman pembelajaran yang mendalam melalui teknologi VR dan AR yang canggih dan interaktif.",
+      title: t("creator.about.features.immersive.title"),
+      description: t("creator.about.features.immersive.desc"),
     },
     {
       icon: Cube,
-      title: "Ruang Virtual Beragam",
-      description:
-        "Menyediakan berbagai jenis ruang virtual seperti Cube, Custom Shape, dan Lab Kimia untuk eksplorasi tanpa batas.",
+      title: t("creator.about.features.virtual.title"),
+      description: t("creator.about.features.virtual.desc"),
     },
     {
       icon: Users,
-      title: "Kolaborasi Real-time",
-      description:
-        "Memungkinkan pembelajaran kolaboratif dengan sesama pengguna dalam lingkungan virtual yang aman dan terkontrol.",
+      title: t("creator.about.features.collaboration.title"),
+      description: t("creator.about.features.collaboration.desc"),
     },
     {
       icon: Lightbulb,
-      title: "Kreativitas Tanpa Batas",
-      description:
-        "Platform yang membebaskan kreativitas untuk menciptakan, bereksperimen, dan belajar dengan cara yang menyenangkan.",
+      title: t("creator.about.features.creativity.title"),
+      description: t("creator.about.features.creativity.desc"),
     },
   ]
 
@@ -34,13 +35,14 @@ export function AboutSection() {
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-6">
-              Tentang <span className="text-blue-600">Mersif Creator</span>
+            <h2 className="text-4xl font-bold text-gray-900 mb-6" style={{ fontFamily: "Poppins, sans-serif" }}>
+              {t("creator.about.title")} <span className="text-blue-600">{t("creator.about.title.highlight")}</span>
             </h2>
-            <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-              Mersif Creator adalah platform revolusioner yang menghadirkan ruang virtual interaktif untuk pembelajaran
-              dan eksplorasi. Dengan teknologi VR dan AR terdepan, kami menciptakan pengalaman edukatif yang imersif dan
-              menyenangkan.
+            <p
+              className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed"
+              style={{ fontFamily: "Inter, sans-serif" }}
+            >
+              {t("creator.about.description")}
             </p>
           </div>
 
@@ -54,8 +56,12 @@ export function AboutSection() {
                 <div className="bg-gradient-to-br from-blue-100 to-blue-50 w-14 h-14 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                   <feature.icon className="h-7 w-7 text-blue-600" />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">{feature.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{feature.description}</p>
+                <h3 className="text-lg font-semibold text-gray-900 mb-3" style={{ fontFamily: "Poppins, sans-serif" }}>
+                  {feature.title}
+                </h3>
+                <p className="text-gray-600 leading-relaxed" style={{ fontFamily: "Inter, sans-serif" }}>
+                  {feature.description}
+                </p>
               </div>
             ))}
           </div>
@@ -64,22 +70,37 @@ export function AboutSection() {
           <div className="bg-white rounded-3xl p-10 shadow-xl border border-gray-100">
             <div className="grid md:grid-cols-3 gap-8 text-center">
               <div className="group">
-                <div className="text-4xl font-bold text-blue-600 mb-3 group-hover:scale-110 transition-transform duration-300">
+                <div
+                  className="text-4xl font-bold text-blue-600 mb-3 group-hover:scale-110 transition-transform duration-300"
+                  style={{ fontFamily: "Poppins, sans-serif" }}
+                >
                   5000+
                 </div>
-                <div className="text-gray-600 font-medium">Ruang Virtual Dibuat</div>
+                <div className="text-gray-600 font-medium" style={{ fontFamily: "Inter, sans-serif" }}>
+                  {t("creator.about.stats.rooms")}
+                </div>
               </div>
               <div className="group">
-                <div className="text-4xl font-bold text-blue-600 mb-3 group-hover:scale-110 transition-transform duration-300">
+                <div
+                  className="text-4xl font-bold text-blue-600 mb-3 group-hover:scale-110 transition-transform duration-300"
+                  style={{ fontFamily: "Poppins, sans-serif" }}
+                >
                   15+
                 </div>
-                <div className="text-gray-600 font-medium">Jenis Ruang Tersedia</div>
+                <div className="text-gray-600 font-medium" style={{ fontFamily: "Inter, sans-serif" }}>
+                  {t("creator.about.stats.types")}
+                </div>
               </div>
               <div className="group">
-                <div className="text-4xl font-bold text-blue-600 mb-3 group-hover:scale-110 transition-transform duration-300">
+                <div
+                  className="text-4xl font-bold text-blue-600 mb-3 group-hover:scale-110 transition-transform duration-300"
+                  style={{ fontFamily: "Poppins, sans-serif" }}
+                >
                   98%
                 </div>
-                <div className="text-gray-600 font-medium">Kepuasan Pengguna</div>
+                <div className="text-gray-600 font-medium" style={{ fontFamily: "Inter, sans-serif" }}>
+                  {t("creator.about.stats.satisfaction")}
+                </div>
               </div>
             </div>
           </div>

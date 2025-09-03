@@ -1,21 +1,23 @@
 import { HeaderVista } from "@/components/layout/header-vista";
 
 import { HeroVista } from "@/components/mersifvista/hero-vista";
-import AboutVista from "@/components/mersifvista/about-vista";
+import{ AboutVista }from "@/components/mersifvista/about-vista";
 import PilarVista from "@/components/mersifvista/pilar-vista";
 import ImpactVista from "@/components/mersifvista/impact-vista";
-import FooterVista from "@/components/mersifvista/footer-vista"; // ✅ default import
+import FormVista from "@/components/mersifvista/form-vista";
+import { Footer } from "@/components/layout/footer" // ✅ default import
 
-export default function MersifVistaPage() {
-  return (
+export default function MersifVistaPage() {    
+  return ( 
     <>
-      <main>
+      <main> 
         <HeaderVista />
         <HeroVista />
         <AboutVista />
         <PilarVista />
         <ImpactVista />
-        <FooterVista /> {/* ✅ dipanggil sebagai komponen biasa */}
+        <FormVista />
+        <Footer />
       </main>
     </>
   );

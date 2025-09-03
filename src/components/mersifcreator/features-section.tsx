@@ -1,37 +1,41 @@
-import { CuboidIcon as Cube, Palette, Users, Zap, Shield, Gamepad2 } from "lucide-react"
+"use client"
+
+import { Cable as Cube, Palette, Users, Zap, Shield, Gamepad2 } from "lucide-react"
+import { useLanguage } from "@/contexts/language-context"
 
 export function FeaturesSection() {
+  const { t } = useLanguage()
+
   const features = [
     {
       icon: Cube,
-      title: "Ruang Virtual 3D",
-      description: "Ciptakan dan jelajahi ruang virtual 3D yang realistis dengan teknologi rendering terdepan.",
+      title: t("creator.features.virtual3d.title"),
+      description: t("creator.features.virtual3d.desc"),
     },
     {
       icon: Palette,
-      title: "Kustomisasi Bebas",
-      description:
-        "Personalisasi ruang virtual Anda dengan berbagai bentuk, warna, dan elemen interaktif sesuai kebutuhan.",
+      title: t("creator.features.customization.title"),
+      description: t("creator.features.customization.desc"),
     },
     {
       icon: Users,
-      title: "Kolaborasi Real-time",
-      description: "Bekerja sama dengan pengguna lain dalam ruang virtual yang sama secara bersamaan.",
+      title: t("creator.features.realtime.title"),
+      description: t("creator.features.realtime.desc"),
     },
     {
       icon: Gamepad2,
-      title: "Kontrol Intuitif",
-      description: "Interface yang mudah dipahami untuk navigasi dan interaksi dalam lingkungan virtual.",
+      title: t("creator.features.intuitive.title"),
+      description: t("creator.features.intuitive.desc"),
     },
     {
       icon: Shield,
-      title: "Lingkungan Aman",
-      description: "Ruang virtual yang aman dan terkontrol untuk pembelajaran dan eksplorasi tanpa risiko.",
+      title: t("creator.features.safe.title"),
+      description: t("creator.features.safe.desc"),
     },
     {
       icon: Zap,
-      title: "Performa Optimal",
-      description: "Teknologi optimasi canggih untuk pengalaman virtual yang lancar di berbagai perangkat.",
+      title: t("creator.features.performance.title"),
+      description: t("creator.features.performance.desc"),
     },
   ]
 
@@ -41,12 +45,15 @@ export function FeaturesSection() {
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Fitur <span className="text-blue-600">Unggulan</span>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4" style={{ fontFamily: "Poppins, sans-serif" }}>
+              {t("creator.features.title")}{" "}
+              <span className="text-blue-600">{t("creator.features.title.highlight")}</span>
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Nikmati berbagai fitur canggih Mersif Creator yang dirancang khusus untuk memberikan pengalaman
-              pembelajaran virtual yang imersif dan interaktif.
+            <p
+              className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
+              style={{ fontFamily: "Inter, sans-serif" }}
+            >
+              {t("creator.features.description")}
             </p>
           </div>
 
@@ -58,8 +65,15 @@ export function FeaturesSection() {
                   <div className="bg-gradient-to-br from-blue-500 to-blue-600 w-14 h-14 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                     <feature.icon className="h-7 w-7 text-white" />
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">{feature.title}</h3>
-                  <p className="text-gray-600 leading-relaxed">{feature.description}</p>
+                  <h3
+                    className="text-xl font-semibold text-gray-900 mb-4"
+                    style={{ fontFamily: "Poppins, sans-serif" }}
+                  >
+                    {feature.title}
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed" style={{ fontFamily: "Inter, sans-serif" }}>
+                    {feature.description}
+                  </p>
                 </div>
               </div>
             ))}

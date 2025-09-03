@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layanan dan Fasilitas - Hanief Academy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body class="bg-gray-50 overflow-x-hidden max-w-full">
+     <!-- Navbar -->
+<nav class="fixed top-2 left-1/2 transform -translate-x-1/2 z-50 bg-white/90 backdrop-blur-md shadow-lg rounded-full border border-white/20 max-w-5xl w-11/12">
+  <div class="px-8 py-2.5 flex justify-between items-center w-full">
+    <!-- Logo -->
+    <a href="index.html" class="flex items-center space-x-2">
+      <img src="logo.png" alt="Logo Mersif" class="h-8 sm:h-10" />
+      <span class="sr-only">Mersif Academy</span>
+    </a>
+
+    <!-- Hamburger Button (Mobile) -->
+    <button id="menu-toggle" class="sm:hidden text-gray-700 focus:outline-none w-10 h-10 flex items-center justify-center rounded-md hover:bg-gray-100 transition-colors">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+
+    <!-- Ganti class menu -->
+    <ul id="menu" class="hidden sm:flex flex-col sm:flex-row sm:space-x-8 text-sm font-medium sm:items-center bg-white sm:bg-transparent absolute sm:static left-4 right-4 sm:left-auto sm:right-auto w-auto sm:w-auto top-full sm:top-auto shadow-md sm:shadow-none z-40 sm:z-auto rounded-xl sm:rounded-none mt-2 sm:mt-0">
+      <li><a href="about.html" class="block px-4 py-2 hover:text-blue-700">Tentang Kami</a></li>
+      <li><a href="layanan.html" class="block px-4 py-2 hover:text-blue-700">Layanan</a></li>
+      <li><a href="porto.html" class="block px-4 py-2 hover:text-blue-700">Portofolio</a></li>
+      <li><a href="mentor.html" class="block px-4 py-2 hover:text-blue-700">Mentor</a></li>
+      <li><a href="paket.html" class="block px-4 py-2 hover:text-blue-700">Paket</a></li>
+      <li><a href="daftar.html" class="block bg-blue-900 text-white px-4 py-2 rounded hover:bg-blue-800 mx-4 my-2 sm:my-0">Daftar Sekarang</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+    <section class="hero-gradient relative overflow-x-hidden" style="padding-top: 8rem;">
+        <div class="max-w-7xl mx-auto px-4">
+
+            <div class="service-section">
+                <div class="flex flex-col lg:flex-row gap-12">
+                    <div class="flex-1">
+                        <div class="flex justify-end mb-1">
+                            <div class="flex items-center gap-2">
+                            </div>
+                        </div>
+
+                        <h2 class="text-4xl font-bold text-blue-900 mb-12" data-aos="fade-right" data-aos-duration="1000">
+                            Layanan dan<br>
+                            Fasilitas
+                        </h2>
+
+                        <div class="space-y-8">
+                            <div class="service-item active flex items-start gap-4" data-aos="fade-down-right" data-aos-duration="1000" data-aos-anchor-placement="top-bottom" data-aos-delay="200" data-service="1">
+                                <div class="service-number bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold text-lg flex-shrink-0">01</div>
+                                <div>
+                                    <h3 class="service-title font-bold text-xl text-blue-900 mb-2">Weekly Research Mentorship</h3>
+                                    <p class="text-gray-600 leading-relaxed">
+                                        Menyediakan pendampingan ekstrakurikuler Karya Ilmiah Remaja. Terdiri dari mentor dengan berbagai bidang keahlian.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="service-item flex items-start gap-4" data-aos="fade-right" data-aos-duration="1000" data-service="2">
+                                <div class="service-number bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold text-lg flex-shrink-0">02</div>
+                                <div>
+                                    <h3 class="service-title font-bold text-xl text-blue-900 mb-2">Competition Coaching</h3>
+                                    <p class="text-gray-600 leading-relaxed">
+                                        Program intensif pelatihan lomba riset dan olimpiade sains. Membantu siswa dalam mempersiapkan hingga pelaksanaan lomba.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="service-item flex items-start gap-4" data-aos="fade-up-right" data-aos-duration="1000" data-service="3">
+                                <div class="service-number bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold text-lg flex-shrink-0">03</div>
+                                <div>
+                                    <h3 class="service-title font-bold text-xl text-blue-900 mb-2">Innovation Bootcamp</h3>
+                                    <p class="text-gray-600 leading-relaxed">
+                                        Bootcamp intensif yang dirancang untuk meningkatkan kemampuan siswa pada bidang riset dan teknologi sesuai talenta dan minat.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex-1">
+                        <div class="relative">
+                             <div class="relative mb-4">
+                                <div class="w-full h-64 bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl overflow-hidden image-container" data-aos="fade-down-left" data-aos-duration="1000">
+                                    <div class="image-slide active" data-slide="1"><img src="https://images.unsplash.com/photo-1576267423445-b2e0074d68a4?auto=format&fit=crop&w=800&q=80" alt="Mentorship" class="w-full h-full object-cover"></div>
+                                    <div class="image-slide" data-slide="2"><img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80" alt="Coaching" class="w-full h-full object-cover"></div>
+                                    <div class="image-slide" data-slide="3"><img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=800&q=80" alt="Bootcamp" class="w-full h-full object-cover"></div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="h-48 bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl overflow-hidden image-container" data-aos="fade-up" data-aos-duration="1000">
+                                    <div class="image-slide active" data-slide="1"><img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=400&q=80" alt="Mentorship Detail" class="w-full h-full object-cover"></div>
+                                    <div class="image-slide" data-slide="2"><img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=400&q=80" alt="Competition Detail" class="w-full h-full object-cover"></div>
+                                    <div class="image-slide" data-slide="3"><img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=400&q=80" alt="Bootcamp Detail" class="w-full h-full object-cover"></div>
+                                </div>
+                                <div class="h-48 bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl overflow-hidden image-container" data-aos="fade-up-left" data-aos-duration="1000">
+                                    <div class="image-slide active" data-slide="1"><img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=400&q=80" alt="Research Environment" class="w-full h-full object-cover"></div>
+                                    <div class="image-slide" data-slide="2"><img src="3 (2).jpg" alt="Competition Environment" class="w-full h-full object-cover"></div>
+                                    <div class="image-slide" data-slide="3"><img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=400&q=80" alt="Innovation Environment" class="w-full h-full object-cover"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="facility-section" class="service-section mt-16 lg:mt-24">
+                <div class="flex flex-col lg:flex-row gap-12">
+                    <div class="flex-1">
+                        <div class="flex justify-end mb-6">
+                            <div class="flex justify-end mb-1">
+                            <div class="flex items-center gap-2">
+                            </div>
+                        </div>
+                        </div>
+
+                        <div class="space-y-8">
+                             <div class="service-item active flex items-start gap-4" data-aos="fade-down-right" data-aos-duration="1000" data-service="4">
+                                <div class="service-number bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold text-lg flex-shrink-0">04</div>
+                                <div>
+                                    <h3 class="service-title font-bold text-xl text-blue-900 mb-2">Ruangan Luas</h3>
+                                    <p class="text-gray-600 leading-relaxed">
+                                        Menyediakan ruangan luas untuk berdiskusi, tersedia jaringan internet dan AC.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="service-item flex items-start gap-4" data-aos="fade-right" data-aos-duration="1000" data-service="5">
+                                <div class="service-number bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold text-lg flex-shrink-0">05</div>
+                                <div>
+                                    <h3 class="service-title font-bold text-xl text-blue-900 mb-2">3D Printer</h3>
+                                    <p class="text-gray-600 leading-relaxed">
+                                        Tersedia perangkat 3D printer untuk mencetak prototype penelitian.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="service-item flex items-start gap-4" data-aos="fade-up-right" data-aos-duration="1000" data-service="6">
+                                <div class="service-number bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold text-lg flex-shrink-0">06</div>
+                                <div>
+                                    <h3 class="service-title font-bold text-xl text-blue-900 mb-2">Kit Elektronika</h3>
+                                    <p class="text-gray-600 leading-relaxed">
+                                        Tersedia kit elektronika lengkap untuk menyempurnakan penelitian yang berkaitan dengan elektronika.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex-1 mb-16">
+                        <div class="relative">
+                            <div class="relative mb-4">
+                                <div class="w-full h-64 bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl overflow-hidden image-container" data-aos="fade-down-left" data-aos-duration="1000">
+                                    <div class="image-slide active" data-slide="4"><img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80" alt="Ruangan Luas" class="w-full h-full object-cover"></div>
+                                    <div class="image-slide" data-slide="5"><img src="4 (2).jpg" alt="3D Printer" class="w-full h-full object-cover"></div>
+                                    <div class="image-slide" data-slide="6"><img src="2 (2).jpg" alt="Kit Elektronika" class="w-full h-full object-cover"></div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="h-48 bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl overflow-hidden image-container" data-aos="fade-up" data-aos-duration="1000">
+                                    <div class="image-slide active" data-slide="4"><img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=400&q=80" alt="Room Detail" class="w-full h-full object-cover"></div>
+                                    <div class="image-slide" data-slide="5"><img src="https://images.unsplash.com/photo-1612198188060-c7c2a3b66eae?auto=format&fit=crop&w=400&q=80" alt="3D Printer Detail" class="w-full h-full object-cover"></div>
+                                    <div class="image-slide" data-slide="6"><img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=400&q=80" alt="Electronics Detail" class="w-full h-full object-cover"></div>
+                                </div>
+                                <div class="h-48 bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl overflow-hidden image-container" data-aos="fade-up-left" data-aos-duration="1000">
+                                    <div class="image-slide active" data-slide="4"><img src="https://images.unsplash.com/photo-1497366412874-3415097a27e7?auto=format&fit=crop&w=400&q=80" alt="Spacious Room" class="w-full h-full object-cover"></div>
+                                    <div class="image-slide" data-slide="5"><img src="https://images.unsplash.com/photo-1565106430482-8f6e74349ca1?auto=format&fit=crop&w=400&q=80" alt="3D Printing Process" class="w-full h-full object-cover"></div>
+                                    <div class="image-slide" data-slide="6"><img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=400&q=80" alt="Electronics Kit" class="w-full h-full object-cover"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <script>
+        // --- UPDATED SCRIPT ---
+        // This script handles both sections independently.
+        const serviceSections = document.querySelectorAll('.service-section');
+        
+        serviceSections.forEach(section => {
+            const serviceItems = section.querySelectorAll('.service-item');
+            const allImageSlidesInSection = section.querySelectorAll('.image-slide');
+
+            serviceItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const serviceNumber = item.dataset.service;
+
+                    // Deactivate all items within this section
+                    serviceItems.forEach(si => si.classList.remove('active'));
+                    
+                    // Deactivate all image slides within this section
+                    allImageSlidesInSection.forEach(slide => slide.classList.remove('active'));
+
+                    // Activate the clicked item
+                    item.classList.add('active');
+
+                    // Activate the corresponding slides in this section
+                    const targetSlides = section.querySelectorAll(`[data-slide="${serviceNumber}"]`);
+                    targetSlides.forEach(slide => slide.classList.add('active'));
+                });
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+        const currentPage = window.location.pathname;
+        const navLinks = document.querySelectorAll('nav ul li a');
+
+        navLinks.forEach(link => {
+            // Hanya proses link yang tidak mengandung '#' (bukan anchor link)
+            if (!link.href.includes('#')) {
+                const linkHref = link.getAttribute('href');
+                if (currentPage.endsWith(linkHref)) {
+                    link.classList.add('active-nav-link');
+                }
+            }
+        });
+    });
+    
+        const toggleButton = document.getElementById('menu-toggle');
+        const menu = document.getElementById('menu');
+
+        toggleButton.addEventListener('click', () => {
+          menu.classList.toggle('hidden');
+    });
+    AOS.init({   
+        once: false,
+        duration: 1000,
+    });
+    </script>
+
+      <!-- Footer -->
+<!-- Footer -->
+<footer class="bg-blue-900 text-white py-8">
+  <div class="max-w-7xl mx-auto px-4 text-center">
+    <div class="mb-4">
+      <p class="mb-2">📞 +62 822 2684 1762</p>
+      <p class="mb-2">📧 official@mersifacademy.com</p>
+      <p class="mb-2">📍 Daratan, RT.02/RW.06, Senden, Tohudan, Kec. Colomadu, Kabupaten Karanganyar, Jawa Tengah 57173</p>
+    </div>
+    <div class="border-t border-blue-800 pt-4">
+      <p>&copy; 2025 Mersif Academy. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

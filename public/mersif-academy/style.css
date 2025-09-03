@@ -1,0 +1,1070 @@
+/* 1. Impor Font dan Gaya Global */
+/* =================================== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+* {
+    font-family: 'Inter', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #f9fafb;
+    min-height: 100vh;
+    position: relative;
+}
+
+
+/* 2. Gaya Komponen Umum (Navbar, dll) */
+/* =================================== */
+.active-nav-link {
+    color: #1d4ed8; /* Tailwind blue-700 */
+    font-weight: 600;
+}
+
+.card-hover {
+    transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+
+/* 3. Gaya Halaman Utama (index.html) */
+/* =================================== */
+.gradient-text {
+    background: linear-gradient(135deg, #3b82f6, #06b6d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-gradient {
+  position: relative;
+  min-height: 100vh;
+  padding-top: 10rem; 
+  background-image: url('bg.jpg');
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow: hidden;
+}
+
+.hero-gradient::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.8); /* Overlay putih transparan sama seperti parallax */
+  z-index: 1;
+}
+
+.hero-gradient > * {
+  position: relative;
+  z-index: 2;
+}
+
+.grid-background {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        linear-gradient(rgba(148, 163, 184, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148, 163, 184, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    z-index: 1;
+}
+
+.marquee-wrapper {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    padding-inline: 3rem;
+}
+
+.marquee-track {
+    gap: 2rem;
+    display: flex;
+    width: max-content;
+    animation: scrollLeft 15s linear infinite;
+}
+
+.marquee-track-reverse {
+    gap: 2rem;
+    display: flex;
+    width: max-content;
+    animation: scrollRight 15s linear infinite;
+}
+
+.marquee-logo {
+    width: 4rem;
+    height: 4rem;
+    object-fit: contain;
+    margin-right: 2rem;
+}
+
+
+/* 4. Gaya Halaman Tentang Kami (about.html) */
+/* =================================== */
+.skill-item {
+    background-color: #1e3a8a;
+    color: white;
+    border-radius: 9999px;
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.skill-item:hover {
+    background-color: #1e40af;
+    transform: translateY(-2px);
+}
+
+.skill-item.active {
+    background-color: #2563eb;
+    border-color: #93c5fd;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+}
+
+.bubble-content {
+    display: none;
+    background-color: #d5eaeb;
+    color: #1e3a8a;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    border: 1px solid #dbeafe;
+    line-height: 1.75;
+    font-size: 1.05rem;
+    position: relative;
+}
+
+.bubble-content::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 2rem;
+    width: 0; height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #eff6ff;
+}
+
+.bubble-content.active {
+    display: block;
+    animation: fadeIn 0.4s ease-out;
+}
+
+
+
+/* 5. Gaya Halaman Layanan (layanan.html) */
+/* =================================== */
+.service-item {
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    margin: -0.5rem;
+}
+
+.service-item:hover {
+    background: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 100%);
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.1);
+}
+
+.service-item.active {
+    background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+    border-left: 4px solid #2563eb;
+}
+
+.service-item.active .service-number {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.service-item.active .service-title {
+    color: #1e40af;
+}
+
+.service-number, .service-title {
+    transition: all 0.3s ease;
+}
+
+.image-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.image-slide {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    opacity: 0;
+    transition: opacity 0.6s ease-in-out;
+}
+
+.image-slide.active {
+    opacity: 1;
+}
+
+.image-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(147, 197, 253, 0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.image-container:hover .image-overlay {
+    opacity: 1;
+}
+
+
+/* 6. Gaya Halaman Mentor (mentor.html) */
+/* =================================== */
+.mentor-card {
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.mentor-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.mentor-card.active {
+    z-index: 10 !important;
+    position: relative !important;
+    background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+    transform: translateY(-5px);
+    display: block;
+}
+
+.mentor-photo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #3b82f6;
+    transition: all 0.3s ease;
+}
+
+.mentor-photo:hover {
+    transform: scale(1.05);
+    border-color: #1d4ed8;
+}
+
+.experience-bubble {
+    position: absolute;
+    top: 100%; left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    border: 2px solid #3b82f6;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    width: 320px;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    margin-top: 15px;
+    display: block;
+}
+
+.experience-bubble.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+    z-index: 20 !important;
+}
+
+.experience-bubble::before {
+    content: '';
+    position: absolute;
+    top: -10px; left: 50%;
+    transform: translateX(-50%);
+    width: 0; height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #3b82f6;
+}
+section {
+    min-height: calc(100vh - 100px);
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px; right: 15px;
+    background: none; border: none;
+    color: #6b7280;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.decorative-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23e5e7eb' fill-opacity='0.3' fill-rule='evenodd'%3E%3Cpath d='m0 40l40-40h-40v40zm40 0v-40h-40l40 40z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+
+/* 7. Gaya Halaman Paket (paket.html) */
+/* =================================== */
+.pricing-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e5e7eb;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+    /*opacity: 0;*/
+    /*transform: translateY(40px);*/
+    /*animation: cardSlideIn 0.8s ease-out forwards;*/
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+/*.pricing-card:nth-child(1) { animation-delay: 0.1s; }
+.pricing-card:nth-child(2) { animation-delay: 0.2s; }
+.pricing-card:nth-child(3) { animation-delay: 0.3s; }
+.pricing-card:nth-child(4) { animation-delay: 0.4s; }*/
+
+.pricing-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #2563eb, #1d4ed8);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.pricing-card:hover::before {
+    transform: scaleX(1);
+}
+
+.pricing-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    border-color: #2563eb;
+}
+
+
+.trial-card {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border: 2px dashed #cbd5e0;
+}
+
+.pro-card {
+    background: linear-gradient(135deg, #1e40af 0%, #1d4ed8 100%);
+    color: white;
+    border: none;
+    position: relative;
+}
+
+.pro-card::after {
+    content: '';
+    position: absolute;
+    top: -50%; right: -50%;
+    width: 200%; height: 200%;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+    animation: sparkle 15s linear infinite;
+    pointer-events: none;
+    z-index:0;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    margin: 0 -8px;
+}
+
+.feature-item:hover {
+    background: rgba(59, 130, 246, 0.05);
+    transform: translateX(4px);
+}
+
+.pro-card .feature-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.feature-icon {
+    width: 20px; height: 20px;
+    background: #10b981;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    color: white;
+    font-size: 12px;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+
+.feature-item:hover .feature-icon {
+    background: #059669;
+    transform: scale(1.1);
+}
+
+.cta-button {
+    width: 100%;
+    padding: 14px 24px;
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.39);
+}
+
+.cta-button::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.6s ease;
+}
+
+.cta-button:hover::before {
+    left: 100%;
+}
+
+.cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(37, 99, 235, 0.5);
+}
+
+.cta-button:active {
+    transform: translateY(0);
+}
+
+.pro-card .cta-button {
+    background: white;
+    color: #1e40af;
+}
+
+.pro-card .cta-button:hover {
+    background: #f8fafc;
+    transform: translateY(-2px);
+}
+
+.floating-decoration {
+    position: absolute;
+    width: 40px; height: 40px;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    border-radius: 50%;
+    opacity: 0.1;
+    animation: float 6s ease-in-out infinite;
+}
+
+.floating-decoration:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+.floating-decoration:nth-child(2) { top: 70%; right: 15%; animation-delay: 2s; }
+.floating-decoration:nth-child(3) { bottom: 20%; left: 20%; animation-delay: 4s; }
+
+.card-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+/* 8. Animasi (@keyframes) */
+/* =================================== */
+/* Animasi umum */
+@keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeInLeft { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes fadeInRight { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes slideIn { from { transform: translateX(-20px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+@keyframes slideInFromLeft { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes cardSlideIn { to { opacity: 1; transform: translateY(0); } }
+
+/* Animasi spesifik */
+@keyframes float { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-20px) rotate(180deg); } }
+@keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.05); opacity: 0.5; } }
+@keyframes sparkle { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes scrollLeft { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes scrollRight { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+@keyframes slowbounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+@keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); } 50% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.8); } }
+@keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes bounce-gentle { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+@keyframes slide-diagonal { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(20px, -20px); } }
+@keyframes fade-in-out { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.8; } }
+@keyframes scale-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+
+
+/* 9. Desain Responsif (@media) */
+/* =================================== */
+@media (max-width: 1024px) {
+    .pricing-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-section h1 {
+        font-size: 2rem;
+        line-height: 1.2;
+    }
+    .pricing-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    .price {
+        font-size: 1.75rem;
+    }
+    .feature-text {
+        font-size: 0.875rem;
+    }
+    .popular-badge {
+        top: -10px;
+        right: 16px;
+        padding: 4px 12px;
+        font-size: 0.7rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-section {
+        text-align: center;
+        margin-bottom: 32px;
+    }
+    .header-section h1 {
+        font-size: 1.75rem;
+    }
+    .pricing-card {
+        padding: 16px;
+    }
+    .price {
+        font-size: 1.5rem;
+    }
+    .cta-button {
+        padding: 12px 20px;
+        font-size: 0.9rem;
+    }
+}
+
+        /* Additional styles for interactive elements */
+        .portfolio-card {
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .portfolio-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+        
+        .project-item {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .project-item:hover::before {
+            left: 100%;
+        }
+        
+        .project-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .achievement-badge {
+            animation: bounce-gentle 3s ease-in-out infinite;
+        }
+        
+        .stats-counter {
+            animation: scale-pulse 2s ease-in-out infinite;
+        }
+        
+        .testimonial-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            position: relative;
+        }
+        
+        .testimonial-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            animation: sparkle 20s linear infinite;
+            pointer-events: none;
+        }
+        
+        .floating-icon {
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        .hero-bg {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%);
+            position: relative;
+        }
+        
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+            z-index: 1;
+        }
+        
+        .content-wrapper {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .interactive-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .interactive-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .glow-effect {
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+            animation: pulse-glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-3deg); }
+            75% { transform: rotate(3deg); }
+        }
+        
+        .wiggle-on-hover:hover {
+            animation: wiggle 0.5s ease-in-out;
+        }
+
+        .max-w-7xl {
+            max-width: min(1280px, 100vw) !important;
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+        }
+
+        nav {
+  transition: all 0.3s ease;
+}
+
+nav:hover {
+  background: rgba(255, 255, 255, 0.95);
+  transform: translateX(-50%) translateY(-2px);
+} 
+/* Tambahkan di dalam <style> */
+nav {
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Styling untuk link navbar */
+nav ul li a {
+  padding: 8px 16px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+nav ul li a:hover {
+  background: rgba(59, 130, 246, 0.1);
+  color: #1d4ed8;
+}
+
+/* Styling khusus untuk tombol daftar */
+nav ul li a.bg-blue-900 {
+  padding: 8px 20px;
+  margin-left: 8px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  nav {
+    top: 1rem;
+    max-width: 95%;
+  }
+  
+  nav .px-8 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+ .parallax-bg {
+  position: relative;
+  background-image: url('bg.jpg');
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.parallax-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.8); /* Overlay putih transparan */
+  z-index: 1;
+}
+
+.parallax-bg > * {
+  position: relative;
+  z-index: 2;
+}
+
+.active-nav-link {
+  background: linear-gradient(135deg, #3B82F6, #1D4ED8);
+  color: white !important;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+  transform: translateY(-1px);
+  transition: all 0.3s ease;
+}
+
+.active-nav-link:hover {
+  background: linear-gradient(135deg, #2563EB, #1E40AF);
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.5);
+}
+
+.daftar-active {
+  background: linear-gradient(135deg, #1E40AF, #3730A3) !important;
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.6), 0 0 40px rgba(59, 130, 246, 0.3) !important;
+  transform: scale(1.05) !important;
+  border: 2px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+.daftar-active:hover {
+  background: linear-gradient(135deg, #1D4ED8, #312E81) !important;
+  box-shadow: 0 0 25px rgba(59, 130, 246, 0.8), 0 0 50px rgba(59, 130, 246, 0.4) !important;
+}
+
+/* Chatbot Styles */
+.chatbot-container {
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px;
+    background: #f8fafc;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    max-height: 220px;
+}
+
+.message-bubble {
+    max-width: 85%;
+    padding: 8px 12px;
+    border-radius: 12px;
+    margin: 6px 0;
+    word-wrap: break-word;
+}
+
+.bot {
+    background: #e5e7eb;
+    color: #374151;
+    margin-right: auto;
+}
+
+.user {
+    background: #2563eb;
+    color: white;
+    margin-left: auto;
+}
+
+.typing-indicator {
+    display: flex;
+    gap: 4px;
+    padding: 8px 12px;
+}
+
+.typing-dot {
+    width: 6px;
+    height: 6px;
+    background: #9ca3af;
+    border-radius: 50%;
+    animation: typing 1.4s infinite;
+}
+
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typing {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-10px); }
+}
+
+.chat-input-container {
+    border-top: 1px solid #e5e7eb;
+    padding-top: 12px;
+}
+
+.chatbot-container {
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  max-height: 400px;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+}
+
+.chat-messages {
+  flex-grow: 1;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+  padding-right: 0.5rem;
+}
+
+
+.chat-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.chat-row.user-message {
+  flex-direction: row-reverse;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+/* Bubble chat umum */
+.message-bubble {
+  max-width: 75%;
+  padding: 0.75rem 1rem;
+  border-radius: 1rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  position: relative;
+}
+
+/* Bubble bot (warna biru muda) */
+.message-bubble.bot {
+  background-color: #e0f2fe;
+  color: #0369a1;
+  border-top-left-radius: 0.5rem;
+}
+
+/* Bubble user (warna hijau muda) */
+.message-bubble.user {
+  background-color: #d1fae5;
+  color: #065f46;
+  border-top-right-radius: 0.5rem;
+}
+
+/* "Ekor" bubble bot (mengarah dari kiri/avatar) */
+.message-bubble.bot.with-tail::before {
+  content: "";
+  position: absolute;
+  left: -10px;
+  top: 12px;
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-right: 10px solid #e0f2fe; /* warna sama bubble bot */
+  border-bottom: 10px solid transparent;
+}
+
+/* "Ekor" bubble user (mengarah dari kanan/avatar) */
+.message-bubble.user.with-tail::before {
+  content: "";
+  position: absolute;
+  right: -10px;
+  top: 12px;
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-left: 10px solid #d1fae5; /* warna sama bubble user */
+  border-bottom: 10px solid transparent;
+}
+
+.achievement-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    border: 2px solid #e2e8f0;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+}
+
+.achievement-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+    transition: left 0.6s ease;
+}
+
+.achievement-card:hover::before {
+    left: 100%;
+}
+
+.achievement-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 25px 50px rgba(59, 130, 246, 0.15);
+    border-color: #3b82f6;
+}
+
+.rank-badge {
+    background: linear-gradient(135deg, #1e40af 0%, #1d4ed8 100%);
+    border: 3px solid #ffffff;
+    box-shadow: 0 8px 25px rgba(30, 64, 175, 0.3);
+    animation: pulse-glow 2s ease-in-out infinite alternate;
+}
+
+.rank-number {
+    font-size: 2.5rem;
+    font-weight: 900;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.competition-photo {
+    transition: all 0.4s ease;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+}
+
+.competition-photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.competition-photo:hover::after {
+    opacity: 1;
+}
+
+.competition-photo:hover {
+    transform: scale(1.05) rotateY(5deg);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.student-name {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    display: inline-block;
+    margin: 4px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.student-name:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+}
+
+.organizer-badge {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.year-badge {
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+@keyframes sparkle-rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.sparkle-icon {
+    animation: sparkle-rotate 3s linear infinite;
+}

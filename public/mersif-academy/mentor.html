@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentor - Mersif Academy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <!-- AOS CSS -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+</head>
+<body class="bg-gray-50 overflow-x-hidden">
+    <!-- Navbar -->
+<nav class="fixed top-2 left-1/2 transform -translate-x-1/2 z-50 bg-white/90 backdrop-blur-md shadow-lg rounded-full border border-white/20 max-w-5xl w-11/12">
+  <div class="px-8 py-2.5 flex justify-between items-center w-full">
+    <!-- Logo -->
+    <a href="index.html" class="flex items-center space-x-2">
+      <img src="logo.png" alt="Logo Mersif" class="h-8 sm:h-10" />
+      <span class="sr-only">Mersif Academy</span>
+    </a>
+
+    <!-- Hamburger Button (Mobile) -->
+    <button id="menu-toggle" class="sm:hidden text-gray-700 focus:outline-none w-10 h-10 flex items-center justify-center rounded-md hover:bg-gray-100 transition-colors">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+
+    <!-- Ganti class menu -->
+    <ul id="menu" class="hidden sm:flex flex-col sm:flex-row sm:space-x-8 text-sm font-medium sm:items-center bg-white sm:bg-transparent absolute sm:static left-4 right-4 sm:left-auto sm:right-auto w-auto sm:w-auto top-full sm:top-auto shadow-md sm:shadow-none z-40 sm:z-auto rounded-xl sm:rounded-none mt-2 sm:mt-0">
+      <li><a href="about.html" class="block px-4 py-2 hover:text-blue-700">Tentang Kami</a></li>
+      <li><a href="layanan.html" class="block px-4 py-2 hover:text-blue-700">Layanan</a></li>
+      <li><a href="porto.html" class="block px-4 py-2 hover:text-blue-700">Portofolio</a></li>
+      <li><a href="mentor.html" class="block px-4 py-2 hover:text-blue-700">Mentor</a></li>
+      <li><a href="paket.html" class="block px-4 py-2 hover:text-blue-700">Paket</a></li>
+      <li><a href="daftar.html" class="block bg-blue-900 text-white px-6 py-2 rounded-full hover:bg-blue-800 mx-4 my-2 sm:my-0 transition-all duration-300">Daftar Sekarang</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+    <!-- Main Content -->
+    <section class="hero-gradient relative overflow-x-hidden" style="padding-top: 6rem; padding-bottom: 8rem;">
+        <div class="max-w-7xl mx-auto px-4">
+            <!-- Header -->
+            <div class="text-center mb-16">
+                <div class="flex justify-center mb-4">
+                </div>
+                <h1 class="text-4xl font-bold text-blue-900 mb-4" data-aos="fade-down" data-aos-duration="1000">Mentor</h1>
+                <p class="text-gray-600 max-w-2xl mx-auto" data-aos="fade-up" data-aos-duration="1000">
+                    Tim mentor berpengalaman yang siap membimbing Anda dalam perjalanan riset dan kompetisi sains
+                </p>
+            </div>
+
+            <!-- Mentors Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                <!-- Mentor 1 -->
+                <div class="mentor-card bg-white rounded-lg p-6 shadow-lg border hover:border-blue-300" onclick="toggleExperience(this)" data-aos="fade-down-right" data-aos-duration="1000">
+                    <div class="flex flex-col items-center text-center">
+                        <img src="logo/mentor1.jpg" alt="Rozin Fata Ulvian" class="mentor-photo mb-4">
+                        <h3 class="text-xl font-bold text-blue-900 mb-2">Rozin Fata Ulvian</h3>
+                        <p class="text-blue-600 font-medium mb-3">Fisika dan Elektronika</p>
+                        <div class="flex items-center justify-center text-sm text-gray-500 mb-3">
+                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <span>Best CEO SEMESTA UNS tahun 2006</span>
+                        </div>
+                        <p class="text-gray-600 text-sm">
+                            Berpengalaman dalam proyek elektronika dan pengembangan teknologi
+                        </p>
+                    </div>
+                    <div class="experience-bubble">
+                        <button class="close-btn" onclick="event.stopPropagation(); toggleExperience(this.parentElement.parentElement)">&times;</button>
+                        <div class="mb-4">
+                            <h4 class="font-bold text-blue-900 mb-3">Pengalaman Mentor</h4>
+                            <ul class="space-y-2 text-sm text-gray-600">
+                                <li class="flex items-start">
+                                    <span class="text-blue-600 mr-2">•</span>
+                                    CEO SEMESTA UNS (2006-2010)
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-blue-600 mr-2">•</span>
+                                    Peneliti Elektronika Terapan
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-blue-600 mr-2">•</span>
+                                    Konsultan Teknologi untuk 50+ perusahaan
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-blue-600 mr-2">•</span>
+                                    Pembimbing 200+ mahasiswa teknik
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mentor 2 -->
+                <div class="mentor-card bg-white rounded-lg p-6 shadow-lg border hover:border-blue-300" onclick="toggleExperience(this)"data-aos="zoom-in" data-aos-duration="1000">
+                    <div class="flex flex-col items-center text-center">
+                        <img src="logo/2 (1).jpg" alt="Bagus Prayoga" class="mentor-photo mb-4">
+                        <h3 class="text-xl font-bold text-blue-900 mb-2">Bagus Prayoga</h3>
+                        <p class="text-blue-600 font-medium mb-3">Fisika dan Energi</p>
+                        <div class="flex items-center justify-center text-sm text-gray-500 mb-3">
+                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <span>Mahasiswa berprestasi 1 UNS</span>
+                        </div>
+                        <p class="text-gray-600 text-sm">
+                            Ahli energi terbarukan dengan pengalaman kompetisi nasional
+                        </p>
+                    </div>
+                    <div class="experience-bubble">
+                        <button class="close-btn" onclick="event.stopPropagation(); toggleExperience(this.parentElement.parentElement)">&times;</button>
+                        <div class="mb-4">
+                            <h4 class="font-bold text-blue-900 mb-3">Pengalaman Mentor</h4>
+                            <ul class="space-y-2 text-sm text-gray-600">
+                                <li class="flex items-start">
+                                    <span class="text-blue-600 mr-2">•</span>
+                                    Mahasiswa Berprestasi 1 UNS
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-blue-600 mr-2">•</span>
+                                    Juara Kompetisi Energi Nasional 2018
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-blue-600 mr-2">•</span>
+                                    Peneliti di Lab Energi Terbarukan
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-blue-600 mr-2">•</span>
+                                    Mentor 100+ mahasiswa fisika
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mentor 3 -->
+                <div class="mentor-card bg-white rounded-lg p-6 shadow-lg border hover:border-blue-300" onclick="toggleExperience(this)" data-aos="fade-down-left" data-aos-duration="1000">
+                    <div class="flex flex-col items-center text-center">
+                        <img src="logo/3 (1).jpg" alt="Atina Rahmawati" class="mentor-photo mb-4">
+                        <h3 class="text-xl font-bold text-blue-900 mb-2">Atina Rahmawati</h3>
+                        <p class="text-blue-600 font-medium mb-3">Fisika dan Sains</p>
+                        <div class="flex items-center justify-center text-sm text-gray-500 mb-3">
+                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <span>Mahasiswa berprestasi 1 FKIP UNS</span>
+                        </div>
+                        <p class="text-gray-600 text-sm">
+                            Spesialis pendidikan sains dengan pengalaman mengajar 8+ tahun
+                        </p>
+                    </div>
+                    <div class="experience-bubble">
+                        <button class="close-btn" onclick="event.stopPropagation(); toggleExperience(this.parentElement.parentElement)">&times;</button>
+                        <div class="mb-4">
+                            <h4 class="font-bold text-blue-900 mb-3">Pengalaman Mentor</h4>
+                            <ul class="space-y-2 text-sm text-gray-600">
+                                <li class="flex items-start">
+                                    <span class="text-blue-600 mr-2">•</span>
+                                    Mahasiswa Berprestasi 1 FKIP UNS
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-blue-600 mr-2">•</span>
+                                    Guru Fisika SMA Negeri
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-blue-600 mr-2">•</span>
+                                    Pengembang kurikulum sains
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-blue-600 mr-2">•</span>
+                                    Pelatih olimpiade fisika
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mentor 4 -->
+                <div class="mentor-card bg-white rounded-lg p-6 shadow-lg border hover:border-blue-300" onclick="toggleExperience(this)" data-aos="fade-right" data-aos-duration="1000">
+                    <div class="flex flex-col items-center text-center">
+                        <img src="logo/4 (1).jpg" alt="Moh. Abdul Mukhit" class="mentor-photo mb-4">
+                        <h3 class="text-xl font-bold text-blue-900 mb-2">Moh. Abdul Mukhit</h3>
+                        <p class="text-blue-600 font-medium mb-3">Elektronika dan Internet of Things</p>
+                        <div class="flex items-center justify-center text-sm text-gray-500 mb-3">
+                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <span>Juara dalam 10+ kompetisi</span>
+                        </div>
+                        <p class="text-gray-600 text-sm">
+                            Expert IoT dengan pengalaman Kompetisi Nasional dan Internasional
+                        </p>
+                    </div>
+                    <div class="experience-bubble">
+                        <button class="close-btn" onclick="event.stopPropagation(); toggleExperience(this.parentElement.parentElement)">&times;</button>
+                        <div class="mb-4">
+                            <h4 class="font-bold text-blue-900 mb-3">Pengalaman Mentor</h4>
+                            <ul class="space-y-2 text-sm text-gray-600">
+                                <li class="flex items-start">
+                                    <span class="text-blue-600 mr-2">•</span>
+                                    Juara 1 Kompetisi IoT Nasional
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-blue-600 mr-2">•</span>
+                                    Developer sistem smart home
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-blue-600 mr-2">•</span>
+                                    Konsultan IoT untuk startup
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-blue-600 mr-2">•</span>
+                                    Founder komunitas IoT Indonesia
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mentor 5 -->
+                <div class="mentor-card bg-white rounded-lg p-6 shadow-lg border hover:border-blue-300" onclick="toggleExperience(this)" data-aos="zoom-in-up" data-aos-duration="1000">
+                    <div class="flex flex-col items-center text-center">
+                        <img src="logo/5 (1).jpg" alt="Illyin Kurniana" class="mentor-photo mb-4">
+                        <h3 class="text-xl font-bold text-blue-900 mb-2">Illyin Kurniana</h3>
+                        <p class="text-blue-600 font-medium mb-3">Pangan dan Bio</p>
+                        <div class="flex items-center justify-center text-sm text-gray-500 mb-3">
+                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <span>Juara dalam 5+ kompetisi</span>
+                        </div>
+                        <p class="text-gray-600 text-sm">
+                            Ahli teknologi pangan dengan pengalaman Kompetisi Nasional
+                        </p>
+                    </div>
+                    <div class="experience-bubble">
+                        <button class="close-btn" onclick="event.stopPropagation(); toggleExperience(this.parentElement.parentElement)">&times;</button>
+                        <div class="mb-4">
+                            <h4 class="font-bold text-blue-900 mb-3">Pengalaman Mentor</h4>
+                            <ul class="space-y-2 text-sm text-gray-600">
+                                <li class="flex items-start">
+                                    <span class="text-blue-600 mr-2">•</span>
+                                    Juara Kompetisi Inovasi Pangan
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-blue-600 mr-2">•</span>
+                                    Peneliti di Lab Bioteknologi
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-blue-600 mr-2">•</span>
+                                    Konsultan industri makanan
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-blue-600 mr-2">•</span>
+                                    Pembimbing riset mahasiswa
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mentor 6 -->
+                <div class="mentor-card bg-white rounded-lg p-6 shadow-lg border hover:border-blue-300" onclick="toggleExperience(this)" data-aos="fade-left" data-aos-duration="1000">
+                    <div class="flex flex-col items-center text-center">
+                        <img src="logo/6 (1).jpg" alt="Sinta Kristiana Putri" class="mentor-photo mb-4">
+                        <h3 class="text-xl font-bold text-blue-900 mb-2">Sinta Kristiana Putri</h3>
+                        <p class="text-blue-600 font-medium mb-3">Lingkungan dan Perencanaan</p>
+                        <div class="flex items-center justify-center text-sm text-gray-500 mb-3">
+                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <span>Juara dalam 15+ kompetisi</span>
+                        </div>
+                        <p class="text-gray-600 text-sm">
+                            Spesialis perencanaan lingkungan dengan pengalaman Kompetisi Nasional
+                        </p>
+                    </div>
+                    <div class="experience-bubble">
+                        <button class="close-btn" onclick="event.stopPropagation(); toggleExperience(this.parentElement.parentElement)">&times;</button>
+                        <div class="mb-4">
+                            <h4 class="font-bold text-blue-900 mb-3">Pengalaman Mentor</h4>
+                            <ul class="space-y-2 text-sm text-gray-600">
+                                <li class="flex items-start">
+                                    <span class="text-blue-600 mr-2">•</span>
+                                    Juara Kompetisi Lingkungan Nasional
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-blue-600 mr-2">•</span>
+                                    Konsultan perencanaan kota
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-blue-600 mr-2">•</span>
+                                    Aktivis lingkungan hidup
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-blue-600 mr-2">•</span>
+                                    Pembimbing proyek sustainability
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Second Row -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Mentor 7 -->
+                <div class="mentor-card bg-white rounded-lg p-6 shadow-lg border hover:border-blue-300 mb-16" onclick="toggleExperience(this)" data-aos="fade-up-right" data-aos-duration="1000">
+    <div class="flex flex-col items-center text-center">
+        <img src="logo/7 (1).jpg" alt="Kiranda Dinata" class="mentor-photo mb-4">
+        <h3 class="text-xl font-bold text-blue-900 mb-2">Kiranda Dinata</h3>
+        <p class="text-blue-600 font-medium mb-3">Fisika Material dan Elektronika</p>
+        <div class="flex items-center justify-center text-sm text-gray-500 mb-3">
+            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <span>Berpengalaman dalam 15+ Kompetisi</span>
+        </div>
+        <p class="text-gray-600 text-sm">
+            Expert material science dengan pengalaman Kompetisi Nasional
+        </p>
+    </div>
+    <div class="experience-bubble">
+        <button class="close-btn" onclick="event.stopPropagation(); toggleExperience(this.parentElement.parentElement)">&times;</button>
+        <div class="mb-4">
+            <h4 class="font-bold text-blue-900 mb-3">Pengalaman Mentor</h4>
+            <ul class="space-y-2 text-sm text-gray-600">
+                <li class="flex items-start">
+                    <span class="text-blue-600 mr-2">•</span>
+                    Peneliti material nano
+                </li>
+                <li class="flex items-start">
+                    <span class="text-blue-600 mr-2">•</span>
+                    Juara kompetisi fisika material
+                </li>
+                <li class="flex items-start">
+                    <span class="text-blue-600 mr-2">•</span>
+                    Konsultan industri elektronik
+                </li>
+                <li class="flex items-start">
+                    <span class="text-blue-600 mr-2">•</span>
+                    Pembimbing thesis 50+ mahasiswa
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+                <!-- Mentor 8 -->
+                <div class="mentor-card bg-white rounded-lg p-6 shadow-lg border hover:border-blue-300 mb-16" onclick="toggleExperience(this)" data-aos="fade-up-left" data-aos-duration="1000">
+                    <div class="flex flex-col items-center text-center">
+                        <img src="logo/8 (1).jpg" alt="Ali Nur Mustofa" class="mentor-photo mb-4">
+                        <h3 class="text-xl font-bold text-blue-900 mb-2">Ali Nur Mustofa</h3>
+                        <p class="text-blue-600 font-medium mb-3">Geografi Teknik</p>
+                        <div class="flex items-center justify-center text-sm text-gray-500 mb-3">
+                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <span>Berpengalaman dalam Olimpiade Geografi</span>
+                        </div>
+                        <p class="text-gray-600 text-sm">
+                            Ahli geografi teknik dengan pengalaman Kompetisi Riset Nasional
+                        </p>
+                    </div>
+                    <div class="experience-bubble">
+                        <button class="close-btn" onclick="event.stopPropagation(); toggleExperience(this.parentElement.parentElement)">&times;</button>
+                        <div class="mb-4">
+                            <h4 class="font-bold text-blue-900 mb-3">Pengalaman Mentor</h4>
+                            <ul class="space-y-2 text-sm text-gray-600">
+                                <li class="flex items-start">
+                                    <span class="text-blue-600 mr-2">•</span>
+                                    Finalis PKM 2023
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-blue-600 mr-2">•</span>
+                                    Juara Olimpiade Geografi
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-blue-600 mr-2">•</span>
+                                    Ahli sistem informasi geografis
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-blue-600 mr-2">•</span>
+                                    Pembimbing proyek pemetaan wilayah
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- End Second Row -->
+        </div>
+    </section>
+
+    <!-- Toggle Experience Bubble Script -->
+    <script>
+        function toggleExperience(card) {
+            const allCards = document.querySelectorAll('.mentor-card');
+            allCards.forEach(c => {
+                if (c !== card) {
+                    c.classList.remove('active');
+                    c.querySelector('.experience-bubble').classList.remove('show');
+                }
+            });
+
+            card.classList.toggle('active');
+            const bubble = card.querySelector('.experience-bubble');
+            bubble.classList.toggle('show');
+        }
+
+                document.addEventListener("DOMContentLoaded", function() {
+        const currentPage = window.location.pathname;
+        const navLinks = document.querySelectorAll('nav ul li a:not(.bg-blue-900)');
+
+        navLinks.forEach(link => {
+            if (!link.href.includes('#')) {
+                const linkHref = link.getAttribute('href');
+                if (currentPage.endsWith(linkHref)) {
+                    link.classList.add('active-nav-link');
+                }
+            }
+        });
+    });
+
+        // Toggle mobile menu
+        document.getElementById('menu-toggle').addEventListener('click', function () {
+            const menu = document.getElementById('menu');
+            menu.classList.toggle('hidden');
+        });
+
+        AOS.init({
+         });
+    </script>
+
+      <!-- Footer -->
+<!-- Footer -->
+<footer class="bg-blue-900 text-white py-8">
+  <div class="max-w-7xl mx-auto px-4 text-center">
+    <div class="mb-4">
+      <p class="mb-2">📞 +62 822 2684 1762</p>
+      <p class="mb-2">📧 official@mersifacademy.com</p>
+      <p class="mb-2">📍 Daratan, RT.02/RW.06, Senden, Tohudan, Kec. Colomadu, Kabupaten Karanganyar, Jawa Tengah 57173</p>
+    </div>
+    <div class="border-t border-blue-800 pt-4">
+      <p>&copy; 2025 Mersif Academy. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+
+</body>
+</html>

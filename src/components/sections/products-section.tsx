@@ -13,7 +13,7 @@ export function ProductsSection() {
       name: t('services.academy.title'),
       description: t('services.academy.description'),
       image: "/img/service/mersifacademy.svg",
-      link: "/mersif-academy/index.html",
+      link: "/mersifacademy",
     },
     {
       name: t('services.iot.title'),

@@ -1,13 +1,15 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { useLanguage } from "@/contexts/language-context"
 
 export default function ServiceAcademy() {
+  const { t } = useLanguage()
+
   return (
-    <section className="relative bg-white py-32">
+    <section id="program" className="relative bg-white py-32">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          
           {/* Kolom Kiri - Gambar */}
           <motion.div
             className="flex justify-center"
@@ -16,11 +18,7 @@ export default function ServiceAcademy() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             viewport={{ once: true }}
           >
-            <img
-              src="/img/fasilitas-academy.svg"
-              alt="Service Illustration"
-              className="w-full max-w-md"
-            />
+            <img src="/img/fasilitas-academy.svg" alt="Service Illustration" className="w-full max-w-md" />
           </motion.div>
 
           {/* Kolom Kanan - Teks + Layanan & Fasilitas */}
@@ -31,9 +29,11 @@ export default function ServiceAcademy() {
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl font-bold" style={{ fontFamily: "Poppins, sans-serif" }}>Layanan & Fasilitas</h2>
+            <h2 className="text-3xl font-bold" style={{ fontFamily: "Poppins, sans-serif" }}>
+              {t("academy.services.title")}
+            </h2>
             <p style={{ fontFamily: "Inter, sans-serif" }} className="text-gray-600">
-              Kami menyediakan berbagai layanan dan fasilitas untuk mendukung pengembangan keterampilan dan pengalaman belajar.
+              {t("academy.services.subtitle")}
             </p>
 
             {/* Grid dengan stagger */}
@@ -53,20 +53,20 @@ export default function ServiceAcademy() {
             >
               {[
                 {
-                  title: "Kelas Interaktif",
-                  desc: "Pembelajaran berbasis diskusi & praktik langsung.",
+                  title: t("academy.services.interactive.classes"),
+                  desc: t("academy.services.interactive.desc"),
                 },
                 {
-                  title: "Laboratorium Digital",
-                  desc: "Akses ke perangkat & software terbaru.",
+                  title: t("academy.services.digital.lab"),
+                  desc: t("academy.services.digital.desc"),
                 },
                 {
-                  title: "Mentoring",
-                  desc: "Bimbingan dari para mentor berpengalaman.",
+                  title: t("academy.services.mentoring"),
+                  desc: t("academy.services.mentoring.desc"),
                 },
                 {
-                  title: "Komunitas",
-                  desc: "Bergabung dengan komunitas pembelajar aktif.",
+                  title: t("academy.services.community"),
+                  desc: t("academy.services.community.desc"),
                 },
               ].map((item, i) => (
                 <motion.div
@@ -77,8 +77,12 @@ export default function ServiceAcademy() {
                     show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
                   }}
                 >
-                  <h3 style={{ fontFamily: "Poppins, sans-serif" }} className="font-semibold text-lg">{item.title}</h3>
-                  <p style={{ fontFamily: "Inter, sans-serif" }} className="text-gray-500 text-sm">{item.desc}</p>
+                  <h3 style={{ fontFamily: "Poppins, sans-serif" }} className="font-semibold text-lg">
+                    {item.title}
+                  </h3>
+                  <p style={{ fontFamily: "Inter, sans-serif" }} className="text-gray-500 text-sm">
+                    {item.desc}
+                  </p>
                 </motion.div>
               ))}
             </motion.div>

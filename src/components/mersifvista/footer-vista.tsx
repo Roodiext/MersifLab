@@ -1,6 +1,10 @@
-"use client";
+"use client"
+
+import { useLanguage } from "@/contexts/language-context"
 
 export default function FooterVista() {
+  const { t } = useLanguage()
+
   return (
     <footer className="bg-[#000B49] text-white px-8 py-10 rounded-t-3xl mt-16">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
@@ -8,9 +12,7 @@ export default function FooterVista() {
         <div className="flex-1">
           {/* Gambar Logo */}
           <img src="/img/logomersifvistaputih.svg" alt="Logo MersifVista" className="w-32 mb-4" />
-          <p className="text-sm text-white/80 leading-relaxed max-w-sm">
-            Menjadi akselerator pendidikan berbasis teknologi yang inovatif, berdampak luas, dan berkelanjutan untuk mencetak generasi pembelajar serta technopreneur masa depan
-          </p>
+          <p className="text-sm text-white/80 leading-relaxed max-w-sm">{t("vista.footer.description")}</p>
 
           {/* Social Media Icons */}
           <div className="flex gap-4 mt-4">
@@ -30,19 +32,21 @@ export default function FooterVista() {
         <div className="flex-1 flex flex-col sm:flex-row justify-end gap-10">
           {/* Location */}
           <div>
-            <p className="font-semibold mb-2">Location</p>
+            <p className="font-semibold mb-2">{t("vista.footer.location")}</p>
             <div className="flex items-center gap-2 text-sm text-white/80">
               <img src="https://www.svgrepo.com/show/510211/location-pin-map.svg" alt="Location" className="w-4 h-4" />
-              <span>example RT 02</span>
+              <span>{t("vista.footer.location.address")}</span>
             </div>
           </div>
 
           {/* Email */}
           <div>
-            <p className="font-semibold mb-2">Email</p>
+            <p className="font-semibold mb-2">{t("vista.footer.email")}</p>
             <div className="flex items-center gap-2 text-sm text-white/80">
               <img src="https://www.svgrepo.com/show/512340/mail.svg" alt="Email" className="w-4 h-4" />
-              <a href="mailto:example@gmail.com" className="underline">example@gmail.com</a>
+              <a href={`mailto:${t("vista.footer.email.address")}`} className="underline">
+                {t("vista.footer.email.address")}
+              </a>
             </div>
           </div>
         </div>
@@ -52,9 +56,9 @@ export default function FooterVista() {
       <hr className="border-white/20 my-6" />
 
       <div className="flex justify-between text-sm text-white/50">
-        <span>© MersifVista</span>
-        <span>All Right Reserved</span>
+        <span>{t("vista.footer.copyright")}</span>
+        <span>{t("vista.footer.rights")}</span>
       </div>
     </footer>
-  );
+  )
 }

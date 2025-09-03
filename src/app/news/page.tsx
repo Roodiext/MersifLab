@@ -7,7 +7,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Calendar, Search, Filter } from 'lucide-react'
+import { Calendar, Search, Filter, ArrowLeft } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 
 interface ContentItem {
@@ -135,6 +135,16 @@ export default function NewsPage() {
   return (
     <div className="min-h-screen bg-gray-100 py-6">
       <div className="container mx-auto px-4">
+        {/* Back to Home Button */}
+        <div className="mb-4">
+          <Button asChild variant="ghost" size="sm" className="text-gray-600 hover:text-gray-900">
+            <Link href="/" className="flex items-center gap-2">
+              <ArrowLeft className="h-4 w-4" />
+              <span style={{ fontFamily: 'Inter, sans-serif' }}>Kembali ke Beranda</span>
+            </Link>
+          </Button>
+        </div>
+
         {/* Header - Compact */}
         <div className="text-center mb-8">
           <h1 style={{ fontFamily: 'Poppins, sans-serif' }} className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">

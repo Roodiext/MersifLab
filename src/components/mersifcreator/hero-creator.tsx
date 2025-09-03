@@ -4,9 +4,11 @@ import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { ArrowRight } from "lucide-react"
 import { useState, useEffect } from "react"
+import { useLanguage } from "@/contexts/language-context"
 
 export function HeroSectionCreator() {
   const [showAnimation, setShowAnimation] = useState(false)
+  const { t } = useLanguage()
 
   useEffect(() => {
     setShowAnimation(true)
@@ -20,7 +22,7 @@ export function HeroSectionCreator() {
           <div className="relative w-full max-w-[500px]">
             <Image
               src="/images/mersif-creator.jpg"
-              alt="Ilustrasi Mersif Creator"
+              alt={t("creator.hero.title") + " " + t("creator.hero.title.highlight")}
               width={600}
               height={400}
               priority
@@ -35,18 +37,17 @@ export function HeroSectionCreator() {
               className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight"
               style={{ fontFamily: "Poppins, sans-serif" }}
             >
-              Mersif <span className="text-[#007bff]">Creator</span>
+              {t("creator.hero.title")} <span className="text-[#007bff]">{t("creator.hero.title.highlight")}</span>
             </h1>
             <p
               className="max-w-[600px] text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed px-3"
               style={{ fontFamily: "Inter, sans-serif" }}
             >
-              Buat game interaktif dalam hitungan menit! Semua game yang dibuat dengan Mersif Creator akan otomatis
-              tersedia di Mersif Room untuk dimainkan bersama.
+              {t("creator.hero.subtitle.mobile")}
             </p>
             <div className="flex justify-center pt-2">
               <Button className="rounded-full bg-[#007bff] px-6 text-white hover:bg-[#007bff]/90">
-                Mulai Buat Game
+                {t("creator.hero.button.create")}
                 <ArrowRight className="ml-2 w-4 h-4" />
               </Button>
             </div>
@@ -61,18 +62,17 @@ export function HeroSectionCreator() {
               className="lg:text-4xl xl:text-5xl font-bold tracking-tight"
               style={{ fontFamily: "Poppins, sans-serif" }}
             >
-              Mersif <span className="text-[#007bff]">Creator</span> Room
+              {t("creator.hero.title")} <span className="text-[#007bff]">{t("creator.hero.title.highlight")}</span> Room
             </h1>
             <p
               className="text-lg xl:text-xl text-gray-600 leading-relaxed max-w-lg"
               style={{ fontFamily: "Inter, sans-serif" }}
             >
-              Lihat game dan aplikasi interaktif yang mengedukasi dan menghibur. Sampaikan materi pembelajaran dengan
-              cara yang menyenangkan dan mudah dipahami.
+              {t("creator.hero.subtitle.desktop")}
             </p>
             <div>
               <Button className="rounded-full bg-[#007bff] px-6 text-white hover:bg-[#007bff]/90">
-                Jelajahi
+                {t("creator.hero.button.explore")}
                 <ArrowRight className="ml-2 w-4 h-4" />
               </Button>
             </div>
@@ -82,7 +82,7 @@ export function HeroSectionCreator() {
           <div className="relative">
             <Image
               src="/img/product/product-mersifcreator.png"
-              alt="Ilustrasi Mersif Creator"
+              alt={t("creator.hero.title") + " " + t("creator.hero.title.highlight")}
               width={800}
               height={600}
               priority

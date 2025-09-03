@@ -2,52 +2,46 @@
 
 import Image from "next/image"
 import { motion } from "framer-motion"
+import { useLanguage } from "@/contexts/language-context"
 
-export default function AboutVista() {
+export function AboutVista() {
+  const { t } = useLanguage()
+
   return (
-    <section className="relative py-20 bg-white">
-      <div className="container mx-auto px-6 md:px-12 lg:px-20 flex flex-col md:flex-row items-center gap-14">
-        
-        {/* Bagian kiri - Gambar */}
-        <motion.div 
-          initial={{ opacity: 0, x: -50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
-          className="relative w-full md:w-1/2 flex justify-center"
+    <section id="about" className="relative w-full bg-white overflow-hidden overflow-x-hidden">
+      <div className="max-w-screen-xl mx-auto px-6 md:px-12 lg:px-20 py-16 lg:py-24 flex flex-col lg:flex-row items-center gap-12">
+        {/* Gambar */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9, y: 40 }}
+          whileInView={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          viewport={{ once: true }}
+          className="flex-1 flex justify-center lg:justify-start"
         >
-          <Image 
+          <Image
             src="/img/vista-about.svg"
-            alt="Tentang Kami"
+            alt="Tentang MersifVista"
             width={420}
             height={420}
+            className="max-w-full h-auto object-contain"
+            priority
           />
         </motion.div>
 
-        {/* Bagian kanan - Teks */}
-        <motion.div 
-          initial={{ opacity: 0, x: 50 }}
+        {/* Teks */}
+        <motion.div
+          initial={{ opacity: 0, x: 40 }}
           whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
-          className="w-full md:w-1/2 text-center md:text-left"
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+          viewport={{ once: true }}
+          className="flex-1 text-center lg:text-left space-y-6"
         >
-          <h2 style={{ fontFamily: "Poppins, sans-serif" }} className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6">
-            Tentang MersifVista 
+          <h2 className="text-3xl sm:text-4xl font-bold text-black font-[Poppins]">
+            {t("vista.about.title")} <span className="text-[#00A8FF]">{t("vista.about.title.highlight")}</span>
           </h2>
-          <p style={{ fontFamily: "Inter, sans-serif" }} className="text-gray-600 mb-8 leading-relaxed text-lg">
-            <span className="font-semibold">MersifVista </span> hadir sebagai inisiatif 
-            digital training untuk menjawab tantangan dunia pendidikan di era teknologi. 
-            Kami percaya bahwa <span className="font-semibold">inovasi, kolaborasi, dan keberlanjutan </span> 
-            adalah kunci dalam mencetak generasi pembelajar yang adaptif dan kreatif.
+          <p className="text-gray-700 text-base sm:text-lg leading-relaxed font-[Inter] max-w-lg mx-auto lg:mx-0">
+            {t("vista.about.description")}
           </p>
-
-          {/* Button */}
-          <a 
-          style={{ fontFamily: "Inter, sans-serif" }}
-            href="#"
-            className="inline-block px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-full shadow-lg transition-transform transform hover:-translate-y-1 hover:shadow-xl"
-          >
-            Lihat Selengkapnya
-          </a>
         </motion.div>
       </div>
     </section>

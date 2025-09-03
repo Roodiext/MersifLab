@@ -2,8 +2,10 @@
 
 import { useState, useEffect } from "react"
 import { Check, X, Mail, MessageCircle } from "lucide-react"
+import { useLanguage } from "@/contexts/language-context"
 
 export default function PaketAcademy() {
+  const { t } = useLanguage()
   const [selectedPaket, setSelectedPaket] = useState<any>(null)
   const [isOpen, setIsOpen] = useState(false)
 
@@ -19,30 +21,74 @@ export default function PaketAcademy() {
   const [isFormValid, setIsFormValid] = useState(false)
 
   const paketData = {
-    trial: { nama: "TRIAL", harga: "Gratis", durasi: "Online 1 pertemuan", deskripsi: "Cocok untuk siswa yang ingin memulai belajar penelitian", fitur: ["Brainstorming ide", "Informasi lomba", "Online via Zoom"] },
-    basic: { nama: "BASIC", harga: "Rp 100.000", durasi: "1 pertemuan / 1 kelas", deskripsi: "Cocok untuk sekolah yang memerlukan pelatih ekstrakurikuler KIR", fitur: ["Brainstorming ide", "Fun science", "Pendampingan kepenulisan ilmiah", "Asesmen minat & bakat"] },
-    pro: { nama: "PRO", harga: "Rp 100.000", durasi: "1 pertemuan / tim", deskripsi: "Cocok untuk siswa yang membutuhkan pendampingan kompetisi", fitur: ["Brainstorming ide", "Pelatihan presentasi", "Pendampingan riset", "Pendampingan kepenulisan ilmiah", "Pembuatan prototype"] },
-    premium: { nama: "PREMIUM", harga: "Rp 1.250.000", durasi: "13 pertemuan / tim", deskripsi: "Cocok untuk sekolah yang membutuhkan pendamping riset", fitur: ["Brainstorming ide", "Pendampingan kepenulisan ilmiah", "Informasi lomba", "Pendampingan riset & prototype"] },
+    trial: {
+      nama: t("academy.packages.trial.name"),
+      harga: t("academy.packages.trial.price"),
+      durasi: t("academy.packages.trial.duration"),
+      deskripsi: t("academy.packages.trial.description"),
+      fitur: [
+        t("academy.packages.features.brainstorming"),
+        t("academy.packages.features.info.lomba"),
+        t("academy.packages.features.online.zoom"),
+      ],
+    },
+    basic: {
+      nama: t("academy.packages.basic.name"),
+      harga: t("academy.packages.basic.price"),
+      durasi: t("academy.packages.basic.duration"),
+      deskripsi: t("academy.packages.basic.description"),
+      fitur: [
+        t("academy.packages.features.brainstorming"),
+        t("academy.packages.features.fun.science"),
+        t("academy.packages.features.writing.guidance"),
+        t("academy.packages.features.assessment"),
+      ],
+    },
+    pro: {
+      nama: t("academy.packages.pro.name"),
+      harga: t("academy.packages.pro.price"),
+      durasi: t("academy.packages.pro.duration"),
+      deskripsi: t("academy.packages.pro.description"),
+      fitur: [
+        t("academy.packages.features.brainstorming"),
+        t("academy.packages.features.presentation"),
+        t("academy.packages.features.research.guidance"),
+        t("academy.packages.features.writing.guidance"),
+        t("academy.packages.features.prototype"),
+      ],
+    },
+    premium: {
+      nama: t("academy.packages.premium.name"),
+      harga: t("academy.packages.premium.price"),
+      durasi: t("academy.packages.premium.duration"),
+      deskripsi: t("academy.packages.premium.description"),
+      fitur: [
+        t("academy.packages.features.brainstorming"),
+        t("academy.packages.features.writing.guidance"),
+        t("academy.packages.features.info.lomba"),
+        t("academy.packages.features.research.guidance") + " & " + t("academy.packages.features.prototype"),
+      ],
+    },
   }
 
   const validateForm = () => {
     const newErrors: any = {}
 
-    if (!nama.trim()) newErrors.nama = "Nama wajib diisi."
-    if (!sekolah.trim()) newErrors.sekolah = "Asal sekolah wajib diisi."
+    if (!nama.trim()) newErrors.nama = t("academy.packages.form.validation.name")
+    if (!sekolah.trim()) newErrors.sekolah = t("academy.packages.form.validation.school")
     if (!email.trim()) {
-      newErrors.email = "Email wajib diisi."
+      newErrors.email = t("academy.packages.form.validation.email.required")
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      newErrors.email = "Format email tidak valid."
+      newErrors.email = t("academy.packages.form.validation.email.invalid")
     }
     if (!wa.trim()) {
-      newErrors.wa = "Nomor WhatsApp wajib diisi."
+      newErrors.wa = t("academy.packages.form.validation.whatsapp.required")
     } else if (!/^[0-9]+$/.test(wa)) {
-      newErrors.wa = "Nomor WhatsApp hanya boleh angka."
+      newErrors.wa = t("academy.packages.form.validation.whatsapp.numbers")
     } else if (wa.length < 10) {
-      newErrors.wa = "Nomor WhatsApp minimal 10 digit."
+      newErrors.wa = t("academy.packages.form.validation.whatsapp.min")
     } else if (wa.length > 15) {
-      newErrors.wa = "Nomor WhatsApp maksimal 15 digit."
+      newErrors.wa = t("academy.packages.form.validation.whatsapp.max")
     }
 
     setErrors(newErrors)
@@ -72,10 +118,9 @@ export default function PaketAcademy() {
   }
 
   const handleWhatsApp = () => {
-  if (!isFormValid) return
+    if (!isFormValid) return
 
-  const message = 
-`*PENDAFTARAN MERSIF ACADEMY*
+    const message = `*PENDAFTARAN MERSIF ACADEMY*
 
 *Nama*        : ${nama}
 *Sekolah*     : ${sekolah}
@@ -83,10 +128,9 @@ export default function PaketAcademy() {
 *WhatsApp*    : ${wa}
 *Paket*       : ${selectedPaket.nama}
 *Pesan*       : ${pesan || "Tidak ada"}`
-  
-  window.open(`https://wa.me/6282226841762?text=${encodeURIComponent(message)}`, "_blank")
-}
 
+    window.open(`https://wa.me/6282226841762?text=${encodeURIComponent(message)}`, "_blank")
+  }
 
   const handleEmail = () => {
     if (!isFormValid) return
@@ -108,7 +152,9 @@ export default function PaketAcademy() {
   return (
     <section id="daftar" className="bg-gray-50 py-20">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
-        <h2 className="text-4xl font-bold text-blue-900 mb-12">Ayo Berlangganan Sekarang</h2>
+        <h2 style={{ fontFamily: "Poppins, sans-serif" }} className="text-4xl font-bold text-blue-900 mb-12">
+          {t("academy.packages.title")}
+        </h2>
 
         {/* Paket Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -120,7 +166,9 @@ export default function PaketAcademy() {
               }`}
             >
               <div>
-                <h3 className={`text-2xl font-bold mb-2 ${key === "trial" ? "text-blue-900" : "text-white"}`}>{item.nama}</h3>
+                <h3 className={`text-2xl font-bold mb-2 ${key === "trial" ? "text-blue-900" : "text-white"}`}>
+                  {item.nama}
+                </h3>
                 <p className="text-xl font-semibold mb-1">{item.harga}</p>
                 <p className="text-sm opacity-80 mb-4">{item.durasi}</p>
                 <p className="text-sm mb-4">{item.deskripsi}</p>
@@ -141,7 +189,7 @@ export default function PaketAcademy() {
                     : "bg-white text-blue-700 hover:bg-gray-100"
                 }`}
               >
-                Pilih Paket
+                {t("academy.packages.select.package")}
               </button>
             </div>
           ))}
@@ -155,9 +203,9 @@ export default function PaketAcademy() {
             <button onClick={handleClose} className="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
               <X className="w-6 h-6" />
             </button>
-            <h3 className="text-2xl font-bold text-blue-900 mb-4 text-center">Form Pendaftaran</h3>
+            <h3 className="text-2xl font-bold text-blue-900 mb-4 text-center">{t("academy.packages.form.title")}</h3>
             <p className="text-center text-sm text-gray-600 mb-6">
-              Anda memilih paket <span className="font-semibold">{selectedPaket.nama}</span>
+              {t("academy.packages.form.selected")} <span className="font-semibold">{selectedPaket.nama}</span>
             </p>
 
             <div className="space-y-5">
@@ -168,14 +216,14 @@ export default function PaketAcademy() {
                   type="text"
                   placeholder=" "
                   value={nama}
-                  onChange={e => setNama(e.target.value)}
+                  onChange={(e) => setNama(e.target.value)}
                   className="peer w-full border rounded-lg p-3 pt-5 placeholder-transparent focus:border-blue-600 focus:ring focus:ring-blue-100"
                 />
                 <label
                   htmlFor="namaInput"
                   className="absolute left-3 top-2 text-gray-500 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:text-sm peer-focus:text-blue-600"
                 >
-                  Nama Lengkap *
+                  {t("academy.packages.form.name")} *
                 </label>
                 {errors.nama && <p className="text-red-500 text-sm mt-1">{errors.nama}</p>}
               </div>
@@ -186,13 +234,11 @@ export default function PaketAcademy() {
                   type="text"
                   placeholder=" "
                   value={sekolah}
-                  onChange={e => setSekolah(e.target.value)}
+                  onChange={(e) => setSekolah(e.target.value)}
                   className="peer w-full border rounded-lg p-3 pt-5 placeholder-transparent focus:border-blue-600 focus:ring focus:ring-blue-100"
                 />
-                <label
-                  className="absolute left-3 top-2 text-gray-500 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:text-sm peer-focus:text-blue-600"
-                >
-                  Asal Sekolah *
+                <label className="absolute left-3 top-2 text-gray-500 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:text-sm peer-focus:text-blue-600">
+                  {t("academy.packages.form.school")} *
                 </label>
                 {errors.sekolah && <p className="text-red-500 text-sm mt-1">{errors.sekolah}</p>}
               </div>
@@ -203,13 +249,11 @@ export default function PaketAcademy() {
                   type="email"
                   placeholder=" "
                   value={email}
-                  onChange={e => setEmail(e.target.value)}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="peer w-full border rounded-lg p-3 pt-5 placeholder-transparent focus:border-blue-600 focus:ring focus:ring-blue-100"
                 />
-                <label
-                  className="absolute left-3 top-2 text-gray-500 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:text-sm peer-focus:text-blue-600"
-                >
-                  Email *
+                <label className="absolute left-3 top-2 text-gray-500 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:text-sm peer-focus:text-blue-600">
+                  {t("academy.packages.form.email")} *
                 </label>
                 {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
               </div>
@@ -220,13 +264,11 @@ export default function PaketAcademy() {
                   type="tel"
                   placeholder=" "
                   value={wa}
-                  onChange={e => setWa(e.target.value)}
+                  onChange={(e) => setWa(e.target.value)}
                   className="peer w-full border rounded-lg p-3 pt-5 placeholder-transparent focus:border-blue-600 focus:ring focus:ring-blue-100"
                 />
-                <label
-                  className="absolute left-3 top-2 text-gray-500 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:text-sm peer-focus:text-blue-600"
-                >
-                  Nomor WhatsApp *
+                <label className="absolute left-3 top-2 text-gray-500 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:text-sm peer-focus:text-blue-600">
+                  {t("academy.packages.form.whatsapp")} *
                 </label>
                 {errors.wa && <p className="text-red-500 text-sm mt-1">{errors.wa}</p>}
               </div>
@@ -236,14 +278,12 @@ export default function PaketAcademy() {
                 <textarea
                   placeholder=" "
                   value={pesan}
-                  onChange={e => setPesan(e.target.value)}
+                  onChange={(e) => setPesan(e.target.value)}
                   rows={3}
                   className="peer w-full border rounded-lg p-3 pt-5 placeholder-transparent focus:border-blue-600 focus:ring focus:ring-blue-100"
                 />
-                <label
-                  className="absolute left-3 top-2 text-gray-500 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:text-sm peer-focus:text-blue-600"
-                >
-                  Pesan Tambahan (Opsional)
+                <label className="absolute left-3 top-2 text-gray-500 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:text-sm peer-focus:text-blue-600">
+                  {t("academy.packages.form.message")}
                 </label>
               </div>
 
@@ -254,14 +294,14 @@ export default function PaketAcademy() {
                   disabled={!isFormValid}
                   className="w-full bg-green-600 text-white py-3 rounded-lg font-semibold flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <MessageCircle className="w-5 h-5" /> Kirim via WhatsApp
+                  <MessageCircle className="w-5 h-5" /> {t("academy.packages.form.whatsapp.button")}
                 </button>
                 <button
                   onClick={handleEmail}
                   disabled={!isFormValid}
                   className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <Mail className="w-5 h-5" /> Kirim via Email
+                  <Mail className="w-5 h-5" /> {t("academy.packages.form.email.button")}
                 </button>
               </div>
             </div>

@@ -1,14 +1,20 @@
 "use client"
 
-import React, { useState } from "react"
+import type React from "react"
+import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Menu, ChevronDown, User, Home, Info, Package, Star, Mail, Settings, LogOut, Shield } from "lucide-react"
+import { Menu, ChevronDown, User, Home, Package, Star, Mail, Settings, LogOut, Shield } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from "@/components/ui/dropdown-menu"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
 import { useRouter, usePathname } from "next/navigation"
 import { useSession, signOut } from "next-auth/react"
 import { LanguageSwitcher } from "@/components/language-switcher"
@@ -37,28 +43,27 @@ function NavLink({ href, children, icon: Icon, isMobile = false, onClick }: NavL
   const findElementByIds = (ids: string[]) => {
     for (const id of ids) {
       const element = document.getElementById(id)
-      if (element) {
-        return element
-      }
+      if (element) return element
     }
     return null
   }
 
   const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
-    
+
     if (href.includes("#")) {
       const [path, hash] = href.split("#")
       const targetPath = path || "/"
-      
+
       const possibleIds: { [key: string]: string[] } = {
-        'product': ['product', 'products', 'our-products', 'produk'],
-        'about': ['about', 'about-us', 'tentang', 'tentang-kami'],
-        'hero': ['hero', 'home', 'banner', 'header-section'],
-        'testimonials': ['testimonials', 'testimonial', 'testimoni'],
-        'contact': ['contact', 'contact-us', 'kontak']
+        product: ["product", "products", "our-products", "produk"],
+        about: ["about", "about-us", "tentang", "tentang-kami"],
+        hero: ["hero", "home", "banner", "header-section"],
+        testimonials: ["testimonials", "testimonial", "testimoni"],
+        contact: ["contact", "contact-us", "kontak"],
+        achievements: ["achievements", "prestasi"],
       }
-      
+
       if (pathname !== targetPath) {
         router.push(targetPath)
         setTimeout(() => {
@@ -66,11 +71,9 @@ function NavLink({ href, children, icon: Icon, isMobile = false, onClick }: NavL
           const target = findElementByIds(ids)
           if (target) {
             const headerOffset = 80
-            const elementPosition = target.offsetTop
-            const offsetPosition = elementPosition - headerOffset
             window.scrollTo({
-              top: offsetPosition,
-              behavior: "smooth"
+              top: target.offsetTop - headerOffset,
+              behavior: "smooth",
             })
           }
         }, 500)
@@ -79,34 +82,32 @@ function NavLink({ href, children, icon: Icon, isMobile = false, onClick }: NavL
         const target = findElementByIds(ids)
         if (target) {
           const headerOffset = 80
-          const elementPosition = target.offsetTop
-          const offsetPosition = elementPosition - headerOffset
           window.scrollTo({
-            top: offsetPosition,
-            behavior: "smooth"
+            top: target.offsetTop - headerOffset,
+            behavior: "smooth",
           })
         }
       }
     } else {
       router.push(href)
     }
-    
+
     if (onClick) onClick()
   }
 
-  const base = "relative group transition-all duration-300 flex items-center hover:text-blue-600"
+  const base = "relative group transition-colors duration-300 flex items-center hover:text-blue-600"
   const size = isMobile ? "text-base font-medium" : "text-sm font-medium"
   const gap = Icon ? (isMobile ? "gap-3" : "gap-1.5") : ""
-  
+
   return (
     <Link
       href={href}
       onClick={handleNavigation}
-      className={`${base} ${size} ${gap} ${isMobile ? "px-4 py-3 hover:bg-gray-50 rounded-lg" : "px-4 py-2.5 rounded-full hover:bg-blue-50/80 hover:shadow-sm"}`}
+      className={`${base} ${size} ${gap} ${isMobile ? "px-4 py-3 hover:bg-gray-50 rounded-md" : "px-3 py-2 rounded-md hover:bg-gray-50/80"}`}
     >
-      {Icon && <Icon className={isMobile ? "h-5 w-5" : "h-4 w-4"} />} 
+      {Icon && <Icon className={isMobile ? "h-5 w-5" : "h-4 w-4"} />}
       {children}
-      {!isMobile && <span className="absolute left-4 bottom-1 w-0 h-0.5 bg-blue-600 transition-all duration-300 ease-out group-hover:w-[calc(100%-2rem)]" />}
+      <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-current transition-all duration-300 ease-out group-hover:w-full" />
     </Link>
   )
 }
@@ -114,57 +115,55 @@ function NavLink({ href, children, icon: Icon, isMobile = false, onClick }: NavL
 export function HeaderAcademy() {
   const [isMobileServiceOpen, setIsMobileServiceOpen] = useState(false)
   const [isMobileNewsOpen, setIsMobileNewsOpen] = useState(false)
+  const [isMobileProgramOpen, setIsMobileProgramOpen] = useState(false)
+  const [isMobileMentorOpen, setIsMobileMentorOpen] = useState(false)
   const router = useRouter()
   const { data: session, status } = useSession()
   const { t } = useLanguage()
-  
+
   const navItems: NavItem[] = [
-    { href: "/#hero", label: t('nav.home'), icon: Home },
-    { href: "/#about", label: t('nav.about'), icon: Info },
-    { href: "/#testimonials", label: t('nav.testimonials'), icon: Star },
-    {
-      label: t('nav.services'),
-      icon: Package,
-      isDropdown: true,
-      subLinks: [
-        { href: "/mersif-academy/index.html", label: t('nav.services.academy') },
-        { href: "/mersifiot", label: t('nav.services.iot') },
-        { href: "/mersifvista", label: t('nav.services.vista') },
-        { href: "/mersifcreator", label: t('nav.services.creator') },
-      ],
-    },
-    {
-      label: t('nav.news'),
-      icon: Package,
-      isDropdown: true,
-      subLinks: [
-        { href: "/news", label: t('nav.news.page') },
-        { href: "/news", label: t('nav.news.latest') },
-        { href: "/news", label: t('nav.news.archive') },
-        { href: "/news", label: t('nav.news.categories') },
-      ],
-    },
-    { href: "/#contact", label: t('nav.contact'), icon: Mail },
+    { href: "/mersifacademy#hero", label: t("nav.home"), icon: Home },
+    { href: "/mersifacademy#program", label: t("nav.program"), icon: Package },
+    { href: "/mersifacademy#achievements", label: t("nav.achievements"), icon: Star },
+    { href: "/mersifacademy#mentor", label: t("nav.mentor"), icon: User },
   ]
 
   const closeSheet = () => {
     setIsMobileServiceOpen(false)
     setIsMobileNewsOpen(false)
+    setIsMobileProgramOpen(false)
+    setIsMobileMentorOpen(false)
+  }
+
+  const getUserAvatar = () => {
+    if (!session?.user) return null
+
+    const possibleAvatars = [session.user.avatar, session.user.image, (session.user as any)?.picture].filter(Boolean)
+
+    return possibleAvatars[0] || null
+  }
+
+  const getUserInitials = () => {
+    if (!session?.user) return "U"
+
+    const name = session.user.name || session.user.email || "User"
+    return name
+      .split(" ")
+      .map((word) => word.charAt(0))
+      .slice(0, 2)
+      .join("")
+      .toUpperCase()
   }
 
   return (
     <header className="sticky top-0 z-50 w-full py-4 bg-white/80 backdrop-blur-xl">
-      {/* Centered Container */}
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between gap-4 max-w-7xl mx-auto">
-          
-          {/* Left Section - Logo (Separated) */}
           <div className="flex items-center gap-4">
-            {/* Mobile Menu Button */}
             <Sheet>
               <SheetTrigger asChild>
-                <Button 
-                  variant="ghost" 
+                <Button
+                  variant="ghost"
                   size="icon"
                   className="md:hidden hover:bg-gray-100 rounded-full bg-white/90 backdrop-blur-sm border border-gray-200/50 shadow-sm"
                 >
@@ -174,13 +173,18 @@ export function HeaderAcademy() {
               </SheetTrigger>
               <SheetContent side="left" className="w-80 rounded-r-2xl">
                 <div className="flex h-16 items-center border-b px-4">
-                  <Link href="/" className="flex items-center" onClick={closeSheet}>
-                    <Image 
-                      src="/img/mersifacademy.svg" 
-                      alt="MersifLab Logo" 
-                      width={120} 
-                      height={40} 
-                      className="h-8 w-auto" 
+                  <Link href="/mersifacademy" className="flex items-center" onClick={closeSheet}>
+                    {/* Fixed: Menggunakan path dan extension yang benar */}
+                    <Image
+                      src="/img/navbar-logo/academy.jpg"
+                      alt="Academy Logo"
+                      width={120}
+                      height={40}
+                      className="h-8 w-auto"
+                      onError={(e) => {
+                        console.error('Failed to load academy.jpg, trying logoAcademy.svg...');
+                        e.currentTarget.src = '/img/navbar-logo/logoAcademy.svg';
+                      }}
                     />
                   </Link>
                 </div>
@@ -188,8 +192,19 @@ export function HeaderAcademy() {
                   <nav className="flex flex-col space-y-2">
                     {navItems.map((item, index) => {
                       if (item.isDropdown) {
-                        const isOpen = item.label === t('nav.services') ? isMobileServiceOpen : isMobileNewsOpen
-                        const setIsOpen = item.label === t('nav.services') ? setIsMobileServiceOpen : setIsMobileNewsOpen
+                        let isOpen = false
+                        let setIsOpen = () => {}
+
+                        if (item.label === t("nav.program")) {
+                          isOpen = isMobileProgramOpen
+                          setIsOpen = setIsMobileProgramOpen
+                        } else if (item.label === t("nav.mentor")) {
+                          isOpen = isMobileMentorOpen
+                          setIsOpen = setIsMobileMentorOpen
+                        } else if (item.label === t("nav.services")) {
+                          isOpen = isMobileServiceOpen
+                          setIsOpen = setIsMobileServiceOpen
+                        }
 
                         return (
                           <div key={index} className="space-y-2">
@@ -201,17 +216,14 @@ export function HeaderAcademy() {
                                 {item.icon && <item.icon className="h-4 w-4" />}
                                 <span>{item.label}</span>
                               </div>
-                              <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+                              <ChevronDown
+                                className={`h-4 w-4 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+                              />
                             </button>
                             {isOpen && (
                               <div className="pl-6 space-y-1">
                                 {item.subLinks?.map((subLink, subIndex) => (
-                                  <NavLink
-                                    key={subIndex}
-                                    href={subLink.href}
-                                    isMobile
-                                    onClick={closeSheet}
-                                  >
+                                  <NavLink key={subIndex} href={subLink.href} isMobile onClick={closeSheet}>
                                     {subLink.label}
                                   </NavLink>
                                 ))}
@@ -221,13 +233,7 @@ export function HeaderAcademy() {
                         )
                       }
                       return (
-                        <NavLink
-                          key={index}
-                          href={item.href || "/"}
-                          icon={item.icon}
-                          isMobile
-                          onClick={closeSheet}
-                        >
+                        <NavLink key={index} href={item.href || "/"} icon={item.icon} isMobile onClick={closeSheet}>
                           {item.label}
                         </NavLink>
                       )
@@ -237,56 +243,67 @@ export function HeaderAcademy() {
               </SheetContent>
             </Sheet>
 
-            {/* Logo - Compact with rounded background */}
             <div className="bg-white/90 backdrop-blur-sm border border-gray-200/50 rounded-xl shadow-md shadow-gray-200/20 px-3 py-2">
               <Link href="/" className="flex items-center">
-                <Image 
-                  src="/img/logomersiflab.png" 
-                  alt="MersifLab Logo" 
-                  width={100} 
-                  height={32} 
-                  className="h-6 w-auto" 
-                  priority 
+                <Image
+                  src="/img/logomersiflab.png"
+                  alt="MersifLab Logo"
+                  width={120}
+                  height={40}
+                  className="h-8 w-auto"
+                  priority
+                  onError={(e) => {
+                    console.error('Failed to load logomersiflab.png');
+                  }}
                 />
               </Link>
             </div>
           </div>
 
-          {/* Center Section - Main Navigation with Logo and Language Switcher */}
           <nav className="hidden md:flex items-center justify-center flex-1 max-w-4xl">
             <div className="bg-white/90 backdrop-blur-sm border border-gray-200/50 rounded-2xl shadow-lg shadow-gray-200/20 px-4 py-3">
               <div className="flex items-center space-x-1">
-                {/* Small Logo in Navbar */}
                 <div className="flex items-center mr-4">
-                  <Link href="/" className="flex items-center">
-                    <Image 
-                      src="/img/navbar-logo/logoVISTA.png" 
-                      alt="MersifLab" 
-                      width={100} 
-                      height={30} 
-                      className="h-7 w-auto opacity-80 hover:opacity-100 transition-opacity duration-200" 
+                  <Link href="/mersifacademy" className="flex items-center">
+                    {/* Fixed: Menggunakan SVG yang benar */}
+                    <Image
+                      src="/img/navbar-logo/logoVISTA.svg"
+                      alt="VISTA Logo"
+                      width={140}
+                      height={40}
+                      className="h-9 w-auto opacity-90 hover:opacity-100 transition-opacity duration-200"
+                      onError={(e) => {
+                        console.error('Failed to load logoVISTA.svg, trying academy.jpg...');
+                        e.currentTarget.src = '/img/navbar-logo/academy.jpg';
+                      }}
                     />
                   </Link>
                   <div className="w-px h-6 bg-gray-300 ml-4"></div>
                 </div>
-                
+
                 {navItems.map((item, index) => {
                   if (item.isDropdown) {
                     return (
                       <DropdownMenu key={index}>
-                        <DropdownMenuTrigger className="flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium rounded-full hover:bg-blue-50/80 hover:shadow-sm transition-all duration-200">
-                          {item.icon && <item.icon className="h-4 w-4" />}
-                          <span>{item.label}</span>
-                          <ChevronDown className="h-3 w-3" />
+                        <DropdownMenuTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            className="flex items-center gap-1.5 px-3 py-2 rounded-md hover:bg-gray-50/80 text-sm font-medium transition-colors duration-300 hover:text-blue-600"
+                          >
+                            {item.icon && <item.icon className="h-4 w-4" />}
+                            {item.label}
+                            <ChevronDown className="h-3 w-3" />
+                          </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="start" className="min-w-48 rounded-xl border-0 shadow-xl bg-white/95 backdrop-blur-sm">
+                        <DropdownMenuContent className="w-48 rounded-xl border-0 shadow-xl bg-white/95 backdrop-blur-sm">
                           {item.subLinks?.map((subLink, subIndex) => (
-                            <DropdownMenuItem 
-                              key={subIndex} 
-                              onClick={() => router.push(subLink.href)}
-                              className="flex items-center gap-2 cursor-pointer rounded-lg hover:bg-blue-50 focus:bg-blue-50"
-                            >
-                              {subLink.label}
+                            <DropdownMenuItem key={subIndex} asChild>
+                              <Link
+                                href={subLink.href}
+                                className="cursor-pointer rounded-lg hover:bg-blue-50 focus:bg-blue-50 px-3 py-2"
+                              >
+                                {subLink.label}
+                              </Link>
                             </DropdownMenuItem>
                           ))}
                         </DropdownMenuContent>
@@ -299,86 +316,115 @@ export function HeaderAcademy() {
                     </NavLink>
                   )
                 })}
-                
-                {/* Language Switcher integrated in navbar */}
-                <div className="flex items-center">
-                  <div className="w-px h-6 bg-gray-300 mx-3"></div>
-                  <div className="px-2">
-                    <LanguageSwitcher />
-                  </div>
+
+                <div className="flex items-center ml-4">
+                  <div className="w-px h-6 bg-gray-300 mr-4"></div>
+                  <Button
+                    onClick={() => router.push("/mersifacademy#daftar")}
+                    size="sm"
+                    className="text-sm rounded-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium px-4 py-2 shadow-md hover:shadow-lg transition-all duration-200"
+                  >
+                    {t("nav.subscribe")}
+                  </Button>
                 </div>
               </div>
             </div>
           </nav>
 
-          {/* Right Section - User Profile Only */}
-          <div className="flex items-center">
+          {/* Right Section - Language Switcher & User Menu */}
+          <div className="flex items-center gap-2">
+            <div className="block">
+              <LanguageSwitcher />
+            </div>
+
             {status === "authenticated" && session?.user ? (
-              /* User Profile - Separated */
-              <div className="bg-white/90 backdrop-blur-sm border border-gray-200/50 rounded-2xl shadow-lg shadow-gray-200/20 px-4 py-2">
-                <div className="flex items-center gap-3">
-                  {/* Username Display - Hidden on small screens */}
-                  <div className="hidden lg:flex flex-col items-end">
-                    <span className="text-sm font-semibold text-gray-900 leading-tight">
-                      {session.user.name || 'User'}
-                    </span>
-                    <span className="text-xs text-gray-500 leading-tight">
-                      {session.user.role === 'admin' ? 'Administrator' : 'Member'}
-                    </span>
-                  </div>
-                  
-                  {/* User Avatar Dropdown */}
+              <div className="flex items-center gap-2">
+                <div className="hidden xl:block">
+                  <span className="text-sm font-medium text-gray-900">{session.user.name || "User"}</span>
+                </div>
+
+                {/* Mobile Profile Button - Direct Navigation */}
+                <div className="block md:hidden">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => router.push("/profile")}
+                    className="relative h-8 w-8 rounded-full hover:bg-gray-100"
+                  >
+                    <Avatar className="h-7 w-7">
+                      <AvatarImage
+                        src={getUserAvatar() || undefined}
+                        alt={session.user.name || "User"}
+                        className="object-cover"
+                        onError={(e) => {
+                          console.log("Avatar image failed to load:", getUserAvatar())
+                          e.currentTarget.style.display = "none"
+                        }}
+                      />
+                      <AvatarFallback className="bg-blue-100 text-blue-600 font-medium text-xs">
+                        {getUserInitials()}
+                      </AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </div>
+
+                {/* Desktop Profile Dropdown */}
+                <div className="hidden md:block">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" className="relative h-10 w-10 rounded-full hover:bg-gray-100 ring-2 ring-transparent hover:ring-blue-200/50 transition-all duration-200">
-                        <Avatar className="h-9 w-9">
-                          <AvatarImage src={session.user.image || ''} alt={session.user.name || ''} />
-                          <AvatarFallback className="bg-gradient-to-br from-blue-500 to-blue-600 text-white font-semibold text-sm">
-                            {session.user.name?.charAt(0).toUpperCase() || 'U'}
+                      <Button variant="ghost" size="icon" className="relative h-9 w-9 rounded-full hover:bg-gray-100">
+                        <Avatar className="h-8 w-8">
+                          <AvatarImage
+                            src={getUserAvatar() || undefined}
+                            alt={session.user.name || "User"}
+                            className="object-cover"
+                            onError={(e) => {
+                              console.log("Avatar image failed to load:", getUserAvatar())
+                              e.currentTarget.style.display = "none"
+                            }}
+                          />
+                          <AvatarFallback className="bg-blue-100 text-blue-600 font-medium text-sm">
+                            {getUserInitials()}
                           </AvatarFallback>
                         </Avatar>
-                        {session.user.role === 'admin' && (
-                          <div className="absolute -bottom-0.5 -right-0.5">
-                            <div className="h-3 w-3 bg-green-500 rounded-full border-2 border-white" />
-                          </div>
-                        )}
                       </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-72 rounded-xl border-0 shadow-xl bg-white/95 backdrop-blur-sm" align="end">
-                      <div className="flex items-center gap-3 p-4 border-b border-gray-100">
-                        <Avatar className="h-12 w-12">
-                          <AvatarImage src={session.user.image || ''} alt={session.user.name || ''} />
-                          <AvatarFallback className="bg-gradient-to-br from-blue-500 to-blue-600 text-white font-semibold">
-                            {session.user.name?.charAt(0).toUpperCase() || 'U'}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-semibold text-gray-900 truncate">{session.user.name}</p>
-                          <p className="text-xs text-gray-500 truncate">{session.user.email}</p>
-                          {session.user.role === 'admin' && (
-                            <Badge variant="outline" className="mt-1 text-xs">Administrator</Badge>
-                          )}
-                        </div>
+                    <DropdownMenuContent
+                      className="w-56 md:w-64"
+                      align="end"
+                      side="bottom"
+                      sideOffset={12}
+                      alignOffset={-8}
+                      avoidCollisions={true}
+                      sticky="always"
+                      collisionPadding={16}
+                    >
+                      <div className="flex flex-col gap-1 p-3 border-b">
+                        <p className="text-sm font-medium leading-tight">{session.user.name}</p>
+                        <p className="text-xs text-muted-foreground leading-tight">{session.user.email}</p>
                       </div>
-                      <div className="py-2">
-                        <DropdownMenuItem className="cursor-pointer rounded-lg hover:bg-blue-50 focus:bg-blue-50">
-                          <User className="mr-3 h-4 w-4" />
-                          <span>{t('nav.profile')}</span>
+                      <div className="py-1">
+                        <DropdownMenuItem onClick={() => router.push("/profile")} className="cursor-pointer">
+                          <User className="mr-2 h-4 w-4" />
+                          <span>{t("nav.profile")}</span>
                         </DropdownMenuItem>
-                        <DropdownMenuItem className="cursor-pointer rounded-lg hover:bg-blue-50 focus:bg-blue-50">
-                          <Settings className="mr-3 h-4 w-4" />
-                          <span>{t('nav.settings')}</span>
+                        <DropdownMenuItem className="cursor-pointer">
+                          <Settings className="mr-2 h-4 w-4" />
+                          <span>{t("nav.settings")}</span>
                         </DropdownMenuItem>
-                        {session.user.role === 'admin' && (
-                          <DropdownMenuItem onClick={() => router.push('/admin')} className="cursor-pointer rounded-lg hover:bg-blue-50 focus:bg-blue-50">
-                            <Shield className="mr-3 h-4 w-4" />
-                            <span>{t('nav.admin')}</span>
+                        {session.user.role === "admin" && (
+                          <DropdownMenuItem onClick={() => router.push("/admin")} className="cursor-pointer">
+                            <Shield className="mr-2 h-4 w-4" />
+                            <span>{t("nav.admin")}</span>
                           </DropdownMenuItem>
                         )}
-                        <DropdownMenuSeparator className="my-2" />
-                        <DropdownMenuItem onClick={() => signOut()} className="cursor-pointer text-red-600 focus:text-red-600 focus:bg-red-50 rounded-lg">
-                          <LogOut className="mr-3 h-4 w-4" />
-                          <span>{t('nav.logout')}</span>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem
+                          onClick={() => signOut()}
+                          className="cursor-pointer text-red-600 focus:text-red-600"
+                        >
+                          <LogOut className="mr-2 h-4 w-4" />
+                          <span>{t("nav.logout")}</span>
                         </DropdownMenuItem>
                       </div>
                     </DropdownMenuContent>
@@ -386,30 +432,19 @@ export function HeaderAcademy() {
                 </div>
               </div>
             ) : (
-              /* Login/Register Buttons - Separated */
-              <div className="bg-white/90 backdrop-blur-sm border border-gray-200/50 rounded-2xl shadow-lg shadow-gray-200/20 px-4 py-2">
-                <div className="flex items-center gap-2">
-                  <Button 
-                    variant="ghost" 
-                    onClick={() => router.push('/login')} 
-                    className="text-sm rounded-full hover:bg-gray-100 transition-all duration-200"
-                  >
-                    {t('nav.login')}
-                  </Button>
-                  <Button 
-                    onClick={() => router.push('/register')} 
-                    className="text-sm rounded-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-sm hover:shadow-md"
-                  >
-                    {t('nav.register')}
-                  </Button>
-                </div>
+              <div className="flex items-center gap-1 md:gap-2">
+                <Button
+                  variant="ghost"
+                  onClick={() => router.push("/login")}
+                  className="text-xs md:text-sm px-2 md:px-4"
+                >
+                  {t("nav.login")}
+                </Button>
+                <Button onClick={() => router.push("/register")} className="text-xs md:text-sm px-2 md:px-4">
+                  {t("nav.register")}
+                </Button>
               </div>
             )}
-
-            {/* Mobile Language Switcher */}
-            <div className="sm:hidden ml-3 bg-white/90 backdrop-blur-sm border border-gray-200/50 rounded-2xl shadow-lg shadow-gray-200/20 px-3 py-2">
-              <LanguageSwitcher />
-            </div>
           </div>
         </div>
       </div>

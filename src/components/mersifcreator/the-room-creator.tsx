@@ -1,41 +1,53 @@
 "use client"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Play, Beaker, Box, Shapes } from "lucide-react"
+import { useLanguage } from "@/contexts/language-context"
 
 export function TheRoomsSection() {
+  const { t } = useLanguage()
+
   const rooms = [
     {
       id: "cube",
-      title: "Cube",
-      description:
-        "Ruang eksplorasi 3D dengan bentuk geometri dasar. Pelajari konsep matematika dan fisika melalui manipulasi objek kubus interaktif.",
+      title: t("creator.rooms.cube.title"),
+      description: t("creator.rooms.cube.desc"),
       image: "/img/cube-room.jpg",
       icon: <Box className="w-6 h-6" />,
       href: "https://room.mersiflab.com/cube/",
       bgColor: "from-green-400 to-green-600",
-      features: ["Geometri 3D", "Manipulasi Objek", "Visualisasi Konsep"],
+      features: [
+        t("creator.rooms.cube.features.geometry"),
+        t("creator.rooms.cube.features.manipulation"),
+        t("creator.rooms.cube.features.visualization"),
+      ],
     },
     {
       id: "custom-shape",
-      title: "Custom Shape",
-      description:
-        "Ciptakan dan eksplorasi bentuk-bentuk unik sesuai kreativitas Anda. Ruang tak terbatas untuk pembelajaran yang personal.",
+      title: t("creator.rooms.custom.title"),
+      description: t("creator.rooms.custom.desc"),
       image: "/img/custom-shape.jpg",
       icon: <Shapes className="w-6 h-6" />,
       href: "https://room.mersiflab.com/custom-shape/",
       bgColor: "from-emerald-400 to-teal-600",
-      features: ["Desain Bebas", "Kreativitas Tanpa Batas", "Personalisasi"],
+      features: [
+        t("creator.rooms.custom.features.design"),
+        t("creator.rooms.custom.features.creativity"),
+        t("creator.rooms.custom.features.personalization"),
+      ],
     },
     {
       id: "lab-kimia",
-      title: "Lab Kimia",
-      description:
-        "Laboratorium kimia virtual yang aman dan interaktif. Lakukan eksperimen dengan berbagai bahan kimia tanpa risiko.",
+      title: t("creator.rooms.lab.title"),
+      description: t("creator.rooms.lab.desc"),
       image: "/img/lab-kimia.jpg",
       icon: <Beaker className="w-6 h-6" />,
       href: "https://room.mersiflab.com/lab-sm/",
       bgColor: "from-slate-600 to-slate-800",
-      features: ["Eksperimen Aman", "Simulasi Realistis", "Pembelajaran Praktis"],
+      features: [
+        t("creator.rooms.lab.features.safe"),
+        t("creator.rooms.lab.features.realistic"),
+        t("creator.rooms.lab.features.practical"),
+      ],
     },
   ]
 
@@ -45,14 +57,13 @@ export function TheRoomsSection() {
         {/* Header */}
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6" style={{ fontFamily: "Poppins, sans-serif" }}>
-            Jelajahi <span className="text-[#007bff]">The Rooms</span>
+            {t("creator.rooms.title")} <span className="text-[#007bff]">{t("creator.rooms.title.highlight")}</span>
           </h2>
           <p
             className="text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
             style={{ fontFamily: "Inter, sans-serif" }}
           >
-            Masuki dunia pembelajaran interaktif dengan berbagai ruang virtual yang dirancang khusus untuk memberikan
-            pengalaman edukatif yang tak terlupakan.
+            {t("creator.rooms.description")}
           </p>
         </div>
 
@@ -109,7 +120,7 @@ export function TheRoomsSection() {
                     rel="noopener noreferrer"
                     className="bg-[#007bff] hover:bg-[#007bff]/90 text-white rounded-full px-6 py-2 text-sm font-medium transition-colors duration-300 inline-flex items-center"
                   >
-                    {room.id === "lab-kimia" ? "Masuk Lab" : "Jelajahi"}
+                    {room.id === "lab-kimia" ? t("creator.rooms.button.enter") : t("creator.rooms.button.explore")}
                     <ArrowRight className="ml-2 w-4 h-4" />
                   </a>
 
@@ -118,7 +129,7 @@ export function TheRoomsSection() {
                     <div
                       className={`w-2 h-2 rounded-full ${room.id === "lab-kimia" ? "bg-green-500" : "bg-green-500"}`}
                     />
-                    <span>{room.id === "lab-kimia" ? "Live" : "Live"}</span>
+                    <span>{t("creator.rooms.status.live")}</span>
                   </div>
                 </div>
               </div>
@@ -133,13 +144,15 @@ export function TheRoomsSection() {
             className="inline-flex flex-col sm:flex-row items-center gap-4 p-6 bg-gradient-to-r from-[#007bff]/10 to-blue-50 rounded-2xl border border-blue-100"
           >
             <div className="text-center sm:text-left">
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">Punya Ide Room Baru?</h3>
-              <p className="text-gray-600 text-sm">
-                Berkolaborasi dengan kami untuk menciptakan pengalaman pembelajaran yang lebih beragam.
+              <h3 className="text-xl font-semibold text-gray-800 mb-2" style={{ fontFamily: "Poppins, sans-serif" }}>
+                {t("creator.rooms.cta.title")}
+              </h3>
+              <p className="text-gray-600 text-sm" style={{ fontFamily: "Inter, sans-serif" }}>
+                {t("creator.rooms.cta.desc")}
               </p>
             </div>
             <Button className="bg-[#007bff] hover:bg-[#007bff]/90 text-white rounded-full px-6 whitespace-nowrap">
-              Hubungi Kami
+              {t("creator.rooms.cta.button")}
               <ArrowRight className="ml-2 w-4 h-4" />
             </Button>
           </div>

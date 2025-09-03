@@ -1,30 +1,32 @@
+"use client"
+
 import { Star, Quote } from "lucide-react"
+import { useLanguage } from "@/contexts/language-context"
 
 export function TestimonialsSection() {
+  const { t } = useLanguage()
+
   const testimonials = [
     {
-      name: "Dr. Sarah Wijaya",
-      role: "Dosen Universitas Indonesia",
-      content:
-        "Mersif Creator telah merevolusi cara saya mengajar. Mahasiswa dapat memahami konsep kompleks melalui visualisasi 3D yang interaktif dalam ruang virtual.",
+      name: t("creator.testimonials.sarah.name"),
+      role: t("creator.testimonials.sarah.role"),
+      content: t("creator.testimonials.sarah.content"),
       rating: 5,
-      avatar: "/professional-woman-diverse.png",
+      avatar: "/img/professional-woman-diverse.svg",
     },
     {
-      name: "Ahmad Rizki",
-      role: "Guru SMA Negeri 1 Jakarta",
-      content:
-        "Lab Kimia virtual di Mersif Creator memungkinkan siswa melakukan eksperimen dengan aman. Mereka lebih antusias dan pemahaman meningkat drastis.",
+      name: t("creator.testimonials.ahmad.name"),
+      role: t("creator.testimonials.ahmad.role"),
+      content: t("creator.testimonials.ahmad.content"),
       rating: 5,
-      avatar: "/male-teacher.png",
+      avatar: "/img/male-teacher.svg",
     },
     {
-      name: "Maya Sari",
-      role: "Developer & Educator",
-      content:
-        "Custom Shape room memberikan kebebasan kreativitas yang luar biasa. Saya dapat membuat lingkungan pembelajaran yang sesuai dengan kebutuhan spesifik.",
+      name: t("creator.testimonials.maya.name"),
+      role: t("creator.testimonials.maya.role"),
+      content: t("creator.testimonials.maya.content"),
       rating: 5,
-      avatar: "/female-developer.png",
+      avatar: "/img/female-developer.svg",
     },
   ]
 
@@ -34,12 +36,15 @@ export function TestimonialsSection() {
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Apa Kata <span className="text-blue-600">Pengguna</span>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4" style={{ fontFamily: "Poppins, sans-serif" }}>
+              {t("creator.testimonials.title")}{" "}
+              <span className="text-blue-600">{t("creator.testimonials.title.highlight")}</span>
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Dengarkan pengalaman nyata dari para pengguna yang telah merasakan manfaat ruang virtual Mersif Creator
-              dalam pembelajaran dan eksplorasi kreatif.
+            <p
+              className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
+              style={{ fontFamily: "Inter, sans-serif" }}
+            >
+              {t("creator.testimonials.description")}
             </p>
           </div>
 
@@ -58,7 +63,9 @@ export function TestimonialsSection() {
 
                 <div className="relative mb-6">
                   <Quote className="h-8 w-8 text-blue-200 absolute -top-2 -left-2" />
-                  <p className="text-gray-700 leading-relaxed pl-6">{testimonial.content}</p>
+                  <p className="text-gray-700 leading-relaxed pl-6" style={{ fontFamily: "Inter, sans-serif" }}>
+                    {testimonial.content}
+                  </p>
                 </div>
 
                 <div className="flex items-center">
@@ -68,8 +75,12 @@ export function TestimonialsSection() {
                     className="w-12 h-12 rounded-full mr-4 border-2 border-blue-100"
                   />
                   <div>
-                    <h4 className="font-semibold text-gray-900">{testimonial.name}</h4>
-                    <p className="text-sm text-gray-600">{testimonial.role}</p>
+                    <h4 className="font-semibold text-gray-900" style={{ fontFamily: "Poppins, sans-serif" }}>
+                      {testimonial.name}
+                    </h4>
+                    <p className="text-sm text-gray-600" style={{ fontFamily: "Inter, sans-serif" }}>
+                      {testimonial.role}
+                    </p>
                   </div>
                 </div>
               </div>

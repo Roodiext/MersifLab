@@ -30,7 +30,7 @@ import {
   Shield
 } from "lucide-react"
 import Link from "next/link"
-import { signOut } from "next-auth/react"
+import { signOut, useSession } from "next-auth/react"
 import { useState } from "react"
 
 interface AdminHeaderProps {
@@ -44,18 +44,42 @@ interface AdminHeaderProps {
 
 export function AdminHeader({ user }: AdminHeaderProps) {
   const [notifications] = useState(3) // Mock notification count
+  const { data: session } = useSession()
 
   const handleLogout = async () => {
     await signOut({ callbackUrl: "/login" })
   }
 
-  const getInitials = (name: string) => {
-    return name
+  // Updated function to get user avatar with better fallback logic
+  const getUserAvatar = () => {
+    if (!session?.user) return null
+
+    // Check multiple possible avatar sources from session
+    const possibleAvatars = [
+      session.user.avatar,
+      session.user.image,
+      (session.user as any)?.picture, // Sometimes OAuth providers use 'picture'
+    ].filter(Boolean)
+
+    return possibleAvatars[0] || null
+  }
+
+  // Updated function to get user initials
+  const getUserInitials = () => {
+    if (!session?.user) return user.name
       .split(' ')
       .map(word => word[0])
       .join('')
       .toUpperCase()
       .slice(0, 2)
+
+    const name = session.user.name || session.user.email || user.name || "User"
+    return name
+      .split(" ")
+      .map((word) => word.charAt(0))
+      .slice(0, 2)
+      .join("")
+      .toUpperCase()
   }
 
   return (
@@ -131,7 +155,7 @@ export function AdminHeader({ user }: AdminHeaderProps) {
                 Testimonials
               </Link>
               <Link
-                href="/admin/settings"
+                href="/settings"
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-600 transition-all hover:bg-gray-100 hover:text-gray-900"
               >
                 <Settings className="h-4 w-4" />
@@ -144,9 +168,7 @@ export function AdminHeader({ user }: AdminHeaderProps) {
         {/* Logo & Brand */}
         <div className="flex items-center gap-3">
           <Link href="/admin/dashboard" className="flex items-center gap-3">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-blue-700 text-white font-bold text-sm">
-              ML
-            </div>
+            
             <div className="hidden md:block">
               <h1 className="font-bold text-gray-900">MersifLab</h1>
               <p className="text-xs text-gray-500">Admin Panel</p>
@@ -168,24 +190,24 @@ export function AdminHeader({ user }: AdminHeaderProps) {
 
         {/* Right Side Actions */}
         <div className="flex items-center gap-3">
-          {/* Notifications */}
-          <Button variant="ghost" size="icon" className="relative">
-            <Bell className="h-4 w-4" />
-            {notifications > 0 && (
-              <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 text-xs bg-red-500 hover:bg-red-500">
-                {notifications}
-              </Badge>
-            )}
-          </Button>
+          
 
           {/* User Menu */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="flex items-center gap-2 h-9 px-2">
                 <Avatar className="h-7 w-7">
-                  <AvatarImage src="" alt={user.name} />
+                  <AvatarImage 
+                    src={getUserAvatar() || undefined} 
+                    alt={user.name}
+                    className="object-cover"
+                    onError={(e) => {
+                      console.log("Avatar image failed to load:", getUserAvatar())
+                      e.currentTarget.style.display = "none"
+                    }}
+                  />
                   <AvatarFallback className="bg-gradient-to-br from-blue-600 to-blue-700 text-white text-xs font-medium">
-                    {getInitials(user.name)}
+                    {getUserInitials()}
                   </AvatarFallback>
                 </Avatar>
                 <div className="hidden md:block text-left">
@@ -216,7 +238,7 @@ export function AdminHeader({ user }: AdminHeaderProps) {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href="/admin/profile" className="flex items-center gap-2">
+                <Link href="/profile" className="flex items-center gap-2">
                   <CircleUser className="h-4 w-4" />
                   Profile
                 </Link>
@@ -235,4 +257,4 @@ export function AdminHeader({ user }: AdminHeaderProps) {
       </div>
     </header>
   )
-}  
+}

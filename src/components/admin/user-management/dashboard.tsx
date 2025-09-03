@@ -119,16 +119,7 @@ export default function AdminDashboard() {
           <h1 className="text-3xl font-bold tracking-tight text-gray-900">Dashboard</h1>
           <p className="text-gray-600">Kelola konten dan monitor aktivitas platform Anda</p>
         </div>
-        <div className="flex gap-3">
-          <Button variant="outline" size="sm" className="gap-2 border-gray-300">
-            <Calendar className="h-4 w-4" />
-            Hari Ini
-          </Button>
-          <Button size="sm" className="gap-2 bg-blue-600 hover:bg-blue-700">
-            <BarChart3 className="h-4 w-4" />
-            Lihat Analytics
-          </Button>
-        </div>
+        
       </div>
 
       {/* Stats Grid */}
@@ -295,32 +286,7 @@ export default function AdminDashboard() {
         </Card>
 
         {/* System Status */}
-        <Card className="border-0 shadow-sm bg-white hover:shadow-md transition-all duration-200">
-          <CardHeader className="pb-4">
-            <CardTitle className="flex items-center gap-2 text-sm font-medium text-gray-700">
-              <div className="p-2 bg-green-50 rounded-lg">
-                <Activity className="h-4 w-4 text-green-600" />
-              </div>
-              Status Sistem
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-600 flex items-center gap-2">
-                <Globe className="h-3 w-3" />
-                Website
-              </span>
-              <Badge className="bg-green-50 text-green-700 border-green-200">Online</Badge>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-600 flex items-center gap-2">
-                <Database className="h-3 w-3" />
-                Database
-              </span>
-              <Badge className="bg-green-50 text-green-700 border-green-200">Healthy</Badge>
-            </div>
-          </CardContent>
-        </Card>
+        
       </div>
 
       {/* Recent Activities */}
@@ -396,45 +362,6 @@ export default function AdminDashboard() {
         </Card>
       </div>
 
-      {/* Quick Actions */}
-      <Card className="border-0 shadow-sm bg-white">
-        <CardHeader className="pb-4">
-          <CardTitle className="flex items-center gap-2 text-lg font-semibold text-gray-900">
-            <div className="p-2 bg-blue-50 rounded-lg">
-              <Plus className="h-5 w-5 text-blue-600" />
-            </div>
-            Quick Actions
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
-            <Button variant="outline" size="sm" asChild className="justify-start h-10 border-gray-200 hover:bg-blue-50 hover:border-blue-200">
-              <Link href="/admin/articles/new">
-                <FileText className="h-4 w-4 mr-3" />
-                Artikel Baru
-              </Link>
-            </Button>
-            <Button variant="outline" size="sm" asChild className="justify-start h-10 border-gray-200 hover:bg-green-50 hover:border-green-200">
-              <Link href="/admin/news/new">
-                <Newspaper className="h-4 w-4 mr-3" />
-                Berita Baru
-              </Link>
-            </Button>
-            <Button variant="outline" size="sm" asChild className="justify-start h-10 border-gray-200 hover:bg-purple-50 hover:border-purple-200">
-              <Link href="/admin/testimonials">
-                <Star className="h-4 w-4 mr-3" />
-                Kelola Testimoni
-              </Link>
-            </Button>
-            <Button variant="outline" size="sm" asChild className="justify-start h-10 border-gray-200 hover:bg-indigo-50 hover:border-indigo-200">
-              <Link href="/admin/mersif-numbers">
-                <Hash className="h-4 w-4 mr-3" />
-                Update Numbers
-              </Link>
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
     </div>
   )
 }

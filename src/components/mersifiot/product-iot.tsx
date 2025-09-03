@@ -1,168 +1,188 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
-import Image from "next/image"
+import { useState } from "react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
-import { Download, ShoppingCart } from "lucide-react"
+import { Download, ShoppingCart, X } from "lucide-react"
+import { useLanguage } from "@/contexts/language-context"
 
 const products = [
   {
     id: 1,
     name: "Agnivolt",
-    image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200' viewBox='0 0 300 200'%3E%3Crect width='300' height='200' fill='%23f8f9fa' stroke='%23dee2e6'/%3E%3Cg transform='translate(150,100)'%3E%3Ccircle cx='0' cy='0' r='30' fill='none' stroke='%23495057' stroke-width='2'/%3E%3Cpath d='M-15,-5 L15,-5 M-15,5 L15,5 M-5,-15 L-5,15 M5,-15 L5,15' stroke='%23495057' stroke-width='2'/%3E%3Ctext x='0' y='50' text-anchor='middle' font-size='14' fill='%23495057'%3EAgnivolt%3C/text%3E%3C/g%3E%3C/svg%3E",
+    image: "/img/agnivolt.jpg",
     specs: "Sensor daya listrik untuk pompa air",
+    specsEn: "Power sensor for water pumps",
     description:
       "Sistem monitoring pintar untuk menghitung konsumsi daya listrik pada pompa air. Membantu mengoptimalkan penggunaan energi dan biaya operasional pompa air rumah tangga atau industri.",
-    manualFile: "/manuals/agnivolt.pdf"
+    descriptionEn:
+      "Smart monitoring system to calculate power consumption of water pumps. Helps optimize energy usage and operational costs for household or industrial water pumps.",
+    manualFile: "/manuals/agnivolt.pdf",
   },
   {
     id: 2,
     name: "Mosyen AI",
-    image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200' viewBox='0 0 300 200'%3E%3Crect width='300' height='200' fill='%23f8f9fa' stroke='%23dee2e6'/%3E%3Cg transform='translate(150,100)'%3E%3Crect x='-25' y='-25' width='50' height='50' fill='none' stroke='%23495057' stroke-width='2'/%3E%3Cpath d='M-15,-15 L15,15 M15,-15 L-15,15' stroke='%23495057' stroke-width='2'/%3E%3Ccircle cx='-30' cy='-30' r='3' fill='%23495057'/%3E%3Ccircle cx='30' cy='-30' r='3' fill='%23495057'/%3E%3Ccircle cx='-30' cy='30' r='3' fill='%23495057'/%3E%3Ccircle cx='30' cy='30' r='3' fill='%23495057'/%3E%3Ctext x='0' y='50' text-anchor='middle' font-size='14' fill='%23495057'%3EMosyen AI%3C/text%3E%3C/g%3E%3C/svg%3E",
+    image: "/img/mosyenai.jpg",
     specs: "AI-powered 3D design software",
+    specsEn: "AI-powered 3D design software",
     description:
       "Software desain 3D berbasis AI yang memudahkan pembuatan model dan desain tiga dimensi. Menggunakan teknologi artificial intelligence untuk mempercepat proses desain dan rendering.",
-    manualFile: "/manuals/mosyen-ai.pdf"
+    descriptionEn:
+      "AI-based 3D design software that facilitates the creation of three-dimensional models and designs. Uses artificial intelligence technology to accelerate design and rendering processes.",
+    manualFile: "/manuals/mosyen-ai.pdf",
   },
-  {
-    id: 3,
-    name: "Project Dummy 1",
-    image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200' viewBox='0 0 300 200'%3E%3Crect width='300' height='200' fill='%23f8f9fa' stroke='%23dee2e6'/%3E%3Cg transform='translate(150,100)'%3E%3Crect x='-3' y='-40' width='6' height='60' fill='%23495057'/%3E%3Ccircle cx='0' cy='-45' r='5' fill='%23495057'/%3E%3Cpath d='M-8,25 Q0,15 8,25' fill='none' stroke='%23495057' stroke-width='2'/%3E%3Ctext x='0' y='50' text-anchor='middle' font-size='12' fill='%23495057'%3EProject Dummy 1%3C/text%3E%3C/g%3E%3C/svg%3E",
-    specs: "Pensil warna-warni dengan penghapus",
-    description:
-      "Pensil ajaib yang bisa menulis dalam berbagai warna dan dilengkapi dengan penghapus yang tidak pernah habis. Cocok untuk anak-anak dan dewasa yang suka menggambar.",
-    manualFile: "/manuals/project-dummy-1.pdf"
-  }
 ]
 
 export function ProductIoT() {
   const [selectedProduct, setSelectedProduct] = useState(null)
-  const carouselRef = useRef<HTMLDivElement>(null)
-
-  // Fixed smooth continuous auto-scroll
-  useEffect(() => {
-    let animationFrame: number
-    const speed = 1 // px per frame
-
-    const scroll = () => {
-      if (carouselRef.current) {
-        const container = carouselRef.current
-        const maxScroll = container.scrollWidth - container.clientWidth
-        
-        container.scrollLeft += speed
-        
-        // Reset to beginning when reaching the end
-        if (container.scrollLeft >= maxScroll) {
-          container.scrollLeft = 0
-        }
-      }
-      animationFrame = requestAnimationFrame(scroll)
-    }
-
-    // Start scrolling
-    animationFrame = requestAnimationFrame(scroll)
-    
-    return () => cancelAnimationFrame(animationFrame)
-  }, [])
+  const { t, language } = useLanguage()
 
   return (
-    <section className="w-full py-12 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-8">
-          Produk IoT Kami
-        </h2>
+    <section id="product" className="w-full py-16 bg-gradient-to-br from-slate-50 to-slate-100">
+      <div className="container mx-auto px-6 max-w-6xl">
+        {/* Header Section */}
+        <div className="text-center mb-12">
+          <h2
+            style={{ fontFamily: "Poppins, sans-serif" }}
+            className="text-3xl md:text-4xl font-bold text-slate-800 mb-4"
+          >
+            {t("iot.products.title")}
+          </h2>
+          <p style={{ fontFamily: "Inter, sans-serif" }} className="text-slate-600 max-w-2xl mx-auto">
+            {t("iot.products.subtitle")}
+          </p>
+        </div>
 
-        {/* Carousel */}
-        <div
-          ref={carouselRef}
-          className="flex gap-6 overflow-x-hidden"
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-        >
-          {/* Duplicate products for seamless loop */}
-          {[...products, ...products].map((product, index) => (
+        {/* Product Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 justify-items-center">
+          {products.map((product) => (
             <div
-              key={`${product.id}-${index}`}
-              className="min-w-[300px] max-w-[300px] flex-shrink-0 border rounded-xl shadow-md bg-white hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+              key={product.id}
+              className="group w-full max-w-sm bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer overflow-hidden border border-slate-200 hover:border-blue-200"
               onClick={() => setSelectedProduct(product)}
             >
-              <Image
-                src={product.image}
-                alt={product.name}
-                width={300}
-                height={200}
-                className="object-cover w-full h-48 rounded-t-xl"
-              />
-              <div className="p-4">
-                <h3 className="font-semibold text-lg">{product.name}</h3>
-                <p className="text-sm text-gray-500">{product.specs}</p>
+              <div className="relative overflow-hidden">
+                <img
+                  src={product.image || "/placeholder.svg"}
+                  alt={product.name}
+                  className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              </div>
+              <div className="p-6">
+                <h3
+                  style={{ fontFamily: "Poppins, sans-serif" }}
+                  className="text-xl font-bold text-slate-800 mb-2 group-hover:text-blue-600 transition-colors"
+                >
+                  {product.name}
+                </h3>
+                <p style={{ fontFamily: "Inter, sans-serif" }} className="text-sm text-slate-500 leading-relaxed">
+                  {language === "en" ? product.specsEn : product.specs}
+                </p>
+                <div style={{ fontFamily: "Inter, sans-serif" }} className="mt-4 flex justify-end">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 group-hover:translate-x-1 transition-all"
+                  >
+                    {t("iot.products.view.detail")} →
+                  </Button>
+                </div>
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Modal Detail */}
-      <Dialog
-        open={!!selectedProduct}
-        onOpenChange={() => setSelectedProduct(null)}
-      >
-        <DialogContent className="max-w-md p-4 overflow-y-auto max-h-[90vh] rounded-xl">
+      {/* Modal */}
+      <Dialog open={!!selectedProduct} onOpenChange={() => setSelectedProduct(null)}>
+        <DialogContent className="max-w-2xl p-0 overflow-hidden rounded-2xl border-0 shadow-2xl">
           {selectedProduct && (
             <>
-              <DialogHeader>
-                <DialogTitle className="text-xl font-bold">
-                  {selectedProduct.name}
-                </DialogTitle>
-              </DialogHeader>
-              <div className="space-y-4">
-                <Image
-                  src={selectedProduct.image}
+              <div className="relative">
+                <img
+                  src={selectedProduct.image || "/placeholder.svg"}
                   alt={selectedProduct.name}
-                  width={500}
-                  height={350}
-                  className="rounded-lg"
+                  className="w-full h-64 object-cover"
                 />
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  {selectedProduct.description}
-                </p>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
-                {/* Download Manual */}
+                <Button
+                  onClick={() => setSelectedProduct(null)}
+                  variant="ghost"
+                  size="sm"
+                  className="absolute top-4 right-4 bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white border-white/20"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+
+                <DialogHeader className="absolute bottom-4 left-6 right-6">
+                  <DialogTitle className="text-2xl font-bold text-white mb-1">{selectedProduct.name}</DialogTitle>
+                  <p className="text-white/80 text-sm">
+                    {language === "en" ? selectedProduct.specsEn : selectedProduct.specs}
+                  </p>
+                </DialogHeader>
+              </div>
+
+              <div className="p-6 space-y-6 max-h-[60vh] overflow-y-auto">
+                <div>
+                  <h3 className="text-lg font-semibold text-slate-800 mb-3">{t("iot.products.modal.description")}</h3>
+                  <p className="text-slate-600 leading-relaxed">
+                    {language === "en" ? selectedProduct.descriptionEn : selectedProduct.description}
+                  </p>
+                </div>
+
                 <Button
                   asChild
                   variant="outline"
-                  className="w-full justify-center"
+                  className="w-full border-slate-200 hover:border-blue-300 hover:bg-blue-50 transition-all bg-transparent"
                 >
                   <a href={selectedProduct.manualFile} download>
-                    <Download className="mr-2 h-4 w-4" /> Download Manual
+                    <Download className="mr-2 h-4 w-4" /> {t("iot.products.modal.download.manual")}
                   </a>
                 </Button>
 
-                {/* Form Pemesanan */}
-                <form className="space-y-3">
-                  <input
-                    type="text"
-                    placeholder="Nama"
-                    className="w-full border rounded-lg px-3 py-2 text-sm"
-                    required
-                  />
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    className="w-full border rounded-lg px-3 py-2 text-sm"
-                    required
-                  />
-                  <input
-                    type="number"
-                    placeholder="Jumlah"
-                    className="w-full border rounded-lg px-3 py-2 text-sm"
-                    min="1"
-                    required
-                  />
-                  <Button className="w-full bg-[#007bff] text-white hover:bg-[#0069d9]">
-                    <ShoppingCart className="mr-2 h-4 w-4" /> Pesan Sekarang
-                  </Button>
-                </form>
+                <div className="bg-slate-50 rounded-xl p-6">
+                  <h3 className="text-lg font-semibold text-slate-800 mb-4">{t("iot.products.modal.order.form")}</h3>
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 mb-2">
+                        {t("iot.products.modal.full.name")}
+                      </label>
+                      <input
+                        type="text"
+                        placeholder={t("iot.products.modal.full.name.placeholder")}
+                        className="w-full border border-slate-200 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 mb-2">
+                        {t("iot.products.modal.email")}
+                      </label>
+                      <input
+                        type="email"
+                        placeholder={t("iot.products.modal.email.placeholder")}
+                        className="w-full border border-slate-200 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 mb-2">
+                        {t("iot.products.modal.quantity")}
+                      </label>
+                      <input
+                        type="number"
+                        placeholder={t("iot.products.modal.quantity.placeholder")}
+                        className="w-full border border-slate-200 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none"
+                        min="1"
+                        defaultValue="1"
+                      />
+                    </div>
+                    <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-lg transition-all shadow-lg hover:shadow-xl">
+                      <ShoppingCart className="mr-2 h-4 w-4" />
+                      {t("iot.products.modal.order.now")}
+                    </Button>
+                  </div>
+                </div>
               </div>
             </>
           )}

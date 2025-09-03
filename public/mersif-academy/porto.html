@@ -1,0 +1,584 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tracion - Portofolio Karya Siswa 2024</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+</head>
+<body class="bg-gray-50 overflow-x-hidden">
+<nav class="fixed top-2 left-1/2 transform -translate-x-1/2 z-50 bg-white/90 backdrop-blur-md shadow-lg rounded-full border border-white/20 max-w-5xl w-11/12">
+  <div class="px-8 py-2.5 flex justify-between items-center w-full">
+    <a href="index.html" class="flex items-center space-x-2">
+      <img src="logo.png" alt="Logo Mersif" class="h-8 sm:h-10" />
+      <span class="sr-only">Mersif Academy</span>
+    </a>
+
+    <button id="menu-toggle" class="sm:hidden text-gray-700 focus:outline-none w-10 h-10 flex items-center justify-center rounded-md hover:bg-gray-100 transition-colors">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+
+    <ul id="menu" class="hidden sm:flex flex-col sm:flex-row sm:space-x-8 text-sm font-medium sm:items-center bg-white sm:bg-transparent absolute sm:static left-4 right-4 sm:left-auto sm:right-auto w-auto sm:w-auto top-full sm:top-auto shadow-md sm:shadow-none z-40 sm:z-auto rounded-xl sm:rounded-none mt-2 sm:mt-0">
+      <li><a href="about.html" class="block px-4 py-2 hover:text-blue-700">Tentang Kami</a></li>
+      <li><a href="layanan.html" class="block px-4 py-2 hover:text-blue-700">Layanan</a></li>
+      <li><a href="porto.html" class="block px-4 py-2 hover:text-blue-700">Portofolio</a></li>
+      <li><a href="mentor.html" class="block px-4 py-2 hover:text-blue-700">Mentor</a></li>
+      <li><a href="paket.html" class="block px-4 py-2 hover:text-blue-700">Paket</a></li>
+      <li><a href="daftar.html" class="block bg-blue-900 text-white px-4 py-2 rounded hover:bg-blue-800 mx-4 my-2 sm:my-0">Daftar Sekarang</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero-gradient relative overflow-x-hidden" style="padding-top: 4rem;" >
+        <div class="content-wrapper container mx-auto px-6 py-12">
+            <div class="flex justify-between items-center mb-12">
+                <div class="flex items-center space-x-4">
+                    <div class="floating-icon" data-aos="fade-down-right" data-aos-duration="1000">
+                        <i class="fas fa-cube text-blue-600 text-2xl"></i>
+                    </div>
+                    <h1 class="text-4xl font-bold gradient-text" data-aos="fade-down" data-aos-duration="1000">Traction</h1>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8" data-aos="fade-down-right" data-aos-duration="1000">
+                <div class="lg:col-span-1">
+                    <div class="portfolio-card bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-2xl font-bold text-blue-600" data-aos="fade-down" data-aos-duration="1000">B2B Sales</h2>
+                            <div class="floating-icon">
+                                <i class="fas fa-home text-gray-400 text-2xl"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="achievement-badge flex items-center space-x-3 bg-yellow-100 p-4 rounded-lg mb-6" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="400">
+                            <div class="bg-yellow-500 p-2 rounded-full">
+                                <i class="fas fa-trophy text-white"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold text-yellow-800">10 Tim</div>
+                                <div class="text-sm text-yellow-600">Juara kompetisi bergengsi tingkat provinsi dan nasional di tahun 2024</div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="project-item bg-gray-200 rounded-lg overflow-hidden aspect-square" data-aos="flip-left" data-aos-duration="1000">
+                                <img src="14.jpg" alt="Achievement Photo 1" class="w-full h-full object-cover">
+                            </div>
+                            <div class="project-item bg-gray-200 rounded-lg overflow-hidden aspect-square" data-aos="flip-right" data-aos-duration="1000">
+                                <img src="9.jpg" alt="Achievement Photo 2" class="w-full h-full object-cover">
+                            </div>
+                            <div class="project-item bg-gray-200 rounded-lg overflow-hidden aspect-square" data-aos="flip-left" data-aos-duration="1000">
+                                <img src="16.jpg" alt="Achievement Photo 3" class="w-full h-full object-cover">
+                            </div>
+                            <div class="project-item bg-gray-200 rounded-lg overflow-hidden aspect-square" data-aos="flip-right" data-aos-duration="1000">
+                                <img src="15.jpg" alt="Achievement Photo 4" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-2">
+                    <div class="mb-8">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center" data-aos="fade-down" data-aos-duration="1000">
+                            <u>Portofolio Karya Siswa 2024</u>
+                        </h2>
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+  <div class="project-item bg-white rounded-xl shadow-lg text-center hover:scale-105 transition-transform duration-300 aspect-square flex flex-col" data-aos="flip-left" data-aos-duration="1000">
+    <div class="flex-1 flex items-center justify-center p-4">
+      <img src="10.png" alt="Robot Teleoperasi" class="w-20 h-20 object-contain">
+    </div>
+    <div class="bg-blue-500 text-white px-3 py-3 rounded-b-xl text-sm font-semibold h-16 flex items-center justify-center">
+      <span class="leading-tight">Robot Teleoperasi</span>
+    </div>
+  </div>
+
+  <div class="project-item bg-white rounded-xl shadow-lg text-center hover:scale-105 transition-transform duration-300 aspect-square flex flex-col" data-aos="flip-right" data-aos-duration="1000">
+    <div class="flex-1 flex items-center justify-center p-4">
+      <img src="11.png" alt="Stasiun Cuaca Berbasis IoT" class="w-20 h-20 object-contain">
+    </div>
+    <div class="bg-cyan-500 text-white px-3 py-3 rounded-b-xl text-sm font-semibold h-16 flex items-center justify-center">
+      <span class="leading-tight">Stasiun Cuaca Berbasis IoT</span>
+    </div>
+  </div>
+
+  <div class="project-item bg-white rounded-xl shadow-lg text-center hover:scale-105 transition-transform duration-300 aspect-square flex flex-col" data-aos="flip-left" data-aos-duration="1000">
+    <div class="flex-1 flex items-center justify-center p-4">
+      <img src="12.png" alt="Lampu Portabel" class="w-20 h-20 object-contain">
+    </div>
+    <div class="bg-sky-500 text-white px-3 py-3 rounded-b-xl text-sm font-semibold h-16 flex items-center justify-center">
+      <span class="leading-tight">Lampu Portabel Pengalih Arus</span>
+    </div>
+  </div>
+
+  <div class="project-item bg-white rounded-xl shadow-lg text-center hover:scale-105 transition-transform duration-300 aspect-square flex flex-col" data-aos="flip-right" data-aos-duration="1000">
+    <div class="flex-1 flex items-center justify-center p-4">
+      <img src="13.png" alt="Alat Notifikasi" class="w-20 h-20 object-contain">
+    </div>
+    <div class="bg-blue-700 text-white px-3 py-3 rounded-b-xl text-sm font-semibold h-16 flex items-center justify-center">
+      <span class="leading-tight">Alat Notifikasi Dini Kecelakaan</span>
+    </div>
+  </div>
+</div>
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <div class="bg-blue-500 text-white p-6 rounded-xl shadow-lg interactive-hover" data-aos="fade-left" data-aos-duration="1000">
+                                <div class="flex items-center space-x-4">
+                                    <div class="bg-white p-3 rounded-full">
+                                        <i class="fas fa-school text-blue-500 text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <div class="stats-counter text-2xl font-bold">15</div>
+                                        <div class="text-blue-100">Sekolah Mitra</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-teal-500 text-white p-6 rounded-xl shadow-lg interactive-hover" data-aos="fade-right" data-aos-duration="1000">
+                                <div class="flex items-center space-x-4">
+                                    <div class="bg-white p-3 rounded-full">
+                                        <i class="fas fa-users text-teal-500 text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <div class="stats-counter text-2xl font-bold">200+</div>
+                                        <div class="text-teal-100">Siswa</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="testimonial-card p-6 rounded-xl shadow-lg" data-aos="fade-up" data-aos-duration="1000">
+                                <div class="flex items-start space-x-3">
+
+                                    <div>
+                                        <h4 class="font-semibold mb-1">Azka Hafizhah Ramadhania</h4>
+                                        <p class="text-sm opacity-90 leading-relaxed">
+                                            Pernah ikut lomba, tapi belum dapat juara. Bersyukur banget bisa ketemu Mersif Academy. Mentornya keren, asik banget buat diskusi sepuutar riset. Alhamdulillah setelah ikut program intensif, bisa dapat juara tingkat provinsi dan nasional. Terimakasih :D
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+            <div class="absolute top-20 right-20 opacity-20">
+                <div class="floating-icon text-6xl">
+                    <i class="fas fa-graduation-cap text-blue-300"></i>
+                </div>
+            </div>
+            
+            <div class="absolute bottom-20 left-20 opacity-20">
+                <div class="floating-icon text-4xl" style="animation-delay: 1s;">
+                    <i class="fas fa-lightbulb text-yellow-300"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<section class="hero-gradient relative overflow-x-hidden" style="padding-top: 4rem;">
+    <div class="container mx-auto px-6">
+        <div class="text-center mb-16" data-aos="fade-down" data-aos-duration="1000">
+            <div class="flex justify-center items-center space-x-4 mb-6">
+                <div class="award-icon">
+                    <i class="fas fa-trophy text-yellow-500 text-4xl"></i>
+                </div>
+                <h2 class="text-4xl font-bold gradient-text">Prestasi Gemilang 2024</h2>
+                <div class="sparkle-icon">
+                    <i class="fas fa-star text-yellow-400 text-3xl"></i>
+                </div>
+            </div>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                Siswa-siswi Mersif Academy membanggakan dengan meraih berbagai prestasi di kompetisi bergengsi
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+            <div class="achievement-card rounded-2xl p-6 relative" data-aos="flip-left" data-aos-duration="1000">
+                <div class="rank-badge w-16 h-16 rounded-full flex items-center justify-center mb-4 mx-auto relative">
+                    <div class="rank-number text-white text-2xl">I</div>
+                    <div class="absolute -top-2 -right-2">
+                        <i class="fas fa-crown text-yellow-400 text-lg"></i>
+                    </div>
+                </div>
+                
+                <div class="text-center mb-4">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Juara I</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-3">
+                        Tim KIR dari SMA Islam Al Azhar 7 Sukoharjo dalam Lomba Karya Tulis Ilmiah.
+                        Diselenggarakan Yayasan Pendidikan Islam Al Azhar tahun 2024.
+                    </p>
+                    <div class="flex flex-wrap justify-center gap-2 mb-3">
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <div class="flex flex-wrap justify-center text-xs">
+                        <span class="student-name text-xs py-1 px-3">Azka Hafizhah Ramadhania</span>
+                        <span class="student-name text-xs py-1 px-3">Kayla Shafira Hafid</span>
+                    </div>
+                </div>
+                
+                <div class="competition-photo">
+                    <img src="14.jpg" 
+                         alt="Foto Juara I" 
+                         class="w-full h-64 object-cover rounded-lg">
+                </div>
+            </div>
+
+<div class="col-lg-6 mb-4">
+  <div class="achievement-card rounded-2xl p-6 relative" data-aos="flip-right" data-aos-duration="1000">
+    <div class="rank-badge w-16 h-16 rounded-full flex items-center justify-center mb-4 mx-auto relative" style="background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);">
+      <div class="rank-number text-white text-2xl">II</div>
+      <div class="absolute -top-2 -right-2">
+        <i class="fas fa-award text-gray-300 text-lg"></i>
+      </div>
+    </div>
+    <div class="text-center mb-4">
+      <h3 class="text-xl font-bold text-gray-800 mb-2">Juara II</h3>
+      <p class="text-gray-600 text-sm leading-relaxed mb-3">
+        Tim KIR SMA Islam Al Azhar 7 Sukoharjo dalam Lomba Karya Tulis Ilmiah Hari Air.
+        Diselenggarakan oleh PUSDATARU Provinsi Jawa Tengah tahun 2024.
+      </p>
+    </div>
+    <div class="mb-4">
+      <div class="flex flex-wrap justify-center text-xs">
+        <span class="student-name py-1 px-3">Azka Hafizhah Ramadhania</span>
+        <span class="student-name py-1 px-3">Kayla Shafira Hafid</span>
+      </div>
+    </div>
+    <div class="competition-photo">
+      <img src="9.jpg" alt="Foto Juara II" class="w-full h-64 object-cover rounded-lg">
+    </div>
+  </div>
+</div>
+
+<div class="col-lg-6 mb-4">
+  <div class="achievement-card rounded-2xl p-6 relative" data-aos="flip-left" data-aos-duration="1000">
+    <div class="rank-badge w-16 h-16 rounded-full flex items-center justify-center mb-4 mx-auto relative" style="background: linear-gradient(135deg, #10b981 0%, #047857 100%);">
+      <div class="rank-number text-white text-xl">F</div>
+      <div class="absolute -top-2 -right-2">
+        <i class="fas fa-award text-green-300 text-lg"></i>
+      </div>
+    </div>
+    <div class="text-center mb-4">
+      <h3 class="text-xl font-bold text-gray-800 mb-2">Finalis</h3>
+      <p class="text-gray-600 text-sm leading-relaxed mb-3">
+        Tim SMA Negeri 3 Surakarta dalam Lomba Pelajar Pelopor Keselamatan Lalu Lintas.
+        Diselenggarakan oleh Dinas Perhubungan tahun 2024.
+      </p>
+    </div>
+    <div class="mb-4">
+      <div class="flex flex-wrap justify-center text-xs">
+        <span class="student-name py-1 px-3">Fadhilah Rasya Putra</span>
+      </div>
+    </div>
+    <div class="competition-photo">
+      <img src="17.jpg" alt="Foto Finalis" 
+       class="w-full h-64 object-contain rounded-lg">
+    </div>
+  </div>
+</div>
+
+<div class="col-lg-6 mb-4">
+  <div class="achievement-card rounded-2xl p-6 relative" data-aos="flip-right" data-aos-duration="1000">
+    <div class="rank-badge w-16 h-16 rounded-full flex items-center justify-center mb-4 mx-auto relative" style="background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);">
+      <div class="rank-number text-white text-2xl">I</div>
+      <div class="absolute -top-2 -right-2">
+        <i class="fas fa-award text-gray-300 text-lg"></i>
+      </div>
+    </div>
+    <div class="text-center mb-4">
+      <h3 class="text-xl font-bold text-gray-800 mb-2">Juara I</h3>
+      <p class="text-gray-600 text-sm leading-relaxed mb-3">
+        Tim KIR SMA Islam Al Azhar 7 Sukoharjo dalam Lomba Karya Tulis Ilmiah.
+        Diselenggarakan oleh Yayasan Pendidikan Islam Al Azhar 2024.
+      </p>
+    </div>
+    <div class="mb-4">
+      <div class="flex flex-wrap justify-center text-xs">
+        <span class="student-name py-1 px-3">Fadhilah Rasya Putra</span>
+      </div>
+    </div>
+    <div class="competition-photo">
+      <img src="15.jpg" alt="Foto Juara I" 
+       class="w-full h-64 object-contain rounded-lg">
+    </div>
+  </div>
+</div>
+
+
+<div class="col-lg-6 mb-4">
+  <div class="achievement-card rounded-2xl p-6 relative" data-aos="flip-left" data-aos-duration="1000">
+    <div class="rank-badge w-16 h-16 rounded-full flex items-center justify-center mb-4 mx-auto relative" style="background: linear-gradient(135deg, #3b82f6 0%, #1e3a8a 100%);">
+      <div class="rank-number text-white text-xl">F</div>
+      <div class="absolute -top-2 -right-2">
+        <i class="fas fa-award text-blue-300 text-lg"></i>
+      </div>
+    </div>
+    <div class="text-center mb-4">
+      <h3 class="text-xl font-bold text-gray-800 mb-2">Finalis</h3>
+      <p class="text-gray-600 text-sm leading-relaxed mb-3">
+        Tim SD Islam Tahfidzul Qur’an Sukoharjo dalam Olimpiade Sains Kuark.
+        Diselenggarakan oleh PT Kuark Internasional.
+      </p>
+    </div>
+    <div class="mb-4">
+      <div class="flex flex-wrap justify-center text-xs">
+        <span class="student-name py-1 px-3">Hanis Anindita Sutrisno</span>
+        <span class="student-name py-1 px-3">Alifah Najwa Prasetyo</span>
+        <span class="student-name py-1 px-3">Inaya Athifa Azmi</span>
+      </div>
+    </div>
+    <div class="competition-photo">
+      <img src="18.jpg" alt="Foto Finalis Kuark"
+       class="w-full h-64 object-contain rounded-lg">
+    </div>
+  </div>
+</div>
+
+ <div class="col-lg-6 mb-4">
+            <div class="achievement-card rounded-2xl p-6 relative min-h-[500px] flex flex-col justify-between" data-aos="flip-right" data-aos-duration="1000">
+     <div>
+      <div class="rank-badge w-16 h-16 rounded-full flex items-center justify-center mb-4 mx-auto relative" style="background: linear-gradient(135deg, #3b82f6 0%, #1e3a8a 100%);">
+        <div class="rank-number text-white text-xl">F</div>
+        <div class="absolute -top-2 -right-2">
+          <i class="fas fa-award text-blue-300 text-lg"></i>
+        </div>
+      </div>
+
+      <div class="text-center mb-4">
+        <h3 class="text-xl font-bold text-gray-800 mb-2">Finalis</h3>
+        <p class="text-gray-600 text-sm leading-relaxed mb-3">
+          Tim KIR SMA Negeri 1 Wonosari Klaten dalam Lomba KRENOVA Tk.Kabupaten Klaten 2024
+          yang diselenggarakan oleh Bappedalitbang Kabupaten Klaten.
+        </p>
+      </div>
+
+      <div class="mb-4">
+        <div class="flex flex-wrap justify-center text-xs">
+          <span class="student-name text-xs py-1 px-3">Febriyana Dwi Handayani</span>
+          <span class="student-name text-xs py-1 px-3">Indah Sabila Ramadhani</span>
+          <span class="student-name text-xs py-1 px-3">Agna Eka Saputri</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="competition-photo">
+      <img src="19.jpg" 
+           alt="Foto Finalis Olimpiade Kuark" 
+           class="w-full h-64 object-contain rounded-lg">
+    </div>
+  </div>
+</div>
+            <div class="achievement-card rounded-2xl p-6 relative" data-aos="flip-left" data-aos-duration="1000">
+                <div class="rank-badge w-16 h-16 rounded-full flex items-center justify-center mb-4 mx-auto relative" style="background: linear-gradient(135deg, #cd7f32 0%, #a0522d 100%);">
+                    <div class="rank-number text-white text-2xl">III</div>
+                    <div class="absolute -top-2 -right-2">
+                        <i class="fas fa-ribbon text-orange-300 text-lg"></i>
+                    </div>
+                </div>
+
+                <div class="text-center mb-4">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Juara III</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-3">
+                        Tim KIR SMA Islam Al Azhar 7 Sukoharjo dalam Lomba Pelajar Pelopor Keselamatan Lalu Lintas.
+                        Diselenggarakan oleh Dinas Perhubungan tahun 2024 Tingkat Provinsi Jawa Tengah.
+                    </p>
+                    <div class="flex flex-wrap justify-center gap-2 mb-3">
+                </div>
+
+                <div class="mb-4">
+                    <div class="flex flex-wrap justify-center text-xs">
+                        <span class="student-name text-xs py-1 px-3">FADHILAH RASYA PUTRA</span>
+                    </div>
+                </div>
+
+                <div class="competition-photo">
+                    <img src="16.jpg" 
+                         alt="Foto Juara III" 
+                         class="w-full h-64 object-cover rounded-lg">
+                </div>
+            </div>
+        </div>
+        <div class="container mx-auto px-4">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+
+    <div class="bg-blue-500 text-white p-6 rounded-xl shadow-lg text-center hover:scale-105 transition-transform duration-300" data-aos="fade-right" data-aos-duration="1000">
+      <div class="stats-counter text-3xl font-bold mb-2">10</div>
+      <div class="text-blue-100 text-sm">Total Prestasi 2024</div>
+    </div>
+
+    <div class="bg-emerald-500 text-white p-6 rounded-xl shadow-lg text-center hover:scale-105 transition-transform duration-300" data-aos="fade-left" data-aos-duration="1000">
+      <div class="stats-counter text-3xl font-bold mb-2">25</div>
+      <div class="text-emerald-100 text-sm">Siswa Berprestasi</div>
+    </div>
+
+    <div class="bg-purple-500 text-white p-6 rounded-xl shadow-lg text-center hover:scale-105 transition-transform duration-300" data-aos="fade-up" data-aos-duration="1000">
+      <div class="stats-counter text-3xl font-bold mb-2">3</div>
+      <div class="text-purple-100 text-sm">Tingkat Kompetisi</div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+
+    <script>
+        document.querySelectorAll('.achievement-card').forEach(card => {
+    card.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-8px) scale(1.02)';
+    });
+    
+    card.addEventListener('mouseleave', function() {
+        this.style.transform = '';
+    });
+});
+
+document.querySelectorAll('.student-name').forEach(name => {
+    name.addEventListener('click', function() {
+        this.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            this.style.transform = '';
+        }, 150);
+    });
+});
+
+document.querySelectorAll('.competition-photo').forEach(photo => {
+    photo.addEventListener('click', function() {
+        console.log('Photo clicked - dapat ditambahkan modal zoom');
+    });
+});
+document.addEventListener('DOMContentLoaded', function() {
+    // Fungsi untuk animasi counter individual
+    function animateCounter(counter) {
+        // Cek apakah sudah dianimasi
+        if (counter.dataset.animated === 'true') return;
+        
+        // Tandai sedang dianimasi
+        counter.dataset.animated = 'true';
+        
+        // Ambil target value
+        const targetText = counter.textContent;
+        const hasPlus = targetText.includes('+');
+        const target = parseInt(targetText.replace('+', '').replace(/,/g, ''));
+        
+        // Validasi target
+        if (isNaN(target)) {
+            console.warn('Target value is not a valid number:', targetText);
+            return;
+        }
+        
+        let current = 0;
+        const duration = 2000; // 2 detik
+        const frameRate = 60; // 60 FPS
+        const totalFrames = (duration / 1000) * frameRate;
+        const increment = target / totalFrames;
+        
+        const timer = setInterval(() => {
+            current += increment;
+            
+            if (current >= target) {
+                // Selesai - set ke nilai target yang tepat
+                counter.textContent = target.toLocaleString() + (hasPlus ? '+' : '');
+                clearInterval(timer);
+            } else {
+                // Update dengan nilai saat ini
+                const displayValue = Math.floor(current);
+                counter.textContent = displayValue.toLocaleString() + (hasPlus ? '+' : '');
+            }
+        }, 1000 / frameRate);
+    }
+
+    // Intersection Observer untuk trigger animasi
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCounter(entry.target);
+                // Stop observing setelah animasi dimulai
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { 
+        threshold: 0.3, // Trigger ketika 30% elemen terlihat
+        rootMargin: '0px 0px -50px 0px' // Trigger sedikit sebelum benar-benar terlihat
+    });
+
+    // Observe semua counter
+    document.querySelectorAll('.stats-counter').forEach(counter => {
+        observer.observe(counter);
+    });
+            document.querySelectorAll('.project-item').forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.05) rotateY(5deg)';
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1) rotateY(0deg)';
+                });
+            });
+
+            document.querySelectorAll('.portfolio-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.98)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+
+            window.addEventListener('mousemove', function(e) {
+                const icons = document.querySelectorAll('.floating-icon');
+                icons.forEach(icon => {
+                    const speed = 0.02;
+                    const x = (window.innerWidth - e.pageX * speed) / 100;
+                    const y = (window.innerHeight - e.pageY * speed) / 100;
+                    icon.style.transform += ` translate(${x}px, ${y}px)`;
+                });
+            });
+        });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const currentPage = window.location.pathname;
+    const navLinks = document.querySelectorAll('nav ul li a');
+    navLinks.forEach(link => {
+      if (!link.href.includes('#')) {
+        const linkHref = link.getAttribute('href');
+        if (currentPage.endsWith(linkHref)) {
+          link.classList.add('active-nav-link');
+        }
+      }
+    });
+  });
+
+  document.getElementById("menu-toggle")?.addEventListener("click", function () {
+    const menu = document.getElementById("menu");
+    menu?.classList.toggle("hidden");
+  });
+
+  AOS.init({
+  });
+    </script>
+
+<footer class="bg-blue-900 text-white py-8">
+  <div class="max-w-7xl mx-auto px-4 text-center">
+    <div class="mb-4">
+      <p class="mb-2">📞 +62 822 2684 1762</p>
+      <p class="mb-2">📧 official@mersifacademy.com</p>
+      <p class="mb-2">📍 Daratan, RT.02/RW.06, Senden, Tohudan, Kec. Colomadu, Kabupaten Karanganyar, Jawa Tengah 57173</p>
+    </div>
+    <div class="border-t border-blue-800 pt-4">
+      <p>&copy; 2025 Mersif Academy. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

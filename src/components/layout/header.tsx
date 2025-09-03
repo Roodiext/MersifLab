@@ -1,12 +1,19 @@
 "use client"
 
-import React, { useState } from "react"
+import type React from "react"
+import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { Menu, ChevronDown, User, Home, Info, Package, Star, Mail, Settings, LogOut, Shield } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from "@/components/ui/dropdown-menu"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useRouter, usePathname } from "next/navigation"
 import { useSession, signOut } from "next-auth/react"
@@ -49,11 +56,11 @@ function NavLink({ href, children, icon: Icon, isMobile = false, onClick }: NavL
       const targetPath = path || "/"
 
       const possibleIds: { [key: string]: string[] } = {
-        'product': ['product', 'products', 'our-products', 'produk'],
-        'about': ['about', 'about-us', 'tentang', 'tentang-kami'],
-        'hero': ['hero', 'home', 'banner', 'header-section'],
-        'testimonials': ['testimonials', 'testimonial', 'testimoni'],
-        'contact': ['contact', 'contact-us', 'kontak']
+        product: ["product", "products", "our-products", "produk"],
+        about: ["about", "about-us", "tentang", "tentang-kami"],
+        hero: ["hero", "home", "banner", "header-section"],
+        testimonials: ["testimonials", "testimonial", "testimoni"],
+        contact: ["contact", "contact-us", "kontak"],
       }
 
       if (pathname !== targetPath) {
@@ -65,7 +72,7 @@ function NavLink({ href, children, icon: Icon, isMobile = false, onClick }: NavL
             const headerOffset = 80
             window.scrollTo({
               top: target.offsetTop - headerOffset,
-              behavior: "smooth"
+              behavior: "smooth",
             })
           }
         }, 500)
@@ -76,7 +83,7 @@ function NavLink({ href, children, icon: Icon, isMobile = false, onClick }: NavL
           const headerOffset = 80
           window.scrollTo({
             top: target.offsetTop - headerOffset,
-            behavior: "smooth"
+            behavior: "smooth",
           })
         }
       }
@@ -112,21 +119,21 @@ export function Header() {
   const { t } = useLanguage()
 
   const navItems: NavItem[] = [
-    { href: "/#hero", label: t('nav.home'), icon: Home },
-    { href: "/#about", label: t('nav.about'), icon: Info },
-    { href: "/#testimonials", label: t('nav.testimonials'), icon: Star },
+    { href: "/#hero", label: t("nav.home"), icon: Home },
+    { href: "/#about", label: t("nav.about"), icon: Info },
+    { href: "/#testimonials", label: t("nav.testimonials"), icon: Star },
     {
-      label: t('nav.services'),
+      label: t("nav.services"),
       icon: Package,
       isDropdown: true,
       subLinks: [
-        { href: "/mersifacademy", label: t('nav.services.academy') },
-        { href: "/mersifiot", label: t('nav.services.iot') },
-        { href: "/mersifvista", label: t('nav.services.vista') },
-        { href: "/mersifcreator", label: t('nav.services.creator') },
+        { href: "/mersifacademy", label: t("nav.services.academy") },
+        { href: "/mersifiot", label: t("nav.services.iot") },
+        { href: "/mersifvista", label: t("nav.services.vista") },
+        { href: "/mersifcreator", label: t("nav.services.creator") },
       ],
     },
-    { href: "/#contact", label: t('nav.contact'), icon: Mail },
+    { href: "/#contact", label: t("nav.contact"), icon: Mail },
   ]
 
   const closeSheet = () => {
@@ -134,9 +141,31 @@ export function Header() {
     setIsMobileNewsOpen(false)
   }
 
+  // Updated function to get user avatar with better fallback logic
   const getUserAvatar = () => {
-    if (!session?.user) return '/img/default-avatar.png'
-    return session.user.image || '/img/default-avatar.png'
+    if (!session?.user) return null
+
+    // Check multiple possible avatar sources from session
+    const possibleAvatars = [
+      session.user.avatar,
+      session.user.image,
+      (session.user as any)?.picture, // Sometimes OAuth providers use 'picture'
+    ].filter(Boolean)
+
+    return possibleAvatars[0] || null
+  }
+
+  // Updated function to get user initials
+  const getUserInitials = () => {
+    if (!session?.user) return "U"
+
+    const name = session.user.name || session.user.email || "User"
+    return name
+      .split(" ")
+      .map((word) => word.charAt(0))
+      .slice(0, 2)
+      .join("")
+      .toUpperCase()
   }
 
   return (
@@ -156,12 +185,12 @@ export function Header() {
               <SheetContent side="left" className="w-72">
                 <div className="flex h-16 items-center border-b px-4">
                   <Link href="/" className="flex items-center" onClick={closeSheet}>
-                    <Image 
-                      src="/img/logomersiflab.png" 
-                      alt="MersifLab Logo" 
-                      width={120} 
-                      height={40} 
-                      className="h-8 w-auto" 
+                    <Image
+                      src="/img/logomersiflab.png"
+                      alt="MersifLab Logo"
+                      width={120}
+                      height={40}
+                      className="h-8 w-auto"
                     />
                   </Link>
                 </div>
@@ -169,8 +198,9 @@ export function Header() {
                   <nav className="flex flex-col space-y-2">
                     {navItems.map((item, index) => {
                       if (item.isDropdown) {
-                        const isOpen = item.label === t('nav.services') ? isMobileServiceOpen : isMobileNewsOpen
-                        const setIsOpen = item.label === t('nav.services') ? setIsMobileServiceOpen : setIsMobileNewsOpen
+                        const isOpen = item.label === t("nav.services") ? isMobileServiceOpen : isMobileNewsOpen
+                        const setIsOpen =
+                          item.label === t("nav.services") ? setIsMobileServiceOpen : setIsMobileNewsOpen
 
                         return (
                           <div key={index} className="space-y-2">
@@ -182,17 +212,12 @@ export function Header() {
                                 {item.icon && <item.icon className="h-4 w-4" />}
                                 <span>{item.label}</span>
                               </div>
-                              <ChevronDown className={`h-4 w-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+                              <ChevronDown className={`h-4 w-4 transition-transform ${isOpen ? "rotate-180" : ""}`} />
                             </button>
                             {isOpen && (
                               <div className="pl-6 space-y-1">
                                 {item.subLinks?.map((subLink, subIndex) => (
-                                  <NavLink
-                                    key={subIndex}
-                                    href={subLink.href}
-                                    isMobile
-                                    onClick={closeSheet}
-                                  >
+                                  <NavLink key={subIndex} href={subLink.href} isMobile onClick={closeSheet}>
                                     {subLink.label}
                                   </NavLink>
                                 ))}
@@ -202,13 +227,7 @@ export function Header() {
                         )
                       }
                       return (
-                        <NavLink
-                          key={index}
-                          href={item.href || "/"}
-                          icon={item.icon}
-                          isMobile
-                          onClick={closeSheet}
-                        >
+                        <NavLink key={index} href={item.href || "/"} icon={item.icon} isMobile onClick={closeSheet}>
                           {item.label}
                         </NavLink>
                       )
@@ -220,13 +239,13 @@ export function Header() {
 
             {/* Logo */}
             <Link href="/" className="flex items-center space-x-2">
-              <Image 
-                src="/img/logomersiflab.png" 
-                alt="MersifLab Logo" 
-                width={120} 
-                height={40} 
-                className="h-8 w-auto" 
-                priority 
+              <Image
+                src="/img/logomersiflab.png"
+                alt="MersifLab Logo"
+                width={120}
+                height={40}
+                className="h-8 w-auto"
+                priority
               />
             </Link>
           </div>
@@ -245,8 +264,8 @@ export function Header() {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="start" className="min-w-48">
                         {item.subLinks?.map((subLink, subIndex) => (
-                          <DropdownMenuItem 
-                            key={subIndex} 
+                          <DropdownMenuItem
+                            key={subIndex}
                             onClick={() => router.push(subLink.href)}
                             className="flex items-center gap-2 cursor-pointer"
                           >
@@ -267,73 +286,119 @@ export function Header() {
           </nav>
 
           {/* Right Section - Language Switcher & User Menu */}
-          <div className="flex items-center gap-3">
-            <div className="hidden sm:block">
+          <div className="flex items-center gap-2">
+            <div className="block">
               <LanguageSwitcher />
             </div>
-            
+
             {status === "authenticated" && session?.user ? (
-              <div className="flex items-center gap-3">
-                <div className="hidden lg:block">
-                  <span className="text-sm font-medium text-gray-900">
-                    {session.user.name || 'User'}
-                  </span>
+              <div className="flex items-center gap-2">
+                <div className="hidden xl:block">
+                  <span className="text-sm font-medium text-gray-900">{session.user.name || "User"}</span>
                 </div>
-                
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="icon" className="relative h-9 w-9 rounded-full hover:bg-gray-100">
-                      <Avatar className="h-8 w-8">
-                        <AvatarImage src={getUserAvatar()} alt={session.user.name || 'User'} />
-                        <AvatarFallback className="bg-blue-100 text-blue-600 font-medium">
-                          {session.user.name?.charAt(0).toUpperCase() || 'U'}
-                        </AvatarFallback>
-                      </Avatar>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-64" align="end">
-                    <div className="flex flex-col gap-1 p-3 border-b">
-                      <p className="text-sm font-medium leading-tight">{session.user.name}</p>
-                      <p className="text-xs text-muted-foreground leading-tight">{session.user.email}</p>
-                    </div>
-                    <div className="py-1">
-                      <DropdownMenuItem className="cursor-pointer">
-                        <User className="mr-2 h-4 w-4" />
-                        <span>{t('nav.profile')}</span>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem className="cursor-pointer">
-                        <Settings className="mr-2 h-4 w-4" />
-                        <span>{t('nav.settings')}</span>
-                      </DropdownMenuItem>
-                      {session.user.role === 'admin' && (
-                        <DropdownMenuItem onClick={() => router.push('/admin')} className="cursor-pointer">
-                          <Shield className="mr-2 h-4 w-4" />
-                          <span>{t('nav.admin')}</span>
+
+                {/* Mobile Profile Button - Direct Navigation */}
+                <div className="block md:hidden">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => router.push("/profile")}
+                    className="relative h-8 w-8 rounded-full hover:bg-gray-100"
+                  >
+                    <Avatar className="h-7 w-7">
+                      <AvatarImage
+                        src={getUserAvatar() || undefined}
+                        alt={session.user.name || "User"}
+                        className="object-cover"
+                        onError={(e) => {
+                          console.log("Avatar image failed to load:", getUserAvatar())
+                          e.currentTarget.style.display = "none"
+                        }}
+                      />
+                      <AvatarFallback className="bg-blue-100 text-blue-600 font-medium text-xs">
+                        {getUserInitials()}
+                      </AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </div>
+
+                {/* Desktop Profile Dropdown */}
+                <div className="hidden md:block">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" size="icon" className="relative h-9 w-9 rounded-full hover:bg-gray-100">
+                        <Avatar className="h-8 w-8">
+                          <AvatarImage
+                            src={getUserAvatar() || undefined}
+                            alt={session.user.name || "User"}
+                            className="object-cover"
+                            onError={(e) => {
+                              console.log("Avatar image failed to load:", getUserAvatar())
+                              e.currentTarget.style.display = "none"
+                            }}
+                          />
+                          <AvatarFallback className="bg-blue-100 text-blue-600 font-medium text-sm">
+                            {getUserInitials()}
+                          </AvatarFallback>
+                        </Avatar>
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent
+                      className="w-56 md:w-64"
+                      align="end"
+                      side="bottom"
+                      sideOffset={12}
+                      alignOffset={-8}
+                      avoidCollisions={true}
+                      sticky="always"
+                      collisionPadding={16}
+                    >
+                      <div className="flex flex-col gap-1 p-3 border-b">
+                        <p className="text-sm font-medium leading-tight">{session.user.name}</p>
+                        <p className="text-xs text-muted-foreground leading-tight">{session.user.email}</p>
+                      </div>
+                      <div className="py-1">
+                        <DropdownMenuItem onClick={() => router.push("/profile")} className="cursor-pointer">
+                          <User className="mr-2 h-4 w-4" />
+                          <span>{t("nav.profile")}</span>
                         </DropdownMenuItem>
-                      )}
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem onClick={() => signOut()} className="cursor-pointer text-red-600 focus:text-red-600">
-                        <LogOut className="mr-2 h-4 w-4" />
-                        <span>{t('nav.logout')}</span>
-                      </DropdownMenuItem>
-                    </div>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                        <DropdownMenuItem className="cursor-pointer">
+                          <Settings className="mr-2 h-4 w-4" />
+                          <span>{t("nav.settings")}</span>
+                        </DropdownMenuItem>
+                        {session.user.role === "admin" && (
+                          <DropdownMenuItem onClick={() => router.push("/admin")} className="cursor-pointer">
+                            <Shield className="mr-2 h-4 w-4" />
+                            <span>{t("nav.admin")}</span>
+                          </DropdownMenuItem>
+                        )}
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem
+                          onClick={() => signOut()}
+                          className="cursor-pointer text-red-600 focus:text-red-600"
+                        >
+                          <LogOut className="mr-2 h-4 w-4" />
+                          <span>{t("nav.logout")}</span>
+                        </DropdownMenuItem>
+                      </div>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
               </div>
             ) : (
-              <div className="flex items-center gap-2">
-                <Button variant="ghost" onClick={() => router.push('/login')} className="text-sm">
-                  {t('nav.login')}
+              <div className="flex items-center gap-1 md:gap-2">
+                <Button
+                  variant="ghost"
+                  onClick={() => router.push("/login")}
+                  className="text-xs md:text-sm px-2 md:px-4"
+                >
+                  {t("nav.login")}
                 </Button>
-                <Button onClick={() => router.push('/register')} className="text-sm">
-                  {t('nav.register')}
+                <Button onClick={() => router.push("/register")} className="text-xs md:text-sm px-2 md:px-4">
+                  {t("nav.register")}
                 </Button>
               </div>
             )}
-
-            <div className="sm:hidden">
-              <LanguageSwitcher />
-            </div>
           </div>
         </div>
       </nav>

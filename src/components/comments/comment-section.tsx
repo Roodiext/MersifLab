@@ -386,17 +386,6 @@ export function CommentSection({ articleId, newsId, contentType }: CommentSectio
 
   return (
     <div className="mt-12 pt-8 border-t border-slate-200">
-      {/* ADD DEBUG INFO */}
-      <div className="mb-4 p-4 bg-yellow-100 rounded">
-        <p>Debug Info:</p>
-        <p>Article ID: {articleId}</p>
-        <p>News ID: {newsId}</p>
-        <p>Content Type: {contentType}</p>
-        <p>Session: {session ? 'Logged in' : 'Not logged in'}</p>
-        <p>User Role: {session?.user?.role}</p>
-        <p>Replying To: {replyingTo}</p>
-        <p>Total Comments: {totalComments}</p>
-      </div>
       
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-lg font-semibold text-slate-900 flex items-center gap-2">

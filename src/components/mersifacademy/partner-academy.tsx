@@ -1,6 +1,10 @@
 "use client"
 
+import { useLanguage } from "@/contexts/language-context"
+
 export default function PartnerAcademy() {
+  const { t } = useLanguage()
+
   return (
     <section className="py-16 bg-white relative">
       <style jsx>{`
@@ -77,7 +81,7 @@ export default function PartnerAcademy() {
             data-aos-duration="1000"
             style={{ fontFamily: "Poppins, sans-serif" }}
           >
-            Collaborate with
+            {t("academy.partners.title")}
           </h2>
           <p
             className="text-gray-600"
@@ -85,18 +89,13 @@ export default function PartnerAcademy() {
             data-aos-duration="1000"
             style={{ fontFamily: "Inter, sans-serif" }}
           >
-            Bekerja sama dengan berbagai institusi pendidikan dan organisasi
-            terkemuka
+            {t("academy.partners.subtitle")}
           </p>
         </div>
 
         {/* ROW 1 */}
         <div className="marquee-wrapper mb-6 px-12">
-          <div
-            className="marquee-track"
-            data-aos="fade-up"
-            data-aos-duration="500"
-          >
+          <div className="marquee-track" data-aos="fade-up" data-aos-duration="500">
             <img src="/mersif-academy/logo/download1.jpg" className="marquee-logo" />
             <img src="/mersif-academy/logo/download2.jpg" className="marquee-logo" />
             <img src="/mersif-academy/logo/download3.jpg" className="marquee-logo" />
@@ -116,11 +115,7 @@ export default function PartnerAcademy() {
 
         {/* ROW 2 */}
         <div className="marquee-wrapper mb-6 px-12">
-          <div
-            className="marquee-track-reverse"
-            data-aos="fade-down"
-            data-aos-duration="500"
-          >
+          <div className="marquee-track-reverse" data-aos="fade-down" data-aos-duration="500">
             <img src="/mersif-academy/logo/download7.jpg" className="marquee-logo" />
             <img src="/mersif-academy/logo/download8.jpg" className="marquee-logo" />
             <img src="/mersif-academy/logo/download9.jpg" className="marquee-logo" />

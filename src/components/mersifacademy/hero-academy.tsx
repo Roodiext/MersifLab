@@ -1,16 +1,17 @@
 "use client"
 import { useState } from "react"
 import { motion } from "framer-motion"
+import { useLanguage } from "@/contexts/language-context"
 
 export default function HeroWithAbout() {
   const [showAbout, setShowAbout] = useState(false)
+  const { t } = useLanguage()
 
   return (
     <>
       {/* HERO */}
-      <section className="relative bg-white min-h-screen flex items-center">
+      <section id="hero" className="relative bg-white min-h-screen flex items-center">
         <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          
           {/* Left Content */}
           <motion.div
             className="text-center md:text-left"
@@ -19,13 +20,14 @@ export default function HeroWithAbout() {
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <motion.h1
-            style={{ fontFamily: "Poppins, sans-serif" }}
+              style={{ fontFamily: "Poppins, sans-serif" }}
               className="text-5xl sm:text-6xl font-extrabold text-gray-900 mb-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
             >
-              Mersif <span className="text-blue-600">Academy</span>
+              {t("academy.hero.title").split(" ")[0]}{" "}
+              <span className="text-blue-600">{t("academy.hero.title").split(" ")[1]}</span>
             </motion.h1>
             <motion.p
               className="text-gray-600 text-lg sm:text-xl mb-8 max-w-xl"
@@ -34,8 +36,7 @@ export default function HeroWithAbout() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
             >
-              Platform pembelajaran riset, sains, dan teknologi berbasis open innovation 
-              untuk mencetak inovator muda Indonesia.
+              {t("academy.hero.subtitle")}
             </motion.p>
 
             {/* CTA Buttons */}
@@ -50,14 +51,14 @@ export default function HeroWithAbout() {
                 style={{ fontFamily: "Inter, sans-serif" }}
                 className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-full shadow hover:bg-blue-700 transition"
               >
-                Selengkapnya
+                {t("academy.hero.learn.more")}
               </button>
               <a
                 href="#daftar"
                 style={{ fontFamily: "Inter, sans-serif" }}
                 className="px-6 py-3 border border-blue-600 text-blue-600 font-semibold rounded-full hover:bg-blue-50 transition"
               >
-                Daftar Sekarang
+                {t("academy.hero.register.now")}
               </a>
             </motion.div>
           </motion.div>
@@ -69,11 +70,7 @@ export default function HeroWithAbout() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.8 }}
           >
-            <img
-              src="/img/hero-academy.svg"
-              alt="Hero"
-              className="w-[400px] sm:w-[500px] md:w-[600px] rounded-lg"
-            />
+            <img src="/img/hero-academy.svg" alt="Hero" className="w-[400px] sm:w-[500px] md:w-[600px] rounded-lg" />
           </motion.div>
         </div>
       </section>
@@ -88,7 +85,6 @@ export default function HeroWithAbout() {
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <div className="max-w-7xl mx-auto px-6 space-y-28">
-            
             {/* BAGIAN ATAS */}
             <motion.div
               className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
@@ -110,15 +106,9 @@ export default function HeroWithAbout() {
               </div>
               <div>
                 <h2 className="text-5xl sm:text-6xl font-extrabold text-gray-900 mb-6 leading-tight">
-                  We Bring <span className="text-blue-600">Idea</span> From <br />
-                  <span className="text-gray-900">Sketch To Life</span>
+                  {t("academy.hero.about.title")}
                 </h2>
-                <p className="text-gray-600 text-lg sm:text-xl mb-6">
-                  Platform pembelajaran yang fokus pada riset, sains, dan teknologi, 
-                  dirancang untuk mendorong inovasi terbuka. Kami berkomitmen untuk mencetak 
-                  generasi inovator muda Indonesia yang siap bersaing di tingkat nasional 
-                  dan internasional.
-                </p>
+                <p className="text-gray-600 text-lg sm:text-xl mb-6">{t("academy.hero.about.description")}</p>
               </div>
             </motion.div>
 
@@ -144,7 +134,7 @@ export default function HeroWithAbout() {
 
               {/* VISI MISI */}
               <h1 className="text-5xl sm:text-6xl font-extrabold text-gray-900 mb-10">
-                Visi Misi Kami
+                {t("academy.hero.vision.mission")}
               </h1>
 
               <motion.div
@@ -154,25 +144,9 @@ export default function HeroWithAbout() {
                 transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
                 viewport={{ once: true }}
               >
-                <p>
-                  Menjadi <span className="font-semibold">platform</span> dalam pembelajaran riset, 
-                  sains, dan teknologi, melalui percepatan adopsi teknologi dan integrasi pendidikan, 
-                  serta mencetak inovator muda berdaya saing global melalui open innovation, menuju 
-                  Indonesia Emas 2045.
-                </p>
-                <p>
-                  Mengembangkan pelatihan riset dan sains yang inovatif dan berdaya saing global 
-                  dapat dilakukan dengan menerapkan teknologi canggih dalam pembelajaran maupun 
-                  pelayanan, serta menyediakan program kolaborasi riset antara siswa SMA dan peneliti. 
-                  Penting juga memfasilitasi pertukaran ide antara siswa, guru, mahasiswa, dan peneliti 
-                  untuk menciptakan ekosistem ilmiah yang dinamis.
-                </p>
-                <p>
-                  Dukungan terhadap partisipasi dalam kompetisi riset dan sains tingkat global menjadi 
-                  salah satu cara meningkatkan daya saing, sementara penyediaan program pengembangan 
-                  karakter, kepemimpinan, dan soft skills memastikan siswa tidak hanya unggul dalam 
-                  bidang akademik, tetapi juga siap menghadapi tantangan dunia nyata.
-                </p>
+                <p>{t("academy.hero.vision.text1")}</p>
+                <p>{t("academy.hero.vision.text2")}</p>
+                <p>{t("academy.hero.vision.text3")}</p>
               </motion.div>
             </motion.div>
           </div>

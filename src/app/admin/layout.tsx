@@ -72,6 +72,17 @@ export default function AdminLayout({
                 <MessageSquare className="mr-3 h-5 w-5" />
                 Comments
               </Link>
+              <Link
+                href="/admin/contact-messages"
+                className={`group flex items-center px-2 py-2 text-sm font-medium rounded-md ${
+                  pathname === "/admin/contact-messages"
+                    ? "bg-blue-100 text-blue-700"
+                    : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                }`}
+              >
+                <MessageSquare className="mr-3 h-5 w-5" />
+                Message
+              </Link>
             </nav>
           </div>
         </div>
@@ -134,6 +145,18 @@ export default function AdminLayout({
             >
               <MessageSquare className="mr-3 h-5 w-5" />
               Comments
+            </Link>
+            <Link
+              href="/admin/contact-messages"
+              className={`group flex items-center px-2 py-2 text-sm font-medium rounded-md ${
+                pathname === "/admin/contact-messages"
+                  ? "bg-blue-100 text-blue-700"
+                  : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+              }`}
+              onClick={() => setSidebarOpen(false)}
+            >
+              <MessageSquare className="mr-3 h-5 w-5" />
+              Message
             </Link>
           </nav>
         </SheetContent>
