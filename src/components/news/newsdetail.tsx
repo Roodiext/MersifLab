@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react"
 import { CommentSection } from "@/components/comments/comment-section"
 
-export default function NewsDetail({ newsId }: { newsId: number }) {
+// Ubah dari export default menjadi named export
+export function NewsDetail({ newsId }: { newsId: number }) {
   const [newsData, setNewsData] = useState<any>(null)
   const [loading, setLoading] = useState(true)
 

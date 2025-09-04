@@ -259,11 +259,16 @@ export function HeaderCreator() {
                 <div className="flex items-center mr-3">
                   <Link href="/mersifcreator" className="flex items-center">
                     <Image
-                      src="/img/navbar-logo/logoCreator.svg"
-                      alt="MersifLab"
+                      src="/img/navbar-logo/logoCREATOR.svg"
+                      alt="MersifLab Creator"
                       width={100}
                       height={30}
                       className="h-10 w-auto opacity-80 hover:opacity-100 transition-opacity duration-200"
+                      onError={(e) => {
+                        console.log("Creator logo failed to load, falling back to main logo")
+                        e.currentTarget.src = "/img/logomersiflab.png"
+                        e.currentTarget.className = "h-8 w-auto opacity-80 hover:opacity-100 transition-opacity duration-200"
+                      }}
                     />
                   </Link>
                   <div className="w-px h-5 bg-gray-300 ml-3"></div>
@@ -307,8 +312,6 @@ export function HeaderCreator() {
                     </NavLink>
                   )
                 })}
-
-                
               </div>
             </div>
           </nav>

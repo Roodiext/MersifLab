@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useState } from "react"
 import { signIn, getSession } from "next-auth/react"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import Image from 'next/image';
 import { Eye, EyeOff } from "lucide-react"
@@ -20,8 +20,6 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const router = useRouter()
-  const searchParams = useSearchParams()
-  const callbackUrl = searchParams.get('callbackUrl') || '/'
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -29,12 +27,12 @@ export default function LoginPage() {
 
     try {
       const result = await signIn('credentials', {
-        email: formData.identifier, // Kirim sebagai email field
+        email: formData.identifier,
         password: formData.password,
         redirect: false,
       })
 
-      console.log('SignIn result:', result) // Debug log
+      console.log('SignIn result:', result)
 
       if (result?.error) {
         console.error('Login error:', result.error)
@@ -44,13 +42,13 @@ export default function LoginPage() {
         
         // Get session to check user role
         const session = await getSession()
-        console.log('Session after login:', session) // Debug log
+        console.log('Session after login:', session)
         
-        // Redirect based on role or callback URL
+        // Redirect based on role
         if (session?.user?.role === 'admin') {
           router.push('/admin/dashboard')
         } else {
-          router.push(callbackUrl)
+          router.push('/')
         }
       }
     } catch (error) {
@@ -83,16 +81,15 @@ export default function LoginPage() {
         
         {/* Header */}
         <div className="text-center mb-8">
-  <div className="flex items-center justify-center gap-2">
-    <Image 
-      src="/img/logomersiflab.png" 
-      alt="MersifLab Logo" 
-      width={120} 
-      height={30} 
-    />
-  </div>
-</div>
-
+          <div className="flex items-center justify-center gap-2">
+            <Image 
+              src="/img/logomersiflab.png" 
+              alt="MersifLab Logo" 
+              width={120} 
+              height={30} 
+            />
+          </div>
+        </div>
 
         {/* Login Card */}
         <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">

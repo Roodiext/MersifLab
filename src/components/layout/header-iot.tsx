@@ -244,15 +244,15 @@ export function HeaderIOT() {
             </div>
           </div>
 
-          {/* Center Section */}
+          {/* Center Section - Hanya navbar tanpa language switcher */}
           <nav className="hidden md:flex items-center justify-center flex-1 max-w-4xl">
             <div className="bg-white/90 backdrop-blur-sm border border-gray-200/50 rounded-2xl shadow-lg shadow-gray-200/20 px-4 py-3">
               <div className="flex items-center space-x-1">
                 <div className="flex items-center mr-4">
                   <Link href="/mersifiot" className="flex items-center">
                     <Image
-                      src="/img/logoIOT.jpg"
-                      alt="MersifLab"
+                      src="/img/navbar-logo/IOT.jpg"
+                      alt="MersifIOT"
                       width={100}
                       height={30}
                       className="h-14 w-auto opacity-100 hover:opacity-100 transition-opacity duration-100"
@@ -293,21 +293,16 @@ export function HeaderIOT() {
                     </NavLink>
                   )
                 })}
-
-                {/* Language Switcher di tengah */}
-                <div className="flex items-center">
-                  <div className="w-px h-6 bg-gray-300 mx-3"></div>
-                  <div className="px-2">
-                    <LanguageSwitcher />
-                  </div>
-                </div>
               </div>
             </div>
           </nav>
 
-          {/* Right Section */}
+          {/* Right Section - Language switcher dipindahkan ke sini */}
           <div className="flex items-center gap-2">
-            {/* LanguageSwitcher yang menyebabkan duplikat ID dihapus di sini */}
+            {/* Language Switcher di bagian kanan */}
+            <div className="block">
+              <LanguageSwitcher />
+            </div>
 
             {status === "authenticated" && session?.user ? (
               <div className="flex items-center gap-2">

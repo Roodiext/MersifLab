@@ -12,8 +12,11 @@ import { Lock, Shield, ArrowLeft, Eye, EyeOff } from 'lucide-react'
 import { toast } from 'sonner'
 import Link from 'next/link'
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic'
+
 export default function SettingsPage() {
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [showCurrentPassword, setShowCurrentPassword] = useState(false)
@@ -25,7 +28,20 @@ export default function SettingsPage() {
     confirmPassword: ''
   })
 
-  if (!session) {
+  // Show loading state while session is loading
+  if (status === 'loading') {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading...</p>
+        </div>
+      </div>
+    )
+  }
+
+  // Redirect if not authenticated
+  if (status === 'unauthenticated' || !session) {
     router.push('/login')
     return null
   }
@@ -123,7 +139,7 @@ export default function SettingsPage() {
                     className="text-gray-900 font-medium"
                     style={{ fontFamily: "Inter, sans-serif" }}
                   >
-                    {session.user.username}
+                    {session?.user?.username || 'N/A'}
                   </p>
                 </div>
                 <div>
@@ -137,7 +153,7 @@ export default function SettingsPage() {
                     className="text-gray-900 font-medium"
                     style={{ fontFamily: "Inter, sans-serif" }}
                   >
-                    {session.user.email}
+                    {session?.user?.email || 'N/A'}
                   </p>
                 </div>
                 <div>
@@ -151,7 +167,7 @@ export default function SettingsPage() {
                     className="text-gray-900 font-medium capitalize"
                     style={{ fontFamily: "Inter, sans-serif" }}
                   >
-                    {session.user.role}
+                    {session?.user?.role || 'user'}
                   </p>
                 </div>
                 <div>
@@ -165,7 +181,7 @@ export default function SettingsPage() {
                     className="text-gray-900 font-medium"
                     style={{ fontFamily: "Inter, sans-serif" }}
                   >
-                    {session.user.id}
+                    {session?.user?.id || 'N/A'}
                   </p>
                 </div>
               </div>
