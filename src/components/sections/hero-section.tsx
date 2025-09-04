@@ -47,18 +47,26 @@ export function HeroSection() {
         
         {/* Mobile and Tablet layout (up to lg) - 50:50 ratio */}
         <div className="flex flex-col items-center text-center lg:hidden h-full justify-center">
-          {/* Text Section - Full content with semi-transparent background */}
-          <div className={`flex flex-col justify-center items-center space-y-3 sm:space-y-4 md:space-y-5 px-4 sm:px-6 md:px-8 py-8 rounded-2xl backdrop-blur-sm bg-black/20 transition-all duration-700 ease-out pointer-events-auto ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`} style={{ transitionDelay: "200ms", userSelect: "none" }}>
+          {/* Text Section - Full content with improved semi-transparent background */}
+          <div className={`flex flex-col justify-center items-center space-y-3 sm:space-y-4 md:space-y-5 px-4 sm:px-6 md:px-8 py-8 rounded-2xl backdrop-blur-lg bg-gradient-to-b from-slate-800/40 via-gray-800/35 to-slate-900/40 border border-white/15 shadow-2xl transition-all duration-700 ease-out pointer-events-auto ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`} style={{ transitionDelay: "200ms", userSelect: "none" }}>
             <div className="space-y-2 sm:space-y-3">
               <h1
                 className={`text-4xl xs:text-5xl sm:text-6xl md:text-7xl font-bold tracking-tighter leading-tight transition-all duration-700 ease-out text-white select-none ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
-                style={{ fontFamily: "Poppins, sans-serif", transitionDelay: "300ms" }}
+                style={{ 
+                  fontFamily: "Poppins, sans-serif", 
+                  transitionDelay: "300ms",
+                  textShadow: '0 4px 8px rgba(0,0,0,0.6)'
+                }}
               >
                 {t('hero.mobile.title')}
               </h1>
               <p
-                className={`max-w-[320px] xs:max-w-[380px] sm:max-w-[480px] md:max-w-[600px] text-sm xs:text-base sm:text-lg md:text-xl text-gray-100 leading-relaxed mx-auto transition-all duration-700 ease-out select-none ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
-                style={{ fontFamily: "Inter, sans-serif", transitionDelay: "400ms" }}
+                className={`max-w-[320px] xs:max-w-[380px] sm:max-w-[480px] md:max-w-[600px] text-sm xs:text-base sm:text-lg md:text-xl text-gray-50 leading-relaxed mx-auto transition-all duration-700 ease-out select-none ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+                style={{ 
+                  fontFamily: "Inter, sans-serif", 
+                  transitionDelay: "400ms",
+                  textShadow: '0 2px 4px rgba(0,0,0,0.5)'
+                }}
               >
                 {t('hero.mobile.subtitle')}
               </p>
@@ -89,25 +97,30 @@ export function HeroSection() {
         {/* Desktop layout (lg and above) - Text with background overlay */}
         <div className="hidden lg:grid gap-4 lg:gap-6 xl:gap-8 2xl:gap-10 items-center lg:grid-cols-[1fr_1fr] flex-1">
           
-          {/* Text Content with semi-transparent background */}
+          {/* Text Content with improved semi-transparent background */}
           <div className={`flex flex-col justify-center space-y-3 lg:space-y-4 xl:space-y-5 2xl:space-y-6 lg:pl-6 xl:pl-8 2xl:pl-10 transition-all duration-800 ease-out pointer-events-auto ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"}`} style={{ transitionDelay: "200ms" }}>
-            <div className="backdrop-blur-md bg-black/30 p-6 lg:p-8 xl:p-10 rounded-2xl" style={{ userSelect: "none" }}>
+            <div 
+              className="backdrop-blur-xl bg-gradient-to-br from-slate-700/35 via-gray-800/30 to-slate-800/35 border border-white/20 p-6 lg:p-8 xl:p-10 rounded-2xl shadow-2xl ring-1 ring-white/10 transition-all duration-500 hover:shadow-slate-500/20 hover:border-white/25 hover:bg-gradient-to-br hover:from-slate-700/40 hover:via-gray-800/35 hover:to-slate-800/40" 
+              style={{ userSelect: "none" }}
+            >
               <div className="space-y-2 lg:space-y-2 xl:space-y-3">
                 <h1
                   className={`text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white transition-all duration-800 ease-out select-none ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
                   style={{ 
                     fontFamily: "Poppins, sans-serif",
-                    transitionDelay: "300ms"
+                    transitionDelay: "300ms",
+                    textShadow: '0 4px 12px rgba(0,0,0,0.7)'
                   }}
                 >
                   {t('hero.title')}{" "}
                   <span className="text-[#007bff]">{t('hero.title.highlight')}</span>
                 </h1>
                 <p
-                  className={`max-w-[450px] xl:max-w-[500px] 2xl:max-w-[550px] lg:text-base xl:text-lg 2xl:text-xl text-gray-100 leading-relaxed transition-all duration-800 ease-out select-none ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+                  className={`max-w-[450px] xl:max-w-[500px] 2xl:max-w-[550px] lg:text-base xl:text-lg 2xl:text-xl text-gray-50 leading-relaxed transition-all duration-800 ease-out select-none ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
                   style={{ 
                     fontFamily: "Inter, sans-serif",
-                    transitionDelay: "400ms"
+                    transitionDelay: "400ms",
+                    textShadow: '0 2px 6px rgba(0,0,0,0.6)'
                   }}
                 >
                   {t('hero.subtitle')}
@@ -350,4 +363,4 @@ export function HeroSection() {
       </div>
     </section>
   )
-}
+} 
