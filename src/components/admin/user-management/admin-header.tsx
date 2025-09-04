@@ -165,33 +165,30 @@ export function AdminHeader({ user }: AdminHeaderProps) {
           </SheetContent>
         </Sheet>
 
-        {/* Logo & Brand */}
-        <div className="flex items-center gap-3">
-          <Link href="/admin/dashboard" className="flex items-center gap-3">
-            
-            <div className="hidden md:block">
-              <h1 className="font-bold text-gray-900">MersifLab</h1>
-              <p className="text-xs text-gray-500">Admin Panel</p>
-            </div>
-          </Link>
+        {/* Home Button */}
+        <div className="flex items-center">
+          <Button 
+            asChild 
+            variant="ghost" 
+            size="sm"
+            className="flex items-center gap-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+          >
+            <Link href="/">
+              <Home className="h-4 w-4" />
+              <span className="hidden sm:inline">Beranda</span>
+            </Link>
+          </Button>
         </div>
 
-        {/* Search Bar */}
-        <div className="hidden md:flex flex-1 max-w-md mx-8">
-          <div className="relative w-full">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-            <Input
-              type="search"
-              placeholder="Search anything..."
-              className="w-full pl-10 pr-4 h-9 bg-gray-50 border-gray-200 focus:bg-white focus:border-blue-300 focus:ring-blue-200"
-            />
+        {/* Centered Brand */}
+        <div className="absolute left-1/2 transform -translate-x-1/2">
+          <div className="hidden md:block">
+            <h1 className="font-bold text-gray-900">MersifLab Admin Panel</h1>
           </div>
         </div>
 
         {/* Right Side Actions */}
         <div className="flex items-center gap-3">
-          
-
           {/* User Menu */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -232,7 +229,7 @@ export function AdminHeader({ user }: AdminHeaderProps) {
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
-                <Link href="/admin/settings" className="flex items-center gap-2">
+                <Link href="/settings" className="flex items-center gap-2">
                   <Settings className="h-4 w-4" />
                   Settings
                 </Link>

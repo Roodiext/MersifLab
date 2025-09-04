@@ -264,22 +264,22 @@ export function HeaderAcademy() {
             <div className="bg-white/90 backdrop-blur-sm border border-gray-200/50 rounded-2xl shadow-lg shadow-gray-200/20 px-4 py-3">
               <div className="flex items-center space-x-1">
                 <div className="flex items-center mr-4">
-                  <Link href="/mersifacademy" className="flex items-center">
-                    {/* Fixed: Menggunakan SVG yang benar */}
-                    <Image
-                      src="/img/navbar-logo/logoVISTA.svg"
-                      alt="VISTA Logo"
-                      width={140}
-                      height={40}
-                      className="h-9 w-auto opacity-90 hover:opacity-100 transition-opacity duration-200"
-                      onError={(e) => {
-                        console.error('Failed to load logoVISTA.svg, trying academy.jpg...');
-                        e.currentTarget.src = '/img/navbar-logo/academy.jpg';
-                      }}
-                    />
-                  </Link>
-                  <div className="w-px h-6 bg-gray-300 ml-4"></div>
-                </div>
+  <Link href="/mersifacademy" className="flex items-center">
+    {/* Fixed: Menggunakan SVG yang benar */}
+    <Image
+      src="/img/navbar-logo/logoAcademy.svg"
+      alt="VISTA Logo"
+      width={160}
+      height={48}
+      className="h-12 w-auto opacity-90 hover:opacity-100 transition-opacity duration-200"
+      onError={(e) => {
+        console.error('Failed to load logoVISTA.svg, trying academy.jpg...');
+        e.currentTarget.src = '/img/navbar-logo/academy.jpg';
+      }}
+    />
+  </Link>
+  <div className="w-px h-6 bg-gray-300 ml-4"></div>
+</div>
 
                 {navItems.map((item, index) => {
                   if (item.isDropdown) {

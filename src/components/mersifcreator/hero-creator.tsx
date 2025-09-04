@@ -21,7 +21,7 @@ export function HeroSectionCreator() {
         <div className="flex flex-col items-center text-center lg:hidden space-y-6">
           <div className="relative w-full max-w-[500px]">
             <Image
-              src="/images/mersif-creator.jpg"
+              src="/img/hero-creator.jpg"
               alt={t("creator.hero.title") + " " + t("creator.hero.title.highlight")}
               width={600}
               height={400}
@@ -81,7 +81,7 @@ export function HeroSectionCreator() {
           {/* Image */}
           <div className="relative">
             <Image
-              src="/img/product/product-mersifcreator.png"
+              src="/img/hero-creator.jpg"
               alt={t("creator.hero.title") + " " + t("creator.hero.title.highlight")}
               width={800}
               height={600}

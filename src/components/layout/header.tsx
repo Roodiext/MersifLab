@@ -362,12 +362,12 @@ export function Header() {
                           <User className="mr-2 h-4 w-4" />
                           <span>{t("nav.profile")}</span>
                         </DropdownMenuItem>
-                        <DropdownMenuItem className="cursor-pointer">
+                        <DropdownMenuItem onClick={() => router.push("/settings")} className="cursor-pointer">
                           <Settings className="mr-2 h-4 w-4" />
                           <span>{t("nav.settings")}</span>
                         </DropdownMenuItem>
                         {session.user.role === "admin" && (
-                          <DropdownMenuItem onClick={() => router.push("/admin")} className="cursor-pointer">
+                          <DropdownMenuItem onClick={() => router.push("/admin/dashboard")} className="cursor-pointer">
                             <Shield className="mr-2 h-4 w-4" />
                             <span>{t("nav.admin")}</span>
                           </DropdownMenuItem>

@@ -10,6 +10,9 @@ const nextConfig: NextConfig = {
     // Disable TypeScript type checking during build
     ignoreBuildErrors: true,
   },
+  images: {
+    domains: ['images.unsplash.com'],
+  },    
 };
 
 export default nextConfig;
