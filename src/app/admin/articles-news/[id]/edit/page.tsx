@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, use } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -42,7 +42,8 @@ interface ContentItem {
   }
 }
 
-export default function EditContentPage({ params }: { params: { id: string } }) {
+export default function EditContentPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params)
   const router = useRouter()
   const searchParams = useSearchParams()
   const contentType = searchParams.get('type') as 'article' | 'news'
@@ -73,7 +74,7 @@ export default function EditContentPage({ params }: { params: { id: string } }) 
     
     fetchCategories()
     fetchContent()
-  }, [params.id, contentType])
+  }, [id, contentType])
 
   const fetchCategories = async () => {
     try {
@@ -91,7 +92,7 @@ export default function EditContentPage({ params }: { params: { id: string } }) 
   const fetchContent = async () => {
     try {
       const endpoint = contentType === 'article' ? '/api/articles' : '/api/news'
-      const response = await fetch(`${endpoint}/${params.id}`)
+      const response = await fetch(`${endpoint}/${id}`)
       
       if (response.ok) {
         const data: ContentItem = await response.json()
@@ -198,7 +199,7 @@ export default function EditContentPage({ params }: { params: { id: string } }) 
       }
 
       const endpoint = contentType === 'article' ? '/api/articles' : '/api/news'
-      const response = await fetch(`${endpoint}/${params.id}`, {
+      const response = await fetch(`${endpoint}/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updateData)

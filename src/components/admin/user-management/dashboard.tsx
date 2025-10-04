@@ -200,12 +200,7 @@ export default function AdminDashboard() {
                 Aktif
               </Badge>
             </div>
-            <Button variant="ghost" size="sm" asChild className="w-full justify-between text-purple-600 hover:text-purple-700 hover:bg-purple-50">
-              <Link href="/admin/user-management">
-                Kelola Users
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
+           
           </CardContent>
         </Card>
 

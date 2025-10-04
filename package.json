@@ -5,10 +5,10 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
-    "start": "next start",
+    "start": "cross-env NODE_ENV=production node server.js",
     "lint": "next lint",
     "seed:services": "node scripts/seed-services.js",
-    "reset:services": "node scripts/reset-services.js",
+    "reset:services": "node scripts/reset-service s.js",
     "fix:images": "node scripts/fix-image-paths.js"
   },
   "dependencies": {
@@ -54,6 +54,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/react-google-recaptcha": "^2.1.9",
+    "cross-env": "^10.0.0",
     "eslint": "^9",
     "eslint-config-next": "15.4.1",
     "tailwindcss": "^4",

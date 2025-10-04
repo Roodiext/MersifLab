@@ -1,3 +1,4 @@
+import { use } from "react"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { NewsDetail } from "@/components/news/newsdetail"
@@ -11,11 +12,12 @@ export const metadata: Metadata = {
   },
 }
 
-export default function NewsDetailPage({ params }: { params: { id: string } }) {
+export default function NewsDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params)
   return (
     <>
       <Header />
-      <NewsDetail newsId={parseInt(params.id)} />
+      <NewsDetail newsId={parseInt(id)} />
       <Footer />
     </>
   )

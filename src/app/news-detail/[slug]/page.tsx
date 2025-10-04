@@ -2,14 +2,15 @@ import { notFound } from 'next/navigation'
 import { PrismaClient } from '@prisma/client'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Calendar, User, ArrowLeft, Share2 } from 'lucide-react'
+import { Calendar, User, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 import { CommentSection } from "@/components/comments/comment-section"
+import { ShareButton } from "@/components/share-button"
 
 const prisma = new PrismaClient()
 
 interface PageProps {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 async function getContentBySlug(slug: string) {
@@ -73,7 +74,8 @@ async function getRelatedContent(categoryId: number, currentId: number, currentT
 }
 
 export default async function NewsDetailPage({ params }: PageProps) {
-  const content = await getContentBySlug(params.slug)
+  const { slug } = await params
+  const content = await getContentBySlug(slug)
 
   if (!content) {
     notFound()
@@ -128,10 +130,10 @@ export default async function NewsDetailPage({ params }: PageProps) {
 
           {/* Share Button */}
           <div style={{ fontFamily: "Poppins, sans-serif"}} className="flex gap-3">
-            <Button variant="outline" size="sm" className="text-gray-700 border-gray-300 hover:bg-gray-100 transition-colors duration-200 px-4 py-2 rounded-md">
-              <Share2 className="h-4 w-4 mr-2" />
-              Bagikan
-            </Button>
+            <ShareButton 
+              title={content.title}
+              className="text-gray-700 border-gray-300 hover:bg-gray-100 transition-colors duration-200 px-4 py-2 rounded-md"
+            />
           </div>
         </header>
 
@@ -156,7 +158,7 @@ export default async function NewsDetailPage({ params }: PageProps) {
           <section className="mb-16 border-t border-gray-200 pt-12">
             <h3 className="text-2xl font-bold text-gray-900 mb-8">Galeri Foto</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {content.images.map((image: string, index: number) => (
+              {(content.images as string[]).map((image: string, index: number) => (
                 <img
                   key={index}
                   src={image || `/placeholder.svg?height=200&width=300&query=gallery image ${index + 1}`}
@@ -222,19 +224,21 @@ export default async function NewsDetailPage({ params }: PageProps) {
         )}
 
         {/* Comment Section */}
-        <CommentSection
-        style={{ fontFamily: "Inter, sans-serif"}} 
-          newsId={content.type === 'news' ? content.id : undefined}
-          articleId={content.type === 'article' ? content.id : undefined}
-          contentType={content.type as 'article' | 'news'}
-        />
+        <div style={{ fontFamily: "Inter, sans-serif"}}>
+          <CommentSection
+            newsId={content.type === 'news' ? content.id : undefined}
+            articleId={content.type === 'article' ? content.id : undefined}
+            contentType={content.type as 'article' | 'news'}
+          />
+        </div>
       </div>
     </div>
   )
 }
 
 export async function generateMetadata({ params }: PageProps) {
-  const content = await getContentBySlug(params.slug)
+  const { slug } = await params
+  const content = await getContentBySlug(slug)
 
   if (!content) {
     return {
